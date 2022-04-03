@@ -178,7 +178,7 @@ const Sidebar = ({ location }) => {
                   height="40"
                 />
                 <div className="media-body">
-                  <h5 className="mb-1">Chris Wood</h5>
+                  <h5 className="mb-1">Mink Giang</h5>
                   <div>
                     <FontAwesomeIcon
                       icon={faCircle}

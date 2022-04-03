@@ -9,7 +9,11 @@ import {
 const Default = async(() => import("../pages/dashboards/Default"));
 const Social = async(() => import("../pages/dashboards/Social"));
 
-const PaginationTables = async(() => import("../pages/tables/Pagination"));
+// Product
+const Product = async(() => import("../pages/products/Product"));
+const Feature = async(() => import("../pages/products/Feature"));
+const Category = async(() => import("../pages/products/Category"));
+const Brand = async(() => import("../pages/products/Brand"));
 
 const dashboardRoutes = {
   path: "/",
@@ -33,15 +37,30 @@ const dashboardRoutes = {
   ]
 };
 
-const advancedTablesRoutes = {
-  path: "/advanced-tables",
-  name: "Advanced Tables",
+const productRoutes = {
+  path: "/",
+  name: "Sản Phẩm",
   icon: ListIcon,
   children: [
     {
-      path: "/advanced-tables/pagination",
-      name: "Pagination",
-      component: PaginationTables
+      path: "/product",
+      name: "Sản Phẩm",
+      component: Product
+    },
+    {
+      path: "/feature",
+      name: "Đặc Trưng",
+      component: Feature
+    },
+    {
+      path: "/category",
+      name: "Loại Sản Phẩm",
+      component: Category
+    },
+    {
+      path: "/brand",
+      name: "Thương Hiệu",
+      component: Brand
     }
   ]
 };
@@ -49,7 +68,7 @@ const advancedTablesRoutes = {
 // Dashboard specific routes
 export const dashboard = [
   dashboardRoutes,
-  advancedTablesRoutes
+  productRoutes
 ];
 
 // Auth specific routes
@@ -58,7 +77,7 @@ export const dashboard = [
 // All routes
 const arrayRoutes = [
   dashboardRoutes,
-  advancedTablesRoutes
+  productRoutes
 ]
 
 export default arrayRoutes;

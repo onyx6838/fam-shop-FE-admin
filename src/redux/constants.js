@@ -13,3 +13,6 @@ export const LAYOUT_BOXED_DISABLE = "LAYOUT_BOXED_DISABLE";
 
 // Theme
 export const THEME_TOGGLE = "THEME_TOGGLE";
+
+// Product
+export const PRODUCT_FETCH_ALL = "PRODUCT_FETCH_ALL";

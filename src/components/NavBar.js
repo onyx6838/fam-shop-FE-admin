@@ -23,7 +23,7 @@ const ImgAvt = () => (
                 className="avatar img-fluid rounded-circle mr-1"
                 alt="Chris Wood"
             />
-            <span className="text-dark">Chris Wood</span>
+            <span className="text-dark">Mink Giang</span>
         </span>
     </>
 )
