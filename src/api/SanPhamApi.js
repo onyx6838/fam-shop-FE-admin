@@ -23,7 +23,7 @@ const uploadImage = (files, product) => {
     }
     formData.append('id', product)
 
-    return Api.post(`${url}/file/upload`, formData , {
+    return Api.post(`${url}/file/upload`, formData, {
         headers: { "content-type": `multipart/form-data` }
     })
 }
@@ -32,5 +32,44 @@ const getById = (id) => {
     return Api.get(`${url}/${id}`);
 };
 
-const api = { getAll, getAllPaging, uploadImage, getById }
+const getAllParentSanPhams = () => {
+    return Api.get(`${url}/parents`);
+}
+
+const deleteFileInDatabaseAndFireBase = (fileName, token) => {
+    const body = {
+        fileName,
+        token
+    }
+    return Api.post(`${url}/file/db/delete`, body)
+}
+
+const addSanPham = (form) => {
+    return Api.post(`${url}/create`, form)
+}
+
+const deleteByMaSP = (maSP) => {
+    return Api.delete(`${url}/${maSP}`);
+};
+
+const deleteByMaSPs = (ids) => {
+    return Api.delete(`${url}?maSPs=${ids.toString()}`);
+};
+
+const updateSP = (form, maSP) => {
+    return Api.put(`${url}/${maSP}`, form);
+};
+
+const api = {
+    getAll,
+    getAllPaging,
+    uploadImage,
+    getById,
+    deleteFileInDatabaseAndFireBase,
+    getAllParentSanPhams,
+    addSanPham,
+    updateSP,
+    deleteByMaSP,
+    deleteByMaSPs
+}
 export default api;

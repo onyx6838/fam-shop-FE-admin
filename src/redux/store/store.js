@@ -5,6 +5,7 @@ import layout from '../slice/layoutSlice'
 import sidebar from '../slice/sidebarSlice'
 import product from '../slice/productSlice'
 import brand from '../slice/brandSlice'
+import purchaseOrder from '../slice/purchaseOrderSlice'
 import { reducer as toastr } from "react-redux-toastr";
 
 const reducer = combineReducers({
@@ -13,11 +14,16 @@ const reducer = combineReducers({
     sidebar,
     toastr,
     product,
-    brand
+    brand,
+    purchaseOrder
 })
 
 const store = configureStore({
-    reducer
+    reducer,
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        })
 })
 
 export default store;

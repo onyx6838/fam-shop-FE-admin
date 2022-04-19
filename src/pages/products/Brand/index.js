@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Form, Pagination, Row, Table } from "react-bootstrap";
 import * as Icon from 'react-feather'
 
 import BootstrapTable from "react-bootstrap-table-next";
@@ -9,17 +9,77 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBrands } from "../../../redux/slice/brandSlice";
 
+import { useTable, usePagination } from "react-table";
+
 const Brand = () => {
   const dispatch = useDispatch();
   const size = useSelector(state => state.brand.size);
-  const page = useSelector(state => state.brand.page);
-  //const totalPages = useSelector(state => state.product.totalPages);
+  const pageNumber = useSelector(state => state.brand.page);
+  const totalPages = useSelector(state => state.product.totalPages);
   const totalElements = useSelector(state => state.brand.totalElements);
   const brands = useSelector(state => state.brand.brands);
+  const brandTest = React.useMemo(() => [...brands], [brands])
+  const tableColumnsV2 = [
+    {
+      Header: "Mã",
+      accessor: "maThuongHieu",
+    },
+    {
+      Header: "Tên Thương Hiệu",
+      accessor: "tenThuongHieu",
+    },
+    {
+      Header: "Hình Ảnh",
+      accessor: "hinhAnh",
+    }
+  ];
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    state: { pageIndex },
+  } = useTable(
+    {
+      columns: tableColumnsV2,
+      data: brands,
+      initialState: { pageIndex: 1 },
+      manualPagination: true,
+      pageCount: totalPages
+    },
+    usePagination
+  );
 
   useEffect(() => {
-    dispatch(fetchBrands({ page: 1, size }))
-  }, [dispatch, size])
+    dispatch(fetchBrands({ page: pageIndex, size }))
+  }, [dispatch, pageIndex, size])
+
+  
+
+  const tableColumnTest = React.useMemo(() => [
+    {
+      Header: "Mã",
+      accessor: "maThuongHieu",
+    },
+    {
+      Header: "Tên Thương Hiệu",
+      accessor: "tenThuongHieu",
+    },
+    {
+      Header: "Hình Ảnh",
+      accessor: "hinhAnh",
+    }
+  ], [])
+
+
+
 
   const tableColumnsProduct = [
     {
@@ -39,20 +99,20 @@ const Brand = () => {
     }
   ];
 
-  const handleTableChange = (type, { page, sizePerPage }) => {
-    dispatch(fetchBrands({ page, size: sizePerPage }))
-  }
+  // const handleTableChange = (type, { page, sizePerPage }) => {
+  //   dispatch(fetchBrands({ page, size: sizePerPage }))
+  // }
 
-  const configPagination = {
-    page: page,
-    totalSize: totalElements,
-    sizePerPage: size,
-    nextPageText: '>',
-    prePageText: '<',
-    withFirstAndLast: false,
-    alwaysShowAllBtns: true,
-    hideSizePerPage: true
-  };
+  // const configPagination = {
+  //   page: pageNumber,
+  //   totalSize: totalElements,
+  //   sizePerPage: size,
+  //   nextPageText: '>',
+  //   prePageText: '<',
+  //   withFirstAndLast: false,
+  //   alwaysShowAllBtns: true,
+  //   hideSizePerPage: true
+  // };
 
   return (
     <Card>
@@ -63,7 +123,7 @@ const Brand = () => {
         </h6> */}
       </Card.Header>
       <Card.Body>
-        <ToolkitProvider
+        {/* <ToolkitProvider
           keyField="maSP"
           data={brands}
           columns={tableColumnsProduct}
@@ -94,7 +154,59 @@ const Brand = () => {
               />
             </>
           )}
-        </ToolkitProvider>
+        </ToolkitProvider> */}
+
+        <Table striped bordered {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+
+        <Row>
+          <Col md="6">
+            <Pagination className="float-end">
+              <Pagination.First
+                onClick={() => gotoPage(1)}
+                disabled={!canPreviousPage}
+              />
+              <Pagination.Prev
+                onClick={() => previousPage()}
+                disabled={!canPreviousPage}
+              />
+              <Pagination.Next
+                onClick={() => nextPage()}
+                disabled={!canNextPage}
+              />
+              <Pagination.Last
+                onClick={() => gotoPage(pageCount)}
+                disabled={!canNextPage}
+              />
+            </Pagination>
+          </Col>
+        </Row>
+
       </Card.Body>
     </Card>
   );

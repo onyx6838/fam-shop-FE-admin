@@ -12,5 +12,9 @@ const getAll = (page, size) => {
     return Api.get(`${url}`, { params: parameters });
 };
 
-const api = { getAll }
+const getAllBrandWithoutPaging = () => {
+    return Api.get(`${url}/all`);
+};
+
+const api = { getAll, getAllBrandWithoutPaging }
 export default api;

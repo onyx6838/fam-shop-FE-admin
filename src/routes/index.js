@@ -3,6 +3,7 @@ import async from "../components/Async";
 import {
   Sliders as SlidersIcon,
   List as ListIcon,
+  CreditCard
 } from "react-feather";
 
 // Dashboards
@@ -14,6 +15,9 @@ const Product = async(() => import("../pages/products/Product"));
 const Feature = async(() => import("../pages/products/Feature"));
 const Category = async(() => import("../pages/products/Category"));
 const Brand = async(() => import("../pages/products/Brand"));
+
+// Order
+const PurchaseOrder = async(() => import('../pages/orders/PurchaseOrder'))
 
 const dashboardRoutes = {
   path: "/",
@@ -41,6 +45,8 @@ const productRoutes = {
   path: "/",
   name: "Sản Phẩm",
   icon: ListIcon,
+  badgeText: "4",
+  badgeColor: "primary",
   children: [
     {
       path: "/product",
@@ -65,10 +71,26 @@ const productRoutes = {
   ]
 };
 
+const orderRoutes = {
+  path: "/",  // tạm thời để trống
+  name: "Bán Hàng",
+  icon: CreditCard,
+  badgeText: "4",
+  badgeColor: "primary",
+  children: [
+    {
+      path: "/purchase-order",  // mở rộng route theo path cha
+      name: "Đơn Hàng",
+      component: PurchaseOrder
+    }
+  ]
+};
+
 // Dashboard specific routes
 export const dashboard = [
   dashboardRoutes,
-  productRoutes
+  productRoutes,
+  orderRoutes
 ];
 
 // Auth specific routes
@@ -77,7 +99,8 @@ export const dashboard = [
 // All routes
 const arrayRoutes = [
   dashboardRoutes,
-  productRoutes
+  productRoutes,
+  orderRoutes
 ]
 
 export default arrayRoutes;

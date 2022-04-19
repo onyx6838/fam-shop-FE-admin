@@ -17,15 +17,39 @@ const ModalUploadFile = ({ isOpen, closeModal, selectedItem }) => {
                         .then(buffer => {
                             return new File([new Uint8Array(buffer)], item.name, { type: item.mimetype })
                         }))
-                Promise.all(fileData).then((results) => { setFile(results) })
+                Promise.all(fileData).then((results) => {
+                    setFile(results)
+                })
             })
         }
     }, [selectedItem.maSP])
 
     const handleChangeFile = (files) => {
-        let arr = file.filter((item) => !files.includes(item.name))
-        let newArr = [...arr, ...files]
-        setFile(newArr)
+        //let arr = file.filter((item) => !files.includes(item.name))
+        //let newArr = [...arr, ...files]
+        //setFile([])
+        // let arr = file.map((item) => {
+        // let newArr = files.map((item, i) => {
+        //     return file.includes(item.name) ? { ...file[i], operation: "INSERT" } : null
+        // })
+        // })
+        let newArr = [...file, ...files]
+        let filtered = newArr.filter((tag, index, array) =>
+            array.findIndex(t => t.name === tag.name) === index)
+        let addStatus = filtered.map((item) => {
+            if (!file.includes(item.name)) {
+                return { ...item, operation: "INSERT" }
+            } else if (!files.includes(item.name) && file.includes(item.name)) {
+                return { ...item, operation: "REMOVE" }
+            } else if (files.includes(item.name) && file.includes(item.name)) {
+                return { ...item, operation: "NONE" }
+            }
+            return item;
+        })
+        console.log(files);
+        console.log(file);
+        console.log(filtered);
+        console.log(addStatus);
     }
 
     const handleRemoveFile = (fileRemove) => {
@@ -89,6 +113,8 @@ const ModalUploadFile = ({ isOpen, closeModal, selectedItem }) => {
                     ))}
                 </Row>
             </ModalBody>
+            <img src='https://firebasestorage.googleapis.com/v0/b/fam-shop-4fd26.appspot.com/o/53df1974-eb5e-42bf-96f0-2178b1f7c05e.png?alt=media'
+            alt=''/>
         </Modal>
     )
 }

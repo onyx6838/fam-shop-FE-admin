@@ -117,7 +117,7 @@ const Product = () => {
 
 const Tables = () => (
   <Container fluid className="p-0">
-    <h1 className="h3 mb-3">Đặc Trưng</h1>
+    <h1 className="h3 mb-3">Quản lý đặc trưng</h1>
     <Product />
   </Container>
 );
