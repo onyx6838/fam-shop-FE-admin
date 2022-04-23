@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Form, Row } from "react-bootstrap";
 import * as Icon from 'react-feather'
 
 import BootstrapTable from "react-bootstrap-table-next";
@@ -9,17 +9,24 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPurchaseOrders } from "../../../redux/slice/purchaseOrderSlice";
 import ModalPurchaseOrderLine from "./ModalPurchaseOrderLine";
+import Swal from "sweetalert2";
+
+import DonDatHangApi from '../../../api/DonDatHangApi'
+import reduxNotification from "../../../components/ReduxNotification";
 
 const paymentTypeColors = [
   {
+    ordinary: '1',
     name: "TRUC_TIEP",
     value: "success",
   },
   {
+    ordinary: '0',
     name: "CHUYEN_KHOAN",
     value: "warning",
   },
   {
+    ordinary: '2',
     name: "NHAN_HANG",
     value: "danger",
   }
@@ -36,18 +43,47 @@ const statusOrderColors = [
   },
   {
     name: "VAN_DON",
-    value: "danger",
+    value: "info",
+  },
+  {
+    name: "HUY_DON",
+    value: "secondary",
   }
 ];
 
 const paymentStatusColors = [
   {
+    ordinary: '1',
     name: "DA_TT",
     value: "success",
   },
   {
+    ordinary: '0',
     name: "CHUA_TT",
-    value: "warning"
+    value: "info"
+  }
+]
+
+const changeStatusOrderMessage = [
+  {
+    ordinary: '1',
+    name: "HOA_DON",
+    value: "Chuyển trạng thái đơn sang hóa đơn ?",
+  },
+  {
+    ordinary: '0',
+    name: "DON_DAT",
+    value: "Đơn đặt"
+  },
+  {
+    ordinary: '2',
+    name: "VAN_DON",
+    value: "Chuyển trạng thái đơn sang vận đơn ?",
+  },
+  {
+    ordinary: '3',
+    name: "HUY_DON",
+    value: "Chuyển trạng thái sang hủy đơn ?",
   }
 ]
 
@@ -65,12 +101,46 @@ const PurchaseOrder = () => {
     dispatch(fetchPurchaseOrders({ page: 1, size }))
   }, [dispatch, size])
 
+  const changeStatusOrder = async (order, e) => {
+    Swal.fire({
+      title: `${changeStatusOrderMessage.filter(msg => msg.ordinary === e.target.value).map((item) => item.value)}`,
+      text: 'Thay đổi trạng thái đơn hàng?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const response = DonDatHangApi.changeStatusDonDat({
+          id: order.maDonDat,
+          orderStatus: parseInt(e.target.value),
+          paymentType: parseInt(e.target.value) === 1 ? 1 : -1
+        })
+        response.then((r) => {
+          reduxNotification.showSuccessNotification(
+            "Change Order Status",
+            "Change Order Status Successfully!");
+          dispatch(fetchPurchaseOrders({ page: 1, size }))
+        }).catch((error) => {
+          console.log(error);
+          reduxNotification.showWrongNotification(
+            "Change Order Status",
+            "Change Order Status Failed!");
+        })
+      }
+    })
+  }
+
   const rankFormatter = (cell, row, rowIndex, formatExtraData) => {
     return (
-      <div>
-        <Icon.Check size="24" className="align-middle mr-2" />
-        <Icon.X size="24" className="align-middle mr-2" />
-      </div>
+      <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
+        <option hidden>Thao tác</option>
+        <option value='2'>Xác nhận</option>
+        <option value='1'>Hoàn thành</option>
+        <option value='3'>Hủy đơn</option>
+      </Form.Select>
     );
   };
 
@@ -90,7 +160,7 @@ const PurchaseOrder = () => {
       <>
         {
           paymentTypeColors.filter(color => row.hinhThucTToan === color.name).map((color, index) => (
-            <span key={index} className={`badge badge-${color.name ? color.value : 'primary'}`}>{row.hinhThucTToan}</span>
+            <span key={index} className={`p-2 badge badge-${color.name ? color.value : 'primary'}`}>{row.hinhThucTToan}</span>
           ))
         }
       </>
@@ -102,7 +172,7 @@ const PurchaseOrder = () => {
       <>
         {
           statusOrderColors.filter(color => row.trangThai === color.name).map((color, index) => (
-            <span key={index} className={`badge badge-${color.name ? color.value : 'primary'}`}>{row.trangThai}</span>
+            <span key={index} className={`p-2 badge badge-${color.name ? color.value : 'primary'}`}>{row.trangThai}</span>
           ))
         }
       </>
@@ -114,7 +184,7 @@ const PurchaseOrder = () => {
       <>
         {
           paymentStatusColors.filter(color => row.trangThaiTToan === color.name).map((color, index) => (
-            <span key={index} className={`badge badge-${color.name ? color.value : 'primary'}`}>{row.trangThaiTToan}</span>
+            <span key={index} className={`p-2 badge badge-${color.name ? color.value : 'primary'}`}>{row.trangThaiTToan}</span>
           ))
         }
       </>
@@ -124,8 +194,8 @@ const PurchaseOrder = () => {
   const tablePurchaseOrders = [
     {
       dataField: "maDonDat",
-      text: "Mã Đơn",
-      headerAttrs: { width: 80 }
+      text: "Mã",
+      headerAttrs: { width: 50 }
     },
     {
       dataField: "thoiGianDat",
@@ -163,11 +233,11 @@ const PurchaseOrder = () => {
       dataField: "hinhThucTToan",
       text: "Hình thức thanh toán",
       formatter: orderPurchasePaymentTypeFormatter,
-      headerAttrs: { width: 125 }
+      headerAttrs: { width: 130 }
     },
     {
       dataField: "detail",
-      text: "Chi tiết đơn",
+      text: "Chi tiết",
       formatter: orderPurchaseLineFormatter,
       headerAttrs: { width: 70 }
     },
@@ -175,7 +245,7 @@ const PurchaseOrder = () => {
       dataField: "edit",
       text: "Thao tác",
       formatter: rankFormatter,
-      headerAttrs: { width: 90 }
+      headerAttrs: { width: 120 }
     }
   ];
 
@@ -197,12 +267,6 @@ const PurchaseOrder = () => {
   return (
     <>
       <Card>
-        {/* <Card.Header>
-         <Card.Title tag="h5">Pagination</Card.Title>
-        <h6 className="card-subtitle text-muted">
-          Pagination Table
-        </h6> 
-      </Card.Header> */}
         <Card.Body>
           <ToolkitProvider
             keyField="maDonDat"
@@ -238,7 +302,7 @@ const PurchaseOrder = () => {
         </Card.Body>
       </Card>
       {
-        openPurchaseOrderLineModal && <ModalPurchaseOrderLine isOpen={openPurchaseOrderLineModal} closeModal={() => setOpenPurchaseOrderLineModal(false)} selectedItem={selectedItem}/>
+        openPurchaseOrderLineModal && <ModalPurchaseOrderLine isOpen={openPurchaseOrderLineModal} closeModal={() => setOpenPurchaseOrderLineModal(false)} selectedItem={selectedItem} />
       }
     </>
   );

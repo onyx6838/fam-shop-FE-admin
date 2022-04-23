@@ -8,11 +8,11 @@ import {
 
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
-const Social = async(() => import("../pages/dashboards/Social"));
 
 // Product
 const Product = async(() => import("../pages/products/Product"));
 const Feature = async(() => import("../pages/products/Feature"));
+const ProductFeature = async(() => import("../pages/products/ProductFeature"));
 const Category = async(() => import("../pages/products/Category"));
 const Brand = async(() => import("../pages/products/Brand"));
 
@@ -21,7 +21,7 @@ const PurchaseOrder = async(() => import('../pages/orders/PurchaseOrder'))
 
 const dashboardRoutes = {
   path: "/",
-  name: "Dashboards",
+  name: "Thống kê",
   header: "Pages",
   badgeColor: "primary",
   badgeText: "2",
@@ -30,13 +30,8 @@ const dashboardRoutes = {
   children: [
     {
       path: "/",
-      name: "Default",
+      name: "Thống kê",
       component: Default
-    },
-    {
-      path: "/social",
-      name: "Social",
-      component: Social
     }
   ]
 };
@@ -45,7 +40,7 @@ const productRoutes = {
   path: "/",
   name: "Sản Phẩm",
   icon: ListIcon,
-  badgeText: "4",
+  badgeText: "5",
   badgeColor: "primary",
   children: [
     {
@@ -57,6 +52,11 @@ const productRoutes = {
       path: "/feature",
       name: "Đặc Trưng",
       component: Feature
+    },
+    {
+      path: "/product-feature",
+      name: "Đặc Trưng Sản Phẩm",
+      component: ProductFeature
     },
     {
       path: "/category",

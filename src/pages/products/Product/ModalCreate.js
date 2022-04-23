@@ -65,8 +65,8 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
               await SanPhamApi.addSanPham(values);
               closeModal()
               reduxNotification.showSuccessNotification(
-                "Create Group",
-                "Create Group Successfully!");
+                "Create Product",
+                "Create Product Successfully!");
               refreshForm()
             } catch (error) {
               console.log(error);

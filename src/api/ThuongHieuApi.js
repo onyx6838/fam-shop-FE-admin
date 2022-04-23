@@ -16,5 +16,17 @@ const getAllBrandWithoutPaging = () => {
     return Api.get(`${url}/all`);
 };
 
-const api = { getAll, getAllBrandWithoutPaging }
+const createThuongHieu = (form) => {
+    const { file, tenThuongHieu } = form;
+    let formData = new FormData();
+
+    formData.append('file', file)
+    formData.append('tenThuongHieu', tenThuongHieu)
+
+    return Api.post(`${url}/create`, formData, {
+        headers: { "content-type": `multipart/form-data` }
+    })
+}
+
+const api = { getAll, getAllBrandWithoutPaging, createThuongHieu }
 export default api;

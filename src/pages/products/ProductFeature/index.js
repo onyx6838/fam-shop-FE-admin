@@ -7,57 +7,74 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBrands } from "../../../redux/slice/brandSlice";
-import ModalCreate from "./ModalCreate";
-import ModalFile from "./ModalFile";
+import { fetchProducts } from "../../../redux/slice/productSlice";
+import ModalProductFeature from "./ModalProductFeature";
 
-const Brand = () => {
+const ProductFeature = () => {
   const dispatch = useDispatch();
-  const size = useSelector(state => state.brand.size);
-  const pageNumber = useSelector(state => state.brand.page);
-  const totalElements = useSelector(state => state.brand.totalElements);
-  const brands = useSelector(state => state.brand.brands);
+  const size = useSelector(state => state.product.size);
+  const page = useSelector(state => state.product.page);
+  const totalElements = useSelector(state => state.product.totalElements);
+  const products = useSelector(state => state.product.products);
 
-  const [openCreateModal, setOpenCreateModal] = useState(false)
-  const [openFileModal, setOpenFileModal] = useState(false)
+  const [selectedItem, setSelectedItem] = useState({})
+  const [openProductFeatureModal, setOpenProductFeatureModal] = useState(false)
 
   useEffect(() => {
-    dispatch(fetchBrands({ page: 1, size }))
+    dispatch(fetchProducts({ page: 1, size }))
   }, [dispatch, size])
 
-  const rankFormatter = (cell, row, rowIndex, formatExtraData) => {
+  const productFeatureFormatter = (cell, row, rowIndex, formatExtraData) => {
     return (
       <div>
-        <Icon.Image size="24" className="align-middle mr-2" onClick={() => setOpenFileModal(true)} />
+        <Icon.Settings size="24" className="align-middle mr-2" onClick={() => {
+          setOpenProductFeatureModal(true)
+          setSelectedItem(row)
+        }} />
       </div>
     );
   };
 
   const tableColumnsProduct = [
     {
-      dataField: "maThuongHieu",
-      text: "Mã",
-      headerAttrs: { width: 50 }
+      dataField: "maSP",
+      text: "Mã SP"
     },
     {
-      dataField: "tenThuongHieu",
-      text: "Tên Thương Hiệu"
+      dataField: "ten",
+      text: "Tên"
+    },
+    {
+      dataField: "moTa",
+      text: "Mô Tả"
+    },
+    {
+      dataField: "soLuong",
+      text: "Số Lượng"
+    },
+    {
+      dataField: "donGiaBan",
+      text: "Đơn Giá Bán"
+    },
+    {
+      dataField: "donGiaNhap",
+      text: "Đơn Giá Nhập"
     },
     {
       dataField: "edit",
       text: "Edit",
       sort: false,
-      formatter: rankFormatter,
-      headerAttrs: { width: 160 }
+      formatter: productFeatureFormatter,
+      headerAttrs: { width: 100 }
     }
   ];
 
   const handleTableChange = (type, { page, sizePerPage }) => {
-    dispatch(fetchBrands({ page, size: sizePerPage }))
+    dispatch(fetchProducts({ page, size: sizePerPage }))
   }
 
   const configPagination = {
-    page: pageNumber,
+    page: page,
     totalSize: totalElements,
     sizePerPage: size,
     nextPageText: '>',
@@ -67,21 +84,13 @@ const Brand = () => {
     hideSizePerPage: true
   };
 
-  const refreshForm = () => {
-    handleTableChange(null, {
-      page: 1,
-      sizePerPage: size
-    })
-  }
-
   return (
     <>
-
       <Card>
         <Card.Body>
           <ToolkitProvider
-            keyField="maThuongHieu"
-            data={brands}
+            keyField="maSP"
+            data={products}
             columns={tableColumnsProduct}
             search
           >
@@ -93,8 +102,7 @@ const Brand = () => {
                   </Col>
                   <Col lg="3" style={{ paddingBottom: 20 }}>
                     <div className="float-right pull-right">
-                      <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={() => setOpenCreateModal(true)} />
-                      <Icon.Trash2 size="24" className="align-middle mr-2" />
+                      
                     </div>
                   </Col>
                 </Row>
@@ -114,10 +122,8 @@ const Brand = () => {
         </Card.Body>
       </Card>
       {
-        openCreateModal && <ModalCreate isOpen={openCreateModal} closeModal={() => setOpenCreateModal(false)} refreshForm={refreshForm} />
-      }
-      {
-        openFileModal && <ModalFile isOpen={openFileModal} closeModal={() => setOpenFileModal(false)} />
+        openProductFeatureModal && <ModalProductFeature isOpen={openProductFeatureModal}
+          closeModal={() => setOpenProductFeatureModal(false)} selectedItem={selectedItem}/>
       }
     </>
   );
@@ -125,8 +131,8 @@ const Brand = () => {
 
 const Tables = () => (
   <Container fluid className="p-0">
-    <h1 className="h3 mb-3">Quản Lý Thương Hiệu</h1>
-    <Brand />
+    <h1 className="h3 mb-3">Quản lý Đặc Trưng Sản Phẩm</h1>
+    <ProductFeature />
   </Container>
 );
 

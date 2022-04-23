@@ -6,5 +6,15 @@ const getChildCategory = () => {
     return Api.get(`${url}/child`);
 };
 
-const api = { getChildCategory }
+const getAllLoaiSP = (page, size) => {
+
+    const parameters = {
+        page,
+        size
+    }
+
+    return Api.get(`${url}`, { params: parameters });
+};
+
+const api = { getChildCategory, getAllLoaiSP }
 export default api;

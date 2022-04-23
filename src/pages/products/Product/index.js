@@ -26,7 +26,7 @@ const Product = () => {
   const totalElements = useSelector(state => state.product.totalElements);
   const products = useSelector(state => state.product.products);
   const selectedRows = useSelector(state => state.product.selectedRows);
-  const selectedRow = useSelector(state => state.product.selectedRow);
+  
 
   const [selectedItem, setSelectedItem] = useState({})
 

@@ -12,5 +12,10 @@ const getAllDonDatHang = (page, size) => {
     return Api.get(`${url}`, { params: parameters });
 };
 
-const api = { getAllDonDatHang }
+const changeStatusDonDat = (form) => {
+
+    return Api.post(`${url}/change-status`, form)
+}
+
+const api = { getAllDonDatHang, changeStatusDonDat }
 export default api;

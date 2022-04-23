@@ -6,6 +6,9 @@ import sidebar from '../slice/sidebarSlice'
 import product from '../slice/productSlice'
 import brand from '../slice/brandSlice'
 import purchaseOrder from '../slice/purchaseOrderSlice'
+import feature from '../slice/featureSlice'
+import productFeature from '../slice/productFeatureSlice'
+import category from '../slice/categorySlice'
 import { reducer as toastr } from "react-redux-toastr";
 
 const reducer = combineReducers({
@@ -15,7 +18,10 @@ const reducer = combineReducers({
     toastr,
     product,
     brand,
-    purchaseOrder
+    purchaseOrder,
+    feature,
+    productFeature,
+    category
 })
 
 const store = configureStore({

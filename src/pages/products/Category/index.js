@@ -7,55 +7,37 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../../redux/slice/productSlice";
+import { fetchCategories } from "../../../redux/slice/categorySlice";
 
-const Product = () => {
+const Category = () => {
   const dispatch = useDispatch();
-  const size = useSelector(state => state.product.size);
-  const page = useSelector(state => state.product.page);
-  //const totalPages = useSelector(state => state.product.totalPages);
-  const totalElements = useSelector(state => state.product.totalElements);
-  const products = useSelector(state => state.product.products);
+  const size = useSelector(state => state.category.size);
+  const page = useSelector(state => state.category.page);
+
+  const totalElements = useSelector(state => state.category.totalElements);
+  const categories = useSelector(state => state.category.categories);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page: 1, size }))
+    dispatch(fetchCategories({ page: 1, size }))
   }, [dispatch, size])
 
-  const tableColumnsProduct = [
+  const tableColumnsCategory = [
     {
-      dataField: "maSP",
-      text: "Mã SP",
-      sort: true
+      dataField: "maLoai",
+      text: "Mã Loại"
     },
     {
       dataField: "ten",
-      text: "Tên",
-      sort: true
+      text: "Tên"
     },
     {
       dataField: "moTa",
-      text: "Mô Tả",
-      sort: true
-    },
-    {
-      dataField: "soLuong",
-      text: "Số Lượng",
-      sort: true
-    },
-    {
-      dataField: "donGiaBan",
-      text: "Đơn Giá Bán",
-      sort: true
-    },
-    {
-      dataField: "donGiaNhap",
-      text: "Đơn Giá Nhập",
-      sort: true
+      text: "Mô Tả"
     }
   ];
 
   const handleTableChange = (type, { page, sizePerPage }) => {
-    dispatch(fetchProducts({ page, size: sizePerPage }))
+    dispatch(fetchCategories({ page, size: sizePerPage }))
   }
 
   const configPagination = {
@@ -71,17 +53,11 @@ const Product = () => {
 
   return (
     <Card>
-      <Card.Header>
-        <Card.Title tag="h5">Pagination</Card.Title>
-        {/* <h6 className="card-subtitle text-muted">
-          Pagination Table
-        </h6> */}
-      </Card.Header>
       <Card.Body>
         <ToolkitProvider
-          keyField="maSP"
-          data={products}
-          columns={tableColumnsProduct}
+          keyField="maLoai"
+          data={categories}
+          columns={tableColumnsCategory}
           search
         >
           {toolkitprops => (
@@ -117,8 +93,8 @@ const Product = () => {
 
 const Tables = () => (
   <Container fluid className="p-0">
-    <h1 className="h3 mb-3">Loại Sản Phẩm</h1>
-    <Product />
+    <h1 className="h3 mb-3">Quản lý Loại Sản Phẩm</h1>
+    <Category />
   </Container>
 );
 
