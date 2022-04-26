@@ -10,6 +10,7 @@ import ModalGroupFeature from "./ModalGroupFeature";
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeatures } from "../../../redux/slice/featureSlice";
+import ModalCreateGroupFeature from "./ModalCreateGroupFeature";
 
 const Feature = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Feature = () => {
   const totalElements = useSelector(state => state.feature.totalElements);
   const features = useSelector(state => state.feature.features);
   const [openGroupFeatureModal, setOpenGroupFeatureModal] = useState(false);
+  const [openCreateGroupFeatureModal, setOpenCreateGroupFeatureModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState({})
 
   useEffect(() => {
@@ -87,7 +89,7 @@ const Feature = () => {
                   </Col>
                   <Col lg="3" style={{ paddingBottom: 20 }}>
                     <div className="float-right pull-right">
-                      <Icon.PlusCircle size="24" className="align-middle mr-2" />
+                      <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={() => setOpenCreateGroupFeatureModal(true)} />
                       <Icon.Trash2 size="24" className="align-middle mr-2" />
                     </div>
                   </Col>
@@ -110,6 +112,10 @@ const Feature = () => {
       {
         openGroupFeatureModal && <ModalGroupFeature isOpen={openGroupFeatureModal}
           closeModal={() => setOpenGroupFeatureModal(false)} selectedItem={selectedItem} />
+      }
+      {
+        openCreateGroupFeatureModal && <ModalCreateGroupFeature isOpen={openCreateGroupFeatureModal}
+          closeModal={() => setOpenCreateGroupFeatureModal(false)} />
       }
     </>
   );

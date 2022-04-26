@@ -3,7 +3,6 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import Main from "../components/Main.js";
-import Settings from "../components/Settings";
 
 const Auth = ({ children }) => (
   <>
@@ -16,7 +15,6 @@ const Auth = ({ children }) => (
         </Row>
       </Container>
     </Main>
-    <Settings />
   </>
 );
 

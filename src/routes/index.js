@@ -3,9 +3,11 @@ import async from "../components/Async";
 import {
   Sliders as SlidersIcon,
   List as ListIcon,
-  CreditCard
+  CreditCard,
+  Users as UsersIcon
 } from "react-feather";
 
+import SignIn from '../pages/auth/SignIn'
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
 
@@ -18,7 +20,9 @@ const Brand = async(() => import("../pages/products/Brand"));
 
 // Order
 const PurchaseOrder = async(() => import('../pages/orders/PurchaseOrder'))
+const Receipt = async(() => import('../pages/orders/Receipt'))
 
+// Auth
 const dashboardRoutes = {
   path: "/",
   name: "Thống kê",
@@ -82,6 +86,26 @@ const orderRoutes = {
       path: "/purchase-order",  // mở rộng route theo path cha
       name: "Đơn Hàng",
       component: PurchaseOrder
+    },
+    {
+      path: "/receipt",  // mở rộng route theo path cha
+      name: "Nhập Kho",
+      component: Receipt
+    }
+  ]
+};
+
+const authRoutes = {
+  path: "/auth",
+  name: "Auth",
+  icon: UsersIcon,
+  badgeColor: "secondary",
+  badgeText: "Special",
+  children: [
+    {
+      path: "/auth/sign-in",
+      name: "Sign In",
+      component: SignIn
     }
   ]
 };
@@ -94,7 +118,7 @@ export const dashboard = [
 ];
 
 // Auth specific routes
-//export const page = [authRoutes];
+export const page = [authRoutes];
 
 // All routes
 const arrayRoutes = [

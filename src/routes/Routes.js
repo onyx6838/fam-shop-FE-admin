@@ -1,10 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes as Switch } from "react-router-dom";
 import {
-    dashboard as dashboardRoutes
+    dashboard as dashboardRoutes,
+    page as pageRoutes
 } from "./index";
 
 import DashboardLayout from "../layouts/Dashboard";
+import AuthLayout from "../layouts/Auth";
 
 const childRoutes = (Layout, routes) =>
     routes.map(({ children, path, component: Component }, index) =>
@@ -49,6 +51,7 @@ const Routes = () => (
     <Router>
         <Switch>
             {childRoutes(DashboardLayout, dashboardRoutes)}
+            {childRoutes(AuthLayout, pageRoutes)}
         </Switch>
     </Router>
 );

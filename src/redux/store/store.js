@@ -9,6 +9,7 @@ import purchaseOrder from '../slice/purchaseOrderSlice'
 import feature from '../slice/featureSlice'
 import productFeature from '../slice/productFeatureSlice'
 import category from '../slice/categorySlice'
+import receipt from '../slice/receiptSlice'
 import { reducer as toastr } from "react-redux-toastr";
 
 const reducer = combineReducers({
@@ -21,7 +22,8 @@ const reducer = combineReducers({
     purchaseOrder,
     feature,
     productFeature,
-    category
+    category,
+    receipt
 })
 
 const store = configureStore({

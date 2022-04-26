@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 
 import DonDatHangApi from '../../../api/DonDatHangApi'
 import reduxNotification from "../../../components/ReduxNotification";
+import ModalCreatePurchaseOrder from "./ModalCreatePurchaseOrder";
 
 const paymentTypeColors = [
   {
@@ -95,6 +96,7 @@ const PurchaseOrder = () => {
   const purchaseOrders = useSelector(state => state.purchaseOrder.purchaseOrders);
 
   const [openPurchaseOrderLineModal, setOpenPurchaseOrderLineModal] = useState(false)
+  const [openCreatePurchaseOrderModal, setOpenCreatePurchaseOrderModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState({})
 
   useEffect(() => {
@@ -135,12 +137,18 @@ const PurchaseOrder = () => {
 
   const rankFormatter = (cell, row, rowIndex, formatExtraData) => {
     return (
-      <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
-        <option hidden>Thao tác</option>
-        <option value='2'>Xác nhận</option>
-        <option value='1'>Hoàn thành</option>
-        <option value='3'>Hủy đơn</option>
-      </Form.Select>
+      <>
+        {
+          row.trangThai === 'HUY_DON' || row.trangThai === 'HOA_DON'  ? <></> : (
+            <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
+              <option hidden>Thao tác</option>
+              <option value='2'>Xác nhận</option>
+              <option value='1'>Hoàn thành</option>
+              <option value='3'>Hủy đơn</option>
+            </Form.Select>
+          )
+        }
+      </>
     );
   };
 
@@ -280,11 +288,11 @@ const PurchaseOrder = () => {
                   <Col lg="9">
 
                   </Col>
-                  {/* <Col lg="3" style={{ paddingBottom: 20 }}>
-                  <div className="float-right pull-right">
-                    <Icon.PlusCircle size="24" className="align-middle mr-2" />
-                  </div>
-                </Col> */}
+                  <Col lg="3" style={{ paddingBottom: 20 }}>
+                    <div className="float-right pull-right">
+                      <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={() => setOpenCreatePurchaseOrderModal(true)} />
+                    </div>
+                  </Col>
                 </Row>
                 <BootstrapTable
                   {...toolkitprops.baseProps}
@@ -303,6 +311,9 @@ const PurchaseOrder = () => {
       </Card>
       {
         openPurchaseOrderLineModal && <ModalPurchaseOrderLine isOpen={openPurchaseOrderLineModal} closeModal={() => setOpenPurchaseOrderLineModal(false)} selectedItem={selectedItem} />
+      }
+      {
+        openCreatePurchaseOrderModal && <ModalCreatePurchaseOrder isOpen={openCreatePurchaseOrderModal} closeModal={() => setOpenCreatePurchaseOrderModal(false)} />
       }
     </>
   );
