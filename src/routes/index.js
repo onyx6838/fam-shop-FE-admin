@@ -79,7 +79,7 @@ const orderRoutes = {
   path: "/",  // tạm thời để trống
   name: "Bán Hàng",
   icon: CreditCard,
-  badgeText: "4",
+  badgeText: "2",
   badgeColor: "primary",
   children: [
     {

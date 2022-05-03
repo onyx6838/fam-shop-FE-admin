@@ -139,14 +139,21 @@ const PurchaseOrder = () => {
     return (
       <>
         {
-          row.trangThai === 'HUY_DON' || row.trangThai === 'HOA_DON'  ? <></> : (
-            <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
-              <option hidden>Thao tác</option>
-              <option value='2'>Xác nhận</option>
-              <option value='1'>Hoàn thành</option>
-              <option value='3'>Hủy đơn</option>
-            </Form.Select>
-          )
+          row.trangThai === 'HUY_DON' || row.trangThai === 'HOA_DON' ? <></> :
+            (
+              row.trangThai === 'DON_DAT' ? (
+                <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
+                  <option hidden>Thao tác</option>
+                  <option value='2'>Xác nhận</option>
+                  <option value='3'>Hủy đơn</option>
+                </Form.Select>
+              ) : (
+                <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
+                  <option hidden>Thao tác</option>
+                  <option value='1'>Hoàn thành</option>
+                </Form.Select>
+              )
+            )
         }
       </>
     );

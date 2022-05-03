@@ -99,6 +99,7 @@ const Sidebar = ({ location }) => {
   const [openRoutes, setOpenRoutes] = useState(() => initOpenRoutes(location));
   const layout = useSelector(state => state.layout)
   const sidebar = useSelector(state => state.sidebar)
+  const userInfo = useSelector(state => state.user.userInfo)
 
   const toggle = index => {
     // Collapse all elements
@@ -178,7 +179,7 @@ const Sidebar = ({ location }) => {
                   height="40"
                 />
                 <div className="media-body">
-                  <h5 className="mb-1">Mink Giang</h5>
+                  <h5 className="mb-1">{userInfo.hoTen}</h5>
                   <div>
                     <FontAwesomeIcon
                       icon={faCircle}

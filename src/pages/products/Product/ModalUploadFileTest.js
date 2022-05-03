@@ -155,7 +155,7 @@ const ModalUploadFileTest = ({ isOpen, closeModal, selectedItem, refreshForm }) 
                                         {item.name.split('.').slice(0, -1).join('.')}
                                     </Card.Title>
                                 </Card.Header>
-                                <Card.Img width="100%" src={`https://firebasestorage.googleapis.com/v0/b/fam-shop-4fd26.appspot.com/o/${item.name}?alt=media&token=${item.token}`} alt="Card image cap" />
+                                <Card.Img width="100%" src={`https://firebasestorage.googleapis.com/v0/b/fam-shop-4fd26.appspot.com/o/product%2F${item.name}?alt=media&token=${item.token}`} alt="Card image cap" />
                             </Card>
                         </Col>
                     ))}

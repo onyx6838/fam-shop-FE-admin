@@ -20,6 +20,7 @@ const Brand = () => {
 
   const [openCreateModal, setOpenCreateModal] = useState(false)
   const [openFileModal, setOpenFileModal] = useState(false)
+  const [selectedItem, setSelectedItem] = useState({})
 
   useEffect(() => {
     dispatch(fetchBrands({ page: 1, size }))
@@ -28,7 +29,10 @@ const Brand = () => {
   const rankFormatter = (cell, row, rowIndex, formatExtraData) => {
     return (
       <div>
-        <Icon.Image size="24" className="align-middle mr-2" onClick={() => setOpenFileModal(true)} />
+        <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
+          setSelectedItem(row)
+          setOpenFileModal(true)
+        }} />
       </div>
     );
   };
@@ -117,7 +121,7 @@ const Brand = () => {
         openCreateModal && <ModalCreate isOpen={openCreateModal} closeModal={() => setOpenCreateModal(false)} refreshForm={refreshForm} />
       }
       {
-        openFileModal && <ModalFile isOpen={openFileModal} closeModal={() => setOpenFileModal(false)} />
+        openFileModal && <ModalFile isOpen={openFileModal} closeModal={() => setOpenFileModal(false)} selectedItem={selectedItem} />
       }
     </>
   );

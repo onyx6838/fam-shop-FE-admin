@@ -16,5 +16,13 @@ const getAllLoaiSP = (page, size) => {
     return Api.get(`${url}`, { params: parameters });
 };
 
-const api = { getChildCategory, getAllLoaiSP }
+const getAllLoaiSPIncludeChildAndParent = () => {
+    return Api.get(`/loaisanphams`)
+}
+
+const createLSP = (form) => {
+    return Api.post(`${url}/create`, form)
+}
+
+const api = { getChildCategory, getAllLoaiSP, getAllLoaiSPIncludeChildAndParent, createLSP }
 export default api;

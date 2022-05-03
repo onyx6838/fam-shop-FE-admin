@@ -17,6 +17,20 @@ import reduxNotification from '../../../components/ReduxNotification'
 
 import { useDispatch, useSelector } from "react-redux";
 import { changeSelectedRow, changeSelectedRows, fetchProducts } from "../../../redux/slice/productSlice";
+import Swal from "sweetalert2";
+
+const statusProductColors = [
+  {
+    ordinary: 1,
+    name: "KICH_HOAT",
+    value: "success",
+  },
+  {
+    ordinary: 0,
+    name: "CHUA_KICH_HOAT",
+    value: "danger"
+  }
+];
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -26,7 +40,7 @@ const Product = () => {
   const totalElements = useSelector(state => state.product.totalElements);
   const products = useSelector(state => state.product.products);
   const selectedRows = useSelector(state => state.product.selectedRows);
-  
+
 
   const [selectedItem, setSelectedItem] = useState({})
 
@@ -47,14 +61,29 @@ const Product = () => {
         }} />
         <Icon.Trash2 size="24" className="align-middle mr-2" onClick={() => {
           dispatch(changeSelectedRow(row.maSP))
-          deleteSpecProduct()
+          deleteSpecProduct(row)
         }} />
         <Icon.Eye size="24" className="align-middle mr-2" />
         <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
           setOpenUploadFileModal(true)
           setSelectedItem(row)
         }} />
+        {
+          row.trangThai === 0 && <Icon.Unlock size="24" className="align-middle mr-2" />
+        }
       </div>
+    );
+  };
+
+  const productStatusFormatter = (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <>
+        {
+          statusProductColors.filter(color => row.trangThai === color.ordinary).map((color, index) => (
+            <span key={index} className={`p-2 badge badge-${color.name ? color.value : 'primary'}`}>{color.name}</span>
+          ))
+        }
+      </>
     );
   };
 
@@ -62,41 +91,40 @@ const Product = () => {
     {
       dataField: "maSP",
       text: "Mã",
-      sort: true,
-      headerAttrs: { width: 70 }
+      headerAttrs: { width: 50 }
     },
     {
       dataField: "ten",
-      text: "Tên",
-      sort: true
+      text: "Tên"
     },
     {
       dataField: "moTa",
-      text: "Mô Tả",
-      sort: true
+      text: "Mô Tả"
     },
     {
       dataField: "soLuong",
       text: "Số Lượng",
-      sort: true,
-      headerAttrs: { width: 120 }
+      headerAttrs: { width: 100 }
     },
     {
       dataField: "donGiaBan",
       text: "Đơn Giá Bán",
-      sort: true,
       headerAttrs: { width: 120 }
     },
     {
       dataField: "donGiaNhap",
       text: "Đơn Giá Nhập",
-      sort: true,
       headerAttrs: { width: 120 }
+    },
+    {
+      dataField: "trangThai",
+      text: "Trạng thái",
+      formatter: productStatusFormatter,
+      headerAttrs: { width: 140 }
     },
     {
       dataField: "edit",
       text: "Edit",
-      sort: false,
       formatter: rankFormatter,
       headerAttrs: { width: 160 }
     }
@@ -134,18 +162,32 @@ const Product = () => {
     }
   }
 
-  // option cho toast view
-  const confirmDeleteOptions = {
-    enableNote: true,
-    requiredNote: true,
-    notePlaceholder: 'John',
-    noteLabel: 'What is your name?',
-    onOk: ({ note }) => console.log(note),
-    onCancel: ({ note }) => console.log(note),
-  };
-
-  const deleteSpecProduct = () => {
-    reduxNotification.showConfirmDeleteNotification("Delete this Product ??", confirmDeleteOptions);
+  const deleteSpecProduct = ({ maSP }) => {
+    Swal.fire({
+      title: 'Xóa sản phẩm',
+      text: 'Thao tác sản phẩm?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const response = SanPhamApi.deleteByMaSP(maSP)
+        response.then((r) => {
+          reduxNotification.showSuccessNotification(
+            "Change Product",
+            "Remove Product Successfully!");
+          refreshForm()
+        }).catch((error) => {
+          console.log(error);
+          reduxNotification.showWrongNotification(
+            "Change Product",
+            "Remove Product Failed!");
+        })
+      }
+    })
   }
 
   const refreshForm = () => {
@@ -189,12 +231,6 @@ const Product = () => {
   return (
     <>
       <Card>
-        {/* <Card.Header>
-          <Card.Title tag="h5">Sản Phẩm</Card.Title>
-          <h6 className="card-subtitle text-muted">
-          Pagination Table
-        </h6>
-        </Card.Header> */}
         <Card.Body>
           <ToolkitProvider
             keyField="maSP"

@@ -1,14 +1,26 @@
 import { Formik } from 'formik';
-import React from 'react'
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import DacTrungApi from '../../../api/DacTrungApi'
+import React, { useEffect, useState } from 'react'
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import reduxNotification from '../../../components/ReduxNotification';
+import Select from "react-select";
+import LoaiSanPhamApi from '../../../api/LoaiSanPhamApi'
 
-const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
+const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
+    const [childCategory, setChildCategory] = useState([])
+
+    useEffect(() => {
+        const fetchSelectData = async () => {
+            let childCategoryResponse = await LoaiSanPhamApi.getAllLoaiSPIncludeChildAndParent();
+            let arrChildCategory = childCategoryResponse.map(({ maLoai, ten }) => ({ value: maLoai, label: ten }))
+            setChildCategory(arrChildCategory)
+        }
+        fetchSelectData()
+    }, [])
+
     return (
-        <Modal show={isOpen} onHide={closeModal}>
+        <Modal show={isOpen}>
             <Modal.Header>
-                <Modal.Title>Đặc trưng đại diện</Modal.Title>
+                Thêm mới
                 <button type="button" className="close" aria-label="Close" onClick={closeModal}>
                     <span aria-hidden="true">×</span>
                 </button>
@@ -18,24 +30,21 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                     initialValues={{
                         ten: "",
                         moTa: "",
-                        giaTri: "",
-                        donVi: "",
-                        loaiDacTrung: ""
+                        loaiSPCha: 0
                     }}
                     onSubmit={async (values) => {
                         try {
-                            // tạm thời bỏ qua validate style loaiDacTrung
-                            await DacTrungApi.addDacTrung(values);
+                            await LoaiSanPhamApi.createLSP(values);
                             closeModal()
                             reduxNotification.showSuccessNotification(
-                                "Create Master Feature",
-                                "Create Master Feature Successfully!");
+                                "Create Category",
+                                "Create Category Successfully!");
                             refreshForm()
                         } catch (error) {
                             console.log(error);
                             reduxNotification.showWrongNotification(
-                                "Error When Create Master Feature",
-                                "Create Master Feature Failed!");
+                                "Error When Create Category",
+                                "Create Category Failed!");
                         }
                     }}
                 >
@@ -51,17 +60,6 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
                             <Row className="mb-3">
-                                <Form.Group as={Col} md="12">
-                                    <Form.Label>Loại Đặc Trưng</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="loaiDacTrung"
-                                        value={values.loaiDacTrung}
-                                        onChange={handleChange}
-                                        isValid={touched.loaiDacTrung && !errors.loaiDacTrung}
-                                    />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                                </Form.Group>
                                 <Form.Group as={Col} md="12">
                                     <Form.Label>Tên</Form.Label>
                                     <Form.Control
@@ -84,27 +82,17 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group as={Col} md="12">
-                                    <Form.Label>Giá trị</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="giaTri"
-                                        value={values.giaTri}
-                                        onChange={handleChange}
-                                        isValid={touched.giaTri && !errors.giaTri}
+                                <Form.Group as={Col} md="12" className="mb-3">
+                                    <Form.Label>Loại Sản Phẩm</Form.Label>
+                                    <Select
+                                        className="react-select-container"
+                                        classNamePrefix="react-select"
+                                        options={childCategory}
+                                        name="loaiSPCha"
+                                        onChange={selectedOption => {
+                                            setFieldValue("loaiSPCha", selectedOption.value);
+                                        }}
                                     />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                                </Form.Group>
-                                <Form.Group as={Col} md="12">
-                                    <Form.Label>Đơn vị</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="donVi"
-                                        value={values.donVi}
-                                        onChange={handleChange}
-                                        isValid={touched.donVi && !errors.donVi}
-                                    />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
                             </Row>
                             <Button type="submit">Save</Button>
@@ -112,13 +100,8 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                     )}
                 </Formik>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={closeModal}>
-                    Close
-                </Button>
-            </Modal.Footer>
         </Modal>
     )
 }
 
-export default ModalCreateGroupFeature
+export default ModalCreate

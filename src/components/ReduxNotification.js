@@ -24,14 +24,5 @@ const showWrongNotification = (title, message) => {
     toastr.error(title, message, options);
 }
 
-const showConfirmDeleteNotification = (title, toastrConfirmOptions) => {
-    const options = {
-        okText: 'Xóa',
-        cancelText: 'Hủy',
-        ...toastrConfirmOptions
-    };
-    toastr.confirm(title, toastrConfirmOptions);
-}
-
-const reduxNotification = { showSuccessNotification, showWrongNotification, showConfirmDeleteNotification }
+const reduxNotification = { showSuccessNotification, showWrongNotification }
 export default reduxNotification

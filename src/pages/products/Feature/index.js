@@ -71,6 +71,13 @@ const Feature = () => {
     hideSizePerPage: true
   };
 
+  const refreshForm = () => {
+    handleTableChange(null, {
+      page: 1,
+      sizePerPage: size
+    })
+  }
+
   return (
     <>
       <Card>
@@ -115,7 +122,7 @@ const Feature = () => {
       }
       {
         openCreateGroupFeatureModal && <ModalCreateGroupFeature isOpen={openCreateGroupFeatureModal}
-          closeModal={() => setOpenCreateGroupFeatureModal(false)} />
+          closeModal={() => setOpenCreateGroupFeatureModal(false)} refreshForm={refreshForm} />
       }
     </>
   );

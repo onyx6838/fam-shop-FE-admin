@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SIDEBAR_VISIBILITY_TOGGLE } from "../redux/slice/sidebarSlice";
 
 import {
@@ -11,8 +11,9 @@ import {
 import { Settings, User } from "react-feather";
 
 import avatar1 from "../assets/img/avatars/avatar.jpg";
+import storage from "../storage/storage";
 
-const ImgAvt = () => (
+const ImgAvt = ({ userInfo }) => (
     <>
         <span className="d-inline-block d-sm-none">
             <Settings size={18} className="align-middle" />
@@ -23,13 +24,18 @@ const ImgAvt = () => (
                 className="avatar img-fluid rounded-circle mr-1"
                 alt="Chris Wood"
             />
-            <span className="text-dark">Mink Giang</span>
+            <span className="text-dark">{userInfo.hoTen}</span>
         </span>
     </>
 )
 
 const NavbarComponent = () => {
     const dispatch = useDispatch();
+    const userInfo = useSelector(state => state.user.userInfo)
+
+    const logout = () => {
+        storage.removeUserInfo();
+    }
 
     return (
         <Navbar bg="light" expand="lg" variant="light">
@@ -44,13 +50,13 @@ const NavbarComponent = () => {
 
             <Navbar.Collapse>
                 <Nav className="ml-auto">
-                    <NavDropdown title={<ImgAvt />}>
+                    <NavDropdown title={<ImgAvt userInfo={userInfo} />}>
                         <NavDropdown.Item>
                             <User size={18} className="align-middle mr-2" />Profile
                         </NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item>Settings & Privacy</NavDropdown.Item>
-                        <NavDropdown.Item>Sign out</NavDropdown.Item>
+                        <NavDropdown.Item onClick={logout}>Sign out</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

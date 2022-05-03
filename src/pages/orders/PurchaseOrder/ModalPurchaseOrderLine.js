@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
+import { Element } from 'react-scroll';
 
 const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
   return (
@@ -16,34 +17,45 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
             <div className="col-lg-12 col-xl-12">
               <div className="card" style={{ 'borderRadius': '10px' }}>
                 <div className="card-body">
-                  {
-                    selectedItem.listCTDD.map(({ sanPham: { sanPhamFiles, ten, donGiaBan }, maCTDDH, soLuong, tongTienMuc }, i) => (
-                      <div className="card shadow-0 border mb-4" key={maCTDDH}>
-                        <div className="card-body">
-                          <div className="row">
-                            <div className="col-md-2">
+                  <Element className="element" style={{
+                    position: 'relative',
+                    height: '370px',
+                    overflow: 'scroll',
+                    marginBottom: '20px'
+                  }}>
+                    {
+                      selectedItem.listCTDD.map(({ sanPham: { sanPhamFiles, ten, donGiaBan }, maCTDDH, soLuong, tongTienMuc }, i) => (
+                        <div className="card shadow-0 border mb-4" key={maCTDDH}>
+                          <div className="card-body">
+                            <div className="row">
                               {
-                                i === 0 ? <img src={`https://firebasestorage.googleapis.com/v0/b/fam-shop-4fd26.appspot.com/o/${sanPhamFiles[0].name}?alt=media&token=${sanPhamFiles[0].token}`} className="img-fluid" alt="Phone" /> : ""
+                                sanPhamFiles.length > 0 && (
+                                  <div className="col-md-2">
+                                    {
+                                      i === 0 && <img src={`https://firebasestorage.googleapis.com/v0/b/fam-shop-4fd26.appspot.com/o/${sanPhamFiles[0].name}?alt=media&token=${sanPhamFiles[0].token}`}
+                                        className="img-fluid" alt="Phone" />
+                                    }
+                                  </div>
+                                )
                               }
-                            </div>
-                            <div className="col-md-4 text-center d-flex justify-content-center align-items-center">
-                              <p className="text-muted mb-0">{ten}</p>
-                            </div>
-                            <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                              <p className="text-muted mb-0">{donGiaBan}đ</p>
-                            </div>
-                            <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                              <p className="text-muted mb-0">Số lượng: {soLuong}</p>
-                            </div>
-                            <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                              <p className="text-muted mb-0">Tổng tiền: {tongTienMuc}</p>
+                              <div className="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                <p className="text-muted mb-0">{ten}</p>
+                              </div>
+                              <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                <p className="text-muted mb-0">{donGiaBan}đ</p>
+                              </div>
+                              <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                <p className="text-muted mb-0">Số lượng: {soLuong}</p>
+                              </div>
+                              <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                <p className="text-muted mb-0">Tổng tiền: {tongTienMuc}</p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))
-                  }
-
+                      ))
+                    }
+                  </Element>
                   <div className="d-flex justify-content-between pt-2">
                     <h4 className="fw-bold mb-0">Thông tin đơn hàng</h4>
                     <p className="text-muted mb-0"><span className="fw-bold me-4"></span></p>

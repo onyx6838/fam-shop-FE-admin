@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import './modalReceiptInfo.css'
+import { Element } from 'react-scroll'
 
 const ModalReceiptInfo = ({ isOpen, closeModal, selectedItem }) => {
-  console.log(selectedItem);
   return (
     <Modal show={isOpen} dialogClassName="my-modal">
       <Modal.Header>
@@ -13,11 +13,16 @@ const ModalReceiptInfo = ({ isOpen, closeModal, selectedItem }) => {
         </button>
       </Modal.Header>
       <Modal.Body>
-        <div>
-          <div className="row d-flex justify-content-center align-items-center">
-            <div className="col-lg-12 col-xl-12">
-              <div className="card" style={{ 'borderRadius': '10px' }}>
-                <div className="card-body">
+        <div className="row d-flex justify-content-center align-items-center">
+          <div className="col-lg-12 col-xl-12">
+            <div className="card" style={{ 'borderRadius': '10px' }}>
+              <div className="card-body">
+                <Element className="element" style={{
+                  position: 'relative',
+                  height: '370px',
+                  overflow: 'scroll',
+                  marginBottom: '20px'
+                }}>
                   {
                     selectedItem.listCTPNK.map(({ sanPham: { sanPhamFiles, ten, donGiaNhap }, maCTPNK, soLuong, soThung, tongTienMuc, hanSuDung }, i) => (
                       <div className="card shadow-0 border mb-4" key={maCTPNK}>
@@ -51,31 +56,30 @@ const ModalReceiptInfo = ({ isOpen, closeModal, selectedItem }) => {
                       </div>
                     ))
                   }
-
-                  <div className="d-flex justify-content-between pt-2">
-                    <h4 className="fw-bold mb-0">Thông tin đơn hàng</h4>
-                    <p className="text-muted mb-0"><span className="fw-bold me-4"></span></p>
-                  </div>
-                  <div className="d-flex justify-content-between pt-2">
-                    <p className="text-muted mb-0">Thời gian nhập</p>
-                    <p className="text-muted mb-0"><span className="fw-bold me-4"></span>{selectedItem.thoiGian}</p>
-                  </div>
-                  <div className="d-flex justify-content-between pt-2">
-                    <p className="text-muted mb-0">Loại phiếu</p>
-                    <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.loaiPhieu}</p>
-                  </div>
-                  <div className="d-flex justify-content-between pt-2">
-                    <p className="text-muted mb-0">NV phụ trách</p>
-                    <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhanVien.hoTen}</p>
-                  </div>
-                  <div className="d-flex justify-content-between pt-2">
-                    <p className="text-muted mb-0">Nhà cung cấp</p>
-                    <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhaCungCap.hoTen}</p>
-                  </div>
+                </Element>
+                <div className="d-flex justify-content-between pt-2">
+                  <h4 className="fw-bold mb-0">Thông tin đơn hàng</h4>
+                  <p className="text-muted mb-0"><span className="fw-bold me-4"></span></p>
                 </div>
-                <div className="card-footer border-0 px-4 py-5" style={{ 'backgroundColor': '#a8729a', 'borderBottomLeftRadius': '10px', 'borderBottomRightRadius': '10px' }}>
-                  <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Tổng tiền:&nbsp;<span className="h2 mb-0 ms-2">{selectedItem.tongTien}</span></h5>
+                <div className="d-flex justify-content-between pt-2">
+                  <p className="text-muted mb-0">Thời gian nhập</p>
+                  <p className="text-muted mb-0"><span className="fw-bold me-4"></span>{selectedItem.thoiGian}</p>
                 </div>
+                <div className="d-flex justify-content-between pt-2">
+                  <p className="text-muted mb-0">Loại phiếu</p>
+                  <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.loaiPhieu}</p>
+                </div>
+                <div className="d-flex justify-content-between pt-2">
+                  <p className="text-muted mb-0">NV phụ trách</p>
+                  <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhanVien.hoTen}</p>
+                </div>
+                <div className="d-flex justify-content-between pt-2">
+                  <p className="text-muted mb-0">Nhà cung cấp</p>
+                  <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhaCungCap.hoTen}</p>
+                </div>
+              </div>
+              <div className="card-footer border-0 px-4 py-5" style={{ 'backgroundColor': '#a8729a', 'borderBottomLeftRadius': '10px', 'borderBottomRightRadius': '10px' }}>
+                <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Tổng tiền:&nbsp;<span className="h2 mb-0 ms-2">{selectedItem.tongTien}</span></h5>
               </div>
             </div>
           </div>

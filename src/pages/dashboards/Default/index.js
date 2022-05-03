@@ -7,7 +7,7 @@ import Timeline from "../Social/Timeline";
 const Default = () => (
     <Container fluid className="p-0">
         <Statistics />
-        <Timeline />
+        
     </Container>
 );
 
