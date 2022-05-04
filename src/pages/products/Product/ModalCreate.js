@@ -105,7 +105,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                     {({ field }) => <ReactQuill value={field.value} onChange={field.onChange(field.name)} />}
                   </Field>
                 </Form.Group>
-                <Form.Group as={Col} md="12">
+                <Form.Group as={Col} md="6">
                   <Form.Label>Đơn giá bán</Form.Label>
                   <Form.Control
                     type="number"
@@ -117,7 +117,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                   />
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="12">
+                <Form.Group as={Col} md="6">
                   <Form.Label>Đơn giá nhập</Form.Label>
                   <Form.Control
                     type="number"

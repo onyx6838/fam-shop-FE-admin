@@ -10,7 +10,6 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 
 import ModalCreate from "./ModalCreate";
-//import ModalUploadFile from "./ModalUploadFile";
 import ModalUploadFileTest from "./ModalUploadFileTest";
 import ModalUpdate from "./ModalUpdate";
 import reduxNotification from '../../../components/ReduxNotification'
@@ -36,7 +35,6 @@ const Product = () => {
   const dispatch = useDispatch();
   const size = useSelector(state => state.product.size);
   const page = useSelector(state => state.product.page);
-  //const totalPages = useSelector(state => state.product.totalPages);
   const totalElements = useSelector(state => state.product.totalElements);
   const products = useSelector(state => state.product.products);
   const selectedRows = useSelector(state => state.product.selectedRows);
@@ -59,18 +57,20 @@ const Product = () => {
           setOpenUpdateModal(true)
           setSelectedItem(row)
         }} />
-        <Icon.Trash2 size="24" className="align-middle mr-2" onClick={() => {
-          dispatch(changeSelectedRow(row.maSP))
-          deleteSpecProduct(row)
-        }} />
-        <Icon.Eye size="24" className="align-middle mr-2" />
+        {
+          row.trangThai !== 0 && <Icon.Lock size="24" className="align-middle mr-2" onClick={() => {
+            dispatch(changeSelectedRow(row.maSP))
+            deleteSpecProduct(row)
+          }} />
+        }
+        {
+          row.trangThai === 0 && <Icon.Unlock size="24" className="align-middle mr-2" onClick={() => reactiveSpecProduct(row)} />
+        }
+        <Icon.FileText size="24" className="align-middle mr-2" />
         <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
           setOpenUploadFileModal(true)
           setSelectedItem(row)
         }} />
-        {
-          row.trangThai === 0 && <Icon.Unlock size="24" className="align-middle mr-2" />
-        }
       </div>
     );
   };
@@ -148,17 +148,38 @@ const Product = () => {
   const deleteProduct = async (row) => {
     if (selectedRows === null || selectedRows === undefined || selectedRows.length === 0) {
       reduxNotification.showWrongNotification(
-        "Xóa sản phẩm",
+        "Xóa nhiều sản phẩm",
         "Bạn chưa chọn sản phẩm nào !"
       );
     } else {
-      await SanPhamApi.deleteByMaSPs(selectedRows);
-      // show notification
-      reduxNotification.showSuccessNotification(
-        "Xóa sản phẩm",
-        "Xóa sản phẩm thành công !!");
-      // reload group page
-      refreshForm();  // loại tick sau khi xóa
+      Swal.fire({
+        title: 'Xóa nhiều sản phẩm',
+        text: 'Thao tác sản phẩm?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await SanPhamApi.deleteByMaSPs(selectedRows);
+            // show notification
+            reduxNotification.showSuccessNotification(
+              "Xóa nhiều sản phẩm",
+              "Xóa nhiều sản phẩm thành công !!");
+            // reload group page
+            refreshForm();  // loại tick sau khi xóa 
+          }
+          catch (err) {
+            console.log(err);
+            reduxNotification.showWrongNotification(
+              "Change Product",
+              "Remove Product Failed!");
+          }
+        }
+      })
     }
   }
 
@@ -185,6 +206,34 @@ const Product = () => {
           reduxNotification.showWrongNotification(
             "Change Product",
             "Remove Product Failed!");
+        })
+      }
+    })
+  }
+
+  const reactiveSpecProduct = ({ maSP }) => {
+    Swal.fire({
+      title: 'Thay đổi trang thái sản phẩm',
+      text: 'Thao tác sản phẩm?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const response = SanPhamApi.reactiveSP(maSP)
+        response.then((r) => {
+          reduxNotification.showSuccessNotification(
+            "Change Product",
+            "Change Status Product Successfully!");
+          refreshForm()
+        }).catch((error) => {
+          console.log(error);
+          reduxNotification.showWrongNotification(
+            "Change Product",
+            "Change Status Failed !");
         })
       }
     })
@@ -271,7 +320,9 @@ const Product = () => {
       {
         openUpdateModal && <ModalUpdate isOpen={openUpdateModal} closeModal={() => setOpenUpdateModal(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
       }
-      <ModalUploadFileTest selectedItem={selectedItem} isOpen={openUploadFileModal} closeModal={() => setOpenUploadFileModal(false)} refreshForm={refreshForm} />
+      {
+        openUploadFileModal && <ModalUploadFileTest selectedItem={selectedItem} isOpen={openUploadFileModal} closeModal={() => setOpenUploadFileModal(false)} refreshForm={refreshForm} />
+      }
     </>
   );
 };

@@ -60,6 +60,10 @@ const updateSP = (form, maSP) => {
     return Api.put(`${url}/${maSP}`, form);
 };
 
+const reactiveSP = (maSP) => {
+    return Api.put(`${url}/re-active/${maSP}`);
+};
+
 const api = {
     getAll,
     getAllPaging,
@@ -70,6 +74,7 @@ const api = {
     addSanPham,
     updateSP,
     deleteByMaSP,
-    deleteByMaSPs
+    deleteByMaSPs,
+    reactiveSP
 }
 export default api;
