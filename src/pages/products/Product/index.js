@@ -17,6 +17,8 @@ import reduxNotification from '../../../components/ReduxNotification'
 import { useDispatch, useSelector } from "react-redux";
 import { changeSelectedRow, changeSelectedRows, fetchProducts } from "../../../redux/slice/productSlice";
 import Swal from "sweetalert2";
+import ModalDescription from "./ModalDescription";
+import ModalProfile from "./ModalProfile";
 
 const statusProductColors = [
   {
@@ -45,6 +47,8 @@ const Product = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openUploadFileModal, setOpenUploadFileModal] = useState(false);
+  const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
+  const [openProfileModal, setOpenProfileModal] = useState(false)
 
   useEffect(() => {
     dispatch(fetchProducts({ page: 1, size }))
@@ -66,7 +70,6 @@ const Product = () => {
         {
           row.trangThai === 0 && <Icon.Unlock size="24" className="align-middle mr-2" onClick={() => reactiveSpecProduct(row)} />
         }
-        <Icon.FileText size="24" className="align-middle mr-2" />
         <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
           setOpenUploadFileModal(true)
           setSelectedItem(row)
@@ -74,6 +77,28 @@ const Product = () => {
       </div>
     );
   };
+
+  const textFormatter = (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <div>
+        <Icon.FileText size="24" className="align-middle mr-2" onClick={() => {
+          setOpenDescriptionModal(true)
+          setSelectedItem(row)
+        }} />
+      </div>
+    )
+  }
+
+  const fileFormatter = (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <div>
+        <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
+          setOpenProfileModal(true)
+          setSelectedItem(row)
+        }} />
+      </div>
+    )
+  }
 
   const productStatusFormatter = (cell, row, rowIndex, formatExtraData) => {
     return (
@@ -98,8 +123,16 @@ const Product = () => {
       text: "Tên"
     },
     {
-      dataField: "moTa",
-      text: "Mô Tả"
+      dataField: "texting",
+      text: "Mô tả",
+      formatter: textFormatter,
+      headerAttrs: { width: 100 }
+    },
+    {
+      dataField: "imaging",
+      text: "Ảnh đại diện",
+      formatter: fileFormatter,
+      headerAttrs: { width: 100 }
     },
     {
       dataField: "soLuong",
@@ -120,13 +153,13 @@ const Product = () => {
       dataField: "trangThai",
       text: "Trạng thái",
       formatter: productStatusFormatter,
-      headerAttrs: { width: 140 }
+      headerAttrs: { width: 135 }
     },
     {
       dataField: "edit",
       text: "Edit",
       formatter: rankFormatter,
-      headerAttrs: { width: 160 }
+      headerAttrs: { width: 130 }
     }
   ];
 
@@ -322,6 +355,12 @@ const Product = () => {
       }
       {
         openUploadFileModal && <ModalUploadFileTest selectedItem={selectedItem} isOpen={openUploadFileModal} closeModal={() => setOpenUploadFileModal(false)} refreshForm={refreshForm} />
+      }
+      {
+        openDescriptionModal && <ModalDescription selectedItem={selectedItem} isOpen={openDescriptionModal} closeModal={() => setOpenDescriptionModal(false)} refreshForm={refreshForm} />
+      }
+      {
+        openProfileModal && <ModalProfile selectedItem={selectedItem} isOpen={openProfileModal} closeModal={() => setOpenProfileModal(false)} />
       }
     </>
   );

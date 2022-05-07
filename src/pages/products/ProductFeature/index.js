@@ -45,10 +45,6 @@ const ProductFeature = () => {
       text: "Tên"
     },
     {
-      dataField: "moTa",
-      text: "Mô Tả"
-    },
-    {
       dataField: "soLuong",
       text: "Số Lượng"
     },

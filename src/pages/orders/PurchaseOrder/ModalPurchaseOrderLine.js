@@ -24,11 +24,11 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
                     marginBottom: '20px'
                   }}>
                     {
-                      selectedItem.listCTDD.map(({ sanPham: { sanPhamFiles, ten, donGiaBan }, maCTDDH, soLuong, tongTienMuc }, i) => (
+                      selectedItem.listCTDD.map(({ sanPham: { sanPhamFiles, ten, donGiaBan, hinhAnh }, maCTDDH, soLuong, tongTienMuc }, i) => (
                         <div className="card shadow-0 border mb-4" key={maCTDDH}>
                           <div className="card-body">
                             <div className="row">
-                              {
+                              {/* {
                                 sanPhamFiles.length > 0 && (
                                   <div className="col-md-2">
                                     {
@@ -37,7 +37,10 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
                                     }
                                   </div>
                                 )
-                              }
+                              } */}
+                              <div className="col-md-2">
+                                <img src={hinhAnh} className="img-fluid" alt="Product Order Line Item" />
+                              </div>
                               <div className="col-md-4 text-center d-flex justify-content-center align-items-center">
                                 <p className="text-muted mb-0">{ten}</p>
                               </div>

@@ -20,7 +20,7 @@ const slice = createSlice({
         totalElements: 0,
         totalPages: 0,
         page: 1,
-        size: 3
+        size: 6
     },
     extraReducers: {
         [fetchBrands.fulfilled]: (state, action) => {

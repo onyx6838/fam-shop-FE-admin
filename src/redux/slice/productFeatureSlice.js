@@ -30,12 +30,12 @@ const slice = createSlice({
         totalElements: 0,
         totalPages: 0,
         page: 1,
-        size: 3,
+        size: 4,
         featuresNonGr: [],
         totalElementsNonGr: 0,
         totalPagesNonGr: 0,
         pageNonGr: 1,
-        sizeNonGr: 3,
+        sizeNonGr: 5,
         featuresNonGrSelectedRows: []
     }, reducers: {
         changeFeaturesNonGrSelectedRows: (state, action) => {

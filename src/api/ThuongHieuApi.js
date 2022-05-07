@@ -28,5 +28,20 @@ const createThuongHieu = (form) => {
     })
 }
 
-const api = { getAll, getAllBrandWithoutPaging, createThuongHieu }
+const uploadImage = (file, brand) => {
+    let formData = new FormData();
+    
+    formData.append('file', file)
+    formData.append('id', brand)
+
+    return Api.post(`${url}/file/upload`, formData, {
+        headers: { "content-type": `multipart/form-data` }
+    })
+}
+
+const getById = (id) => {
+    return Api.get(`${url}/${id}`);
+};
+
+const api = { getAll, getAllBrandWithoutPaging, createThuongHieu, uploadImage, getById }
 export default api;

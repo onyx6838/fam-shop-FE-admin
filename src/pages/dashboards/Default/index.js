@@ -1,13 +1,23 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 import Statistics from "./Statistics";
-import Timeline from "../Social/Timeline";
+import BarChart from "./BarChart";
+import TimeLine from '../Social/Timeline'
 
 const Default = () => (
     <Container fluid className="p-0">
-        <Statistics />
-        
+        <Row>
+            <Col lg="12">
+                <Statistics />
+            </Col>
+            <Col lg="6">
+                <BarChart />
+            </Col>
+            <Col lg="6">
+                <TimeLine />
+            </Col>
+        </Row>
     </Container>
 );
 

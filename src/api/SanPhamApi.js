@@ -28,6 +28,17 @@ const uploadImage = (files, product) => {
     })
 }
 
+const uploadProfileImage = (file, product) => {
+    let formData = new FormData();
+    
+    formData.append('file', file)
+    formData.append('id', product)
+
+    return Api.post(`${url}/file/upload/profile`, formData, {
+        headers: { "content-type": `multipart/form-data` }
+    })
+}
+
 const getById = (id) => {
     return Api.get(`${url}/${id}`);
 };
@@ -60,6 +71,10 @@ const updateSP = (form, maSP) => {
     return Api.put(`${url}/${maSP}`, form);
 };
 
+const updateDescSP = (form, maSP) => {
+    return Api.put(`${url}/desc/${maSP}`, form);
+};
+
 const reactiveSP = (maSP) => {
     return Api.put(`${url}/re-active/${maSP}`);
 };
@@ -68,11 +83,13 @@ const api = {
     getAll,
     getAllPaging,
     uploadImage,
+    uploadProfileImage,
     getById,
     deleteFileInDatabaseAndFireBase,
     getAllParentSanPhams,
     addSanPham,
     updateSP,
+    updateDescSP,
     deleteByMaSP,
     deleteByMaSPs,
     reactiveSP

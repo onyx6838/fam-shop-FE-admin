@@ -230,7 +230,7 @@ const ModalProductFeature = ({ isOpen, closeModal, selectedItem }) => {
   return (
     <Modal show={isOpen} dialogClassName="my-modal">
       <Modal.Header>
-        Cập nhật danh sách đặc trưng của sản phẩm
+        Cập nhật danh sách đặc trưng của sản phẩm {selectedItem.ten}
         <button type="button" className="close" aria-label="Close" onClick={closeModal}>
           <span aria-hidden="true">×</span>
         </button>
