@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import ThongKeApi from '../../../api/ThongKeApi'
-import { Card, Dropdown } from 'react-bootstrap';
-import { MoreHorizontal } from 'react-feather';
+import DonDatHangApi from '../../../api/DonDatHangApi'
+import { Card, Col, Dropdown, Row } from 'react-bootstrap';
 
 ChartJS.register(
     CategoryScale,
@@ -14,14 +14,43 @@ ChartJS.register(
     Legend
 );
 
+const statusOrderColors = [
+    {
+        ordinary: 1,
+        name: "HOA_DON",
+        value: "success",
+    },
+    {
+        ordinary: 0,
+        name: "DON_DAT",
+        value: "warning",
+    },
+    {
+        ordinary: 2,
+        name: "VAN_DON",
+        value: "info",
+    },
+    {
+        ordinary: 3,
+        name: "HUY_DON",
+        value: "secondary"
+    }
+];
+
 const BarChart = () => {
     const [sttData, setSTTData] = useState([])
+    const [type, setType] = useState('')
+    const [yearData, setYearData] = useState([])
+    const [year, setYear] = useState(0)
 
     useEffect(() => {
         const fetchData = async () => {
             let response = await ThongKeApi.statisticOrderByYear(2022, '');
             let data = response.map((item) => item.ord_per_month)
             setSTTData(data)
+
+            let distinctYearResponse = await DonDatHangApi.getDistinctYearDatHang();
+            setYearData(distinctYearResponse)
         }
         fetchData()
     }, [])
@@ -37,7 +66,7 @@ const BarChart = () => {
             },
             title: {
                 display: true,
-                text: 'Số đơn đặt trong năm với loại cụ thể',
+                text: 'Số đơn đặt trong năm ứng với loại cụ thể',
             },
         },
     };
@@ -53,20 +82,55 @@ const BarChart = () => {
         ],
     };
 
+    const handleSelectType = async (e) => {
+        setType(e)
+        let response = await ThongKeApi.statisticOrderByYear(year, e);
+        let data = response.map((item) => item.ord_per_month)
+        setSTTData(data)
+    }
+
+    const handleSelectYear = async (e) => {
+        setYear(e)
+        let response = await ThongKeApi.statisticOrderByYear(e, type);
+        let data = response.map((item) => item.ord_per_month)
+        setSTTData(data)
+    }
+
     return (
         <Card className="flex-fill w-100">
             <Card.Header>
                 <div className="card-actions float-right">
-                    <Dropdown align='end'>
-                        <Dropdown.Toggle>
-                            <MoreHorizontal />
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu style={{ margin: 0 }}>
-                            <Dropdown.Item>Action</Dropdown.Item>
-                            <Dropdown.Item>Another Action</Dropdown.Item>
-                            <Dropdown.Item>Something else here</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <Row>
+                        <Col lg="6">
+                            <Dropdown align='end' onSelect={handleSelectType}>
+                                <Dropdown.Toggle variant="light" className="bg-white shadow-sm">
+                                    Trạng thái đơn đặt
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu style={{ margin: 0 }}>
+                                    {
+                                        statusOrderColors.map(item => (
+                                            <Dropdown.Item key={item.ordinary} eventKey={item.name}>{item.name}</Dropdown.Item>
+                                        ))
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Col>
+                        <Col lg='1'></Col>
+                        <Col lg="5">
+                            <Dropdown align='end' onSelect={handleSelectYear}>
+                                <Dropdown.Toggle variant="light" className="bg-white shadow-sm">
+                                    Năm
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu style={{ margin: 0 }}>
+                                    {
+                                        yearData.map(item => (
+                                            <Dropdown.Item key={item} eventKey={item}>{item}</Dropdown.Item>
+                                        ))
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Col>
+                    </Row>
                 </div>
                 <Card.Title tag="h5" className="mb-0">
                     Thống kê

@@ -17,5 +17,10 @@ const changeStatusDonDat = (form) => {
     return Api.post(`${url}/change-status`, form)
 }
 
-const api = { getAllDonDatHang, changeStatusDonDat }
+const getDistinctYearDatHang = () => {
+
+    return Api.get(`${url}/distinct-year-dat-hang`)
+}
+
+const api = { getAllDonDatHang, changeStatusDonDat, getDistinctYearDatHang }
 export default api;
