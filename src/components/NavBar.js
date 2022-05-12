@@ -12,6 +12,8 @@ import { Settings, User } from "react-feather";
 
 import avatar1 from "../assets/img/avatars/avatar.jpg";
 import storage from "../storage/storage";
+import { setRefreshToken, setToken, setUserInfo } from "../redux/slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const ImgAvt = ({ userInfo }) => (
     <>
@@ -32,9 +34,15 @@ const ImgAvt = ({ userInfo }) => (
 const NavbarComponent = () => {
     const dispatch = useDispatch();
     const userInfo = useSelector(state => state.user.userInfo)
+    const navigate = useNavigate();
 
     const logout = () => {
         storage.removeUserInfo();
+        dispatch(setUserInfo({}))
+        dispatch(setRefreshToken(''))
+        dispatch(setToken(''))
+        navigate('/auth/sign-in')
+        navigate(0)
     }
 
     return (

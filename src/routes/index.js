@@ -8,6 +8,9 @@ import {
 } from "react-feather";
 
 import SignIn from '../pages/auth/SignIn'
+
+import withAuth from "../HOC/withAuth";
+
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
 
@@ -27,15 +30,13 @@ const dashboardRoutes = {
   path: "/",
   name: "Thống kê",
   header: "Pages",
-  badgeColor: "primary",
-  badgeText: "2",
   icon: SlidersIcon,
   containsHome: true,
   children: [
     {
       path: "/",
       name: "Thống kê",
-      component: Default
+      component: withAuth(Default)
     }
   ]
 };
@@ -50,27 +51,27 @@ const productRoutes = {
     {
       path: "/product",
       name: "Sản Phẩm",
-      component: Product
+      component: withAuth(Product)
     },
     {
       path: "/feature",
       name: "Đặc Trưng",
-      component: Feature
+      component: withAuth(Feature)
     },
     {
       path: "/product-feature",
       name: "Đặc Trưng Sản Phẩm",
-      component: ProductFeature
+      component: withAuth(ProductFeature)
     },
     {
       path: "/category",
       name: "Loại Sản Phẩm",
-      component: Category
+      component: withAuth(Category)
     },
     {
       path: "/brand",
       name: "Thương Hiệu",
-      component: Brand
+      component: withAuth(Brand)
     }
   ]
 };
@@ -85,12 +86,12 @@ const orderRoutes = {
     {
       path: "/purchase-order",  // mở rộng route theo path cha
       name: "Đơn Hàng",
-      component: PurchaseOrder
+      component: withAuth(PurchaseOrder)
     },
     {
       path: "/receipt",  // mở rộng route theo path cha
       name: "Nhập Kho",
-      component: Receipt
+      component: withAuth(Receipt),
     }
   ]
 };

@@ -6,7 +6,7 @@ const Footer = () => (
     <Container fluid>
       <Row className="text-muted">
         <Col xs="6" className="text-left">
-          <ul className="list-inline">
+          {/* <ul className="list-inline">
             <li className="list-inline-item">
               <span className="text-muted" href="#">
                 Support
@@ -27,7 +27,7 @@ const Footer = () => (
                 Terms of Service
               </span>
             </li>
-          </ul>
+          </ul> */}
         </Col>
         <Col xs="6" className="text-right">
           <p className="mb-0">

@@ -7,7 +7,7 @@ import FormSignIn from "./FormSignIn";
 const SignIn = () => (
   <>
     <div className="text-center mt-4">
-      <h2>Welcome back, Chris</h2>
+      <h2>Welcome back</h2>
       <p className="lead">Sign in to your account to continue</p>
     </div>
     <Card>

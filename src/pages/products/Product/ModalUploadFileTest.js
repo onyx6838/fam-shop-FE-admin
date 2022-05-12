@@ -4,6 +4,7 @@ import { Button, Card, Col, Form, Modal, ModalBody, ModalHeader, Row } from 'rea
 
 import SanPhamApi from '../../../api/SanPhamApi'
 import reduxNotification from '../../../components/ReduxNotification'
+import './modalUploadFile.css'
 
 const ModalUploadFileTest = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
     const [file, setFile] = useState([])
@@ -67,7 +68,7 @@ const ModalUploadFileTest = ({ isOpen, closeModal, selectedItem, refreshForm }) 
     );
 
     return (
-        <Modal show={isOpen} size='lg'>
+        <Modal show={isOpen} size='lg' dialogClassName="my-modal">
             <ModalHeader>
                 Quản lý ảnh
                 <button type="button" className="close" aria-label="Close" onClick={closeModal}>
@@ -124,7 +125,7 @@ const ModalUploadFileTest = ({ isOpen, closeModal, selectedItem, refreshForm }) 
                         <h3>Ảnh tải lên</h3>
                     </Col>
                     {file && [...file].map((item, i) => (
-                        <Col sm={6} key={i}>
+                        <Col sm={2} key={i}>
                             <Card key={i}>
                                 <Card.Header>
                                     <button type="button" className="close" aria-label="Close" onClick={() => handleRemoveLocalFile(item)}>
@@ -145,7 +146,7 @@ const ModalUploadFileTest = ({ isOpen, closeModal, selectedItem, refreshForm }) 
                         <h3>Ảnh đang có</h3>
                     </Col>
                     {fileUploaded && [...fileUploaded].map((item, i) => (
-                        <Col sm={6} key={i}>
+                        <Col sm={2} key={i}>
                             <Card key={i}>
                                 <Card.Header>
                                     <button type="button" className="close" aria-label="Close" onClick={() => handleOpenDeletePopup(item)}>

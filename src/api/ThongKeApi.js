@@ -18,5 +18,9 @@ const statisticOrderByYear = (year, trangThaiDonDat) => {
     return Api.get(`${url}/statistic-order-year?year=${year}&type=${trangThaiDonDat}`);
 };
 
-const api = { totalRevenue, totalProductSold, countOrderWithType, statisticOrderByYear }
+const countCustomerBuyOrderDone = (year) => {
+    return Api.get(`${url}/customer-order-success?year=${year}`);
+};
+
+const api = { totalRevenue, totalProductSold, countOrderWithType, statisticOrderByYear, countCustomerBuyOrderDone }
 export default api;

@@ -11,12 +11,12 @@ const Default = () => (
             <Col lg="12">
                 <Statistics />
             </Col>
-            <Col lg="6">
+            <Col lg="12">
                 <BarChart />
             </Col>
-            <Col lg="6">
+            {/* <Col lg="6">
                 <TimeLine />
-            </Col>
+            </Col> */}
         </Row>
     </Container>
 );
