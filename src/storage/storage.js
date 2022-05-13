@@ -10,26 +10,29 @@ const setRememberMe = (isRememberMe) => {
 }
 
 const setItem = (key, value) => {
-    if (isRememberMe()) {
-        localStorage.setItem(key, value);
-    } else {
-        sessionStorage.setItem(key, value);
-    }
+    // if (isRememberMe()) {
+    //     localStorage.setItem(key, value);
+    // } else {
+    //     sessionStorage.setItem(key, value);
+    // }
+    localStorage.setItem(key, value);
 }
 
 const getItem = (key) => {
-    if (isRememberMe()) {
-        return localStorage.getItem(key);
-    }
-    return sessionStorage.getItem(key);
+    // if (isRememberMe()) {
+    //     return localStorage.getItem(key);
+    // }
+    // return sessionStorage.getItem(key);
+    return localStorage.getItem(key);
 }
 
 const removeItem = (key) => {
-    if (isRememberMe()) {
-        localStorage.removeItem(key);
-    } else {
-        sessionStorage.removeItem(key);
-    }
+    // if (isRememberMe()) {
+    //     localStorage.removeItem(key);
+    // } else {
+    //     sessionStorage.removeItem(key);
+    // }
+    localStorage.removeItem(key);
 }
 
 const setToken = (token) => {

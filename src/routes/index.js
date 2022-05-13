@@ -10,6 +10,7 @@ import {
 import SignIn from '../pages/auth/SignIn'
 
 import withAuth from "../HOC/withAuth";
+import withRole from "../HOC/withRole";
 
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
@@ -24,6 +25,7 @@ const Brand = async(() => import("../pages/products/Brand"));
 // Order
 const PurchaseOrder = async(() => import('../pages/orders/PurchaseOrder'))
 const Receipt = async(() => import('../pages/orders/Receipt'))
+const Account = async(() => import('../pages/accounts/Account'))
 
 // Auth
 const dashboardRoutes = {
@@ -96,6 +98,21 @@ const orderRoutes = {
   ]
 };
 
+const accountRoutes = {
+  path: "/",
+  name: "Tài Khoản",
+  icon: UsersIcon,
+  badgeText: "1",
+  badgeColor: "primary",
+  children: [
+    {
+      path: "/accounts",
+      name: "Tài Khoản",
+      component: withRole(withAuth(Account))
+    }
+  ]
+};
+
 const authRoutes = {
   path: "/auth",
   name: "Auth",
@@ -115,7 +132,8 @@ const authRoutes = {
 export const dashboard = [
   dashboardRoutes,
   productRoutes,
-  orderRoutes
+  orderRoutes,
+  accountRoutes
 ];
 
 // Auth specific routes
@@ -125,7 +143,8 @@ export const page = [authRoutes];
 const arrayRoutes = [
   dashboardRoutes,
   productRoutes,
-  orderRoutes
+  orderRoutes,
+  accountRoutes
 ]
 
 export default arrayRoutes;

@@ -11,6 +11,7 @@ import productFeature from '../slice/productFeatureSlice'
 import category from '../slice/categorySlice'
 import receipt from '../slice/receiptSlice'
 import user from '../slice/userSlice'
+import account from '../slice/accountSlice'
 import { reducer as toastr } from "react-redux-toastr";
 
 const reducer = combineReducers({
@@ -25,7 +26,8 @@ const reducer = combineReducers({
     productFeature,
     category,
     receipt,
-    user
+    user,
+    account
 })
 
 const store = configureStore({

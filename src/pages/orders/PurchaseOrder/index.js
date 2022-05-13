@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import DonDatHangApi from '../../../api/DonDatHangApi'
 import reduxNotification from "../../../components/ReduxNotification";
 import ModalCreatePurchaseOrder from "./ModalCreatePurchaseOrder";
+import ModalShipperAssignment from "./ModalShipperAssignment";
 
 const paymentTypeColors = [
   {
@@ -97,6 +98,7 @@ const PurchaseOrder = () => {
 
   const [openPurchaseOrderLineModal, setOpenPurchaseOrderLineModal] = useState(false)
   const [openCreatePurchaseOrderModal, setOpenCreatePurchaseOrderModal] = useState(false)
+  const [openShipperAssignmentModal, setOpenShipperAssignmentModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState({})
 
   useEffect(() => {
@@ -206,6 +208,19 @@ const PurchaseOrder = () => {
     );
   };
 
+  const shipperAssignmentFormatter = (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <>
+        {
+          (row.trangThai === 'DON_DAT' || row.trangThai === 'VAN_DON') && <Icon.Truck size="24" className="align-middle mr-2" onClick={() => {
+            setOpenShipperAssignmentModal(true)
+            setSelectedItem(row)
+          }}/>
+        }
+      </>
+    );
+  };
+
   const tablePurchaseOrders = [
     {
       dataField: "maDonDat",
@@ -260,6 +275,12 @@ const PurchaseOrder = () => {
       dataField: "edit",
       text: "Thao tác",
       formatter: rankFormatter,
+      headerAttrs: { width: 120 }
+    },
+    {
+      dataField: "shipper",
+      text: "Phân công ship",
+      formatter: shipperAssignmentFormatter,
       headerAttrs: { width: 120 }
     }
   ];
@@ -321,6 +342,9 @@ const PurchaseOrder = () => {
       }
       {
         openCreatePurchaseOrderModal && <ModalCreatePurchaseOrder isOpen={openCreatePurchaseOrderModal} closeModal={() => setOpenCreatePurchaseOrderModal(false)} />
+      }
+      {
+        openShipperAssignmentModal && <ModalShipperAssignment isOpen={openShipperAssignmentModal} closeModal={() => setOpenShipperAssignmentModal(false)} selectedItem={selectedItem} />
       }
     </>
   );
