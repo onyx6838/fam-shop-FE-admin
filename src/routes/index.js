@@ -14,6 +14,7 @@ import withRole from "../HOC/withRole";
 
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
+const Report = async(() => import("../pages/dashboards/Report"));
 
 // Product
 const Product = async(() => import("../pages/products/Product"));
@@ -39,7 +40,12 @@ const dashboardRoutes = {
       path: "/",
       name: "Thống kê",
       component: withAuth(Default)
-    }
+    },
+    {
+      path: "/report",
+      name: "Báo cáo",
+      component: withAuth(Report)
+    },
   ]
 };
 

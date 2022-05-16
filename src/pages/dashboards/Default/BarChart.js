@@ -18,22 +18,22 @@ const statusOrderColors = [
     {
         ordinary: 1,
         name: "HOA_DON",
-        value: "success",
+        value: "Hóa Đơn",
     },
     {
         ordinary: 0,
         name: "DON_DAT",
-        value: "warning",
+        value: "Đơn Đặt",
     },
     {
         ordinary: 2,
         name: "VAN_DON",
-        value: "info",
+        value: "Vận Đơn",
     },
     {
         ordinary: 3,
         name: "HUY_DON",
-        value: "secondary"
+        value: "Hủy Đơn"
     }
 ];
 
@@ -55,7 +55,6 @@ const BarChart = () => {
         fetchData()
     }, [])
 
-    //const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const labels = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
 
     const options = {
@@ -66,7 +65,7 @@ const BarChart = () => {
             },
             title: {
                 display: true,
-                text: 'Số đơn đặt trong năm ứng với loại cụ thể',
+                text: 'Số đơn đặt với loại cụ thể trong 1 năm',
             },
         },
     };
@@ -109,7 +108,7 @@ const BarChart = () => {
                                 <Dropdown.Menu style={{ margin: 0 }}>
                                     {
                                         statusOrderColors.map(item => (
-                                            <Dropdown.Item key={item.ordinary} eventKey={item.name}>{item.name}</Dropdown.Item>
+                                            <Dropdown.Item key={item.ordinary} eventKey={item.name}>{item.value}</Dropdown.Item>
                                         ))
                                     }
                                 </Dropdown.Menu>

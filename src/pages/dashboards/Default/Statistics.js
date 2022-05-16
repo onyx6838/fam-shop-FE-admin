@@ -83,7 +83,7 @@ const Statistics = () => {
               </div>
               <Card.Body>
                 <h3 className="mb-2">{totalCustomerOrderSuccess}</h3>
-                <div className="mb-0">Đặt hàng thành công ({(new Date().getFullYear())})</div>
+                <div className="mb-0">Nhận hàng thành công ({(new Date().getFullYear())})</div>
               </Card.Body>
             </Card>
           </Card.Body>

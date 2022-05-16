@@ -3,20 +3,20 @@ import { Col, Container, Row } from "react-bootstrap";
 
 import Statistics from "./Statistics";
 import BarChart from "./BarChart";
-import TimeLine from '../Social/Timeline'
+import ProductPieChart from "./ProductPieChart";
 
 const Default = () => (
     <Container fluid className="p-0">
         <Row>
-            <Col lg="12">
+            <Col lg={12}>
                 <Statistics />
             </Col>
-            <Col lg="12">
+            <Col lg={8}>
                 <BarChart />
             </Col>
-            {/* <Col lg="6">
-                <TimeLine />
-            </Col> */}
+            <Col lg={4}>
+                <ProductPieChart />
+            </Col>
         </Row>
     </Container>
 );

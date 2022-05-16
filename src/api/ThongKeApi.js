@@ -22,5 +22,16 @@ const countCustomerBuyOrderDone = (year) => {
     return Api.get(`${url}/customer-order-success?year=${year}`);
 };
 
-const api = { totalRevenue, totalProductSold, countOrderWithType, statisticOrderByYear, countCustomerBuyOrderDone }
+const categorySoldWithOrder = () => {
+    return Api.get(`${url}/category-most-sold`);
+};
+
+const api = {
+    totalRevenue,
+    totalProductSold,
+    countOrderWithType,
+    statisticOrderByYear,
+    countCustomerBuyOrderDone,
+    categorySoldWithOrder
+}
 export default api;
