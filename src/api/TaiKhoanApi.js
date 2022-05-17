@@ -22,5 +22,13 @@ const getAccountsByRole = (page, size, role) => {
     return Api.get(`${url}/list-by-role?loaiTK=${role}`, { params: parameters });
 };
 
-const api = { getAllTaiKhoan, getAccountsByRole }
+const lockAccount = (maTK) => {
+    return Api.get(`${url}/lock-account/${maTK}`);
+}
+
+const unlockAccount = (maTK) => {
+    return Api.get(`${url}/unlock-account/${maTK}`);
+}
+
+const api = { getAllTaiKhoan, getAccountsByRole, lockAccount, unlockAccount }
 export default api;

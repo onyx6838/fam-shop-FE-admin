@@ -26,7 +26,7 @@ const Report = () => {
                                 <td className="table-action">
                                     <a href='http://localhost:8080/api/v1/admin/baocao/sanphams/export/excel'
                                         target='_blank' download rel="noopener noreferrer">
-                                        <Icon.File className="align-middle me-1" size={18}></Icon.File>
+                                        <Icon.Download className="align-middle me-1" size={18}></Icon.Download>
                                     </a>
                                 </td>
                             </tr>
@@ -35,7 +35,7 @@ const Report = () => {
                                 <td className="table-action">
                                     <a href={`http://localhost:8080/api/v1/admin/baocao/sp-ban-thang-nam/export/excel/${new Date().getFullYear()}`}
                                         target='_blank' download rel="noopener noreferrer">
-                                        <Icon.File className="align-middle me-1" size={18}></Icon.File>
+                                        <Icon.Download className="align-middle me-1" size={18}></Icon.Download>
                                     </a>
                                 </td>
                             </tr>

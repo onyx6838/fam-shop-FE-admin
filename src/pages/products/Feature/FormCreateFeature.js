@@ -86,7 +86,7 @@ const FormCreateFeature = ({ loaiDacTrung, refreshForm, closeForm }) => {
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
                     </Row>
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">Lưu</Button>
                 </Form>
             )}
         </Formik>

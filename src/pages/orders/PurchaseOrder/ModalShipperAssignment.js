@@ -69,9 +69,7 @@ const ModalShipperAssignment = ({ isOpen, closeModal, selectedItem }) => {
 
     const confirmShipper = () => {
         Swal.fire({
-            title: `${
-                selectedItem.trangThai === 'VAN_DON' ? 'Thay đổi sang shipper khác ?' : 'Giao cho shipper giao hàng ?'
-            }`,
+            title: `${selectedItem.trangThai === 'VAN_DON' ? 'Thay đổi sang shipper khác ?' : 'Giao cho shipper giao hàng ?'}`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -103,7 +101,7 @@ const ModalShipperAssignment = ({ isOpen, closeModal, selectedItem }) => {
     return (
         <Modal show={isOpen} onHide={closeModal}>
             <Modal.Header>
-                <Modal.Title>Phân công Shipper cho đơn hàng</Modal.Title>
+                <Modal.Title>Phân công Shipper cho đơn hàng ({selectedItem.nhanVien === null && "Chưa phân công shipper"})</Modal.Title>
                 <button type="button" className="close" aria-label="Close" onClick={closeModal}>
                     <span aria-hidden="true">×</span>
                 </button>

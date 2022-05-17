@@ -69,7 +69,7 @@ const ModalGroupFeature = ({ isOpen, closeModal, selectedItem }) => {
     return (
         <Modal show={isOpen} size='lg'>
             <Modal.Header>
-                Group Feature
+                Danh sách các đặc trưng thuộc loại
                 <button type="button" className="close" aria-label="Close" onClick={closeModal}>
                     <span aria-hidden="true">×</span>
                 </button>
@@ -114,7 +114,7 @@ const ModalGroupFeature = ({ isOpen, closeModal, selectedItem }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>
-                    Close
+                    Đóng
                 </Button>
             </Modal.Footer>
         </Modal>

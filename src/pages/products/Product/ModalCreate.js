@@ -55,6 +55,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
             moTa: "",
             donGiaBan: 0,
             donGiaNhap: 0,
+            soLuong: 0,
             parentSP: 0,
             childCategory: 0,
             brand: 0
@@ -129,6 +130,18 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                   />
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
+                <Form.Group as={Col} md="12">
+                  <Form.Label>Số lượng</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="soLuong"
+                    value={values.soLuong}
+                    onChange={handleChange}
+                    isValid={touched.soLuong && !errors.soLuong}
+                    min="0"
+                  />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                </Form.Group>
                 <Form.Group as={Col} md="12" className="mb-3">
                   <Form.Label>Sản Phẩm Cha</Form.Label>
                   <Select
@@ -166,7 +179,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                   />
                 </Form.Group>
               </Row>
-              <Button type="submit">Save</Button>
+              <Button type="submit">Lưu</Button>
             </Form>
           )}
         </Formik>

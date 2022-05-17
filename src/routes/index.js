@@ -25,7 +25,7 @@ const Brand = async(() => import("../pages/products/Brand"));
 
 // Order
 const PurchaseOrder = async(() => import('../pages/orders/PurchaseOrder'))
-const Receipt = async(() => import('../pages/orders/Receipt'))
+//const Receipt = async(() => import('../pages/orders/Receipt'))
 const Account = async(() => import('../pages/accounts/Account'))
 
 // Auth
@@ -95,12 +95,13 @@ const orderRoutes = {
       path: "/purchase-order",  // mở rộng route theo path cha
       name: "Đơn Hàng",
       component: withAuth(PurchaseOrder)
-    },
-    {
-      path: "/receipt",  // mở rộng route theo path cha
-      name: "Nhập Kho",
-      component: withAuth(Receipt),
     }
+    // ,
+    // {
+    //   path: "/receipt",  // mở rộng route theo path cha
+    //   name: "Nhập Kho",
+    //   component: withAuth(Receipt),
+    // }
   ]
 };
 

@@ -15,6 +15,7 @@ import DonDatHangApi from '../../../api/DonDatHangApi'
 import reduxNotification from "../../../components/ReduxNotification";
 import ModalCreatePurchaseOrder from "./ModalCreatePurchaseOrder";
 import ModalShipperAssignment from "./ModalShipperAssignment";
+import ModalShipInfo from "./ModalShipperInfo";
 
 const paymentTypeColors = [
   {
@@ -99,6 +100,7 @@ const PurchaseOrder = () => {
   const [openPurchaseOrderLineModal, setOpenPurchaseOrderLineModal] = useState(false)
   const [openCreatePurchaseOrderModal, setOpenCreatePurchaseOrderModal] = useState(false)
   const [openShipperAssignmentModal, setOpenShipperAssignmentModal] = useState(false)
+  const [openShipperInfo, setOpenShipperInfo] = useState(false)
   const [selectedItem, setSelectedItem] = useState({})
 
   useEffect(() => {
@@ -212,10 +214,27 @@ const PurchaseOrder = () => {
     return (
       <>
         {
-          (row.trangThai === 'DON_DAT' || row.trangThai === 'VAN_DON') && <Icon.Truck size="24" className="align-middle mr-2" onClick={() => {
-            setOpenShipperAssignmentModal(true)
-            setSelectedItem(row)
-          }}/>
+          {
+            'DON_DAT': <Icon.Truck size="24" className="align-middle mr-2" onClick={() => {
+              setOpenShipperAssignmentModal(true)
+              setSelectedItem(row)
+            }} />
+            ,
+            'VAN_DON':
+              <>
+                {
+                  row.nhanVien === null ?
+                    <Icon.Truck size="24" className="align-middle mr-2" onClick={() => {
+                      setOpenShipperAssignmentModal(true)
+                      setSelectedItem(row)
+                    }} /> :
+                    <Icon.Info size="24" className="align-middle mr-2" onClick={() => {
+                      setOpenShipperInfo(true)
+                      setSelectedItem(row)
+                    }} />
+                }
+              </>
+          }[row.trangThai]
         }
       </>
     );
@@ -345,6 +364,9 @@ const PurchaseOrder = () => {
       }
       {
         openShipperAssignmentModal && <ModalShipperAssignment isOpen={openShipperAssignmentModal} closeModal={() => setOpenShipperAssignmentModal(false)} selectedItem={selectedItem} />
+      }
+      {
+        openShipperInfo && <ModalShipInfo isOpen={openShipperInfo} closeModal={() => setOpenShipperInfo(false)} selectedItem={selectedItem} />
       }
     </>
   );

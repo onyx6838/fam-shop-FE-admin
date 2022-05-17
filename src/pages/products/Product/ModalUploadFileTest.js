@@ -94,8 +94,8 @@ const ModalUploadFileTest = ({ isOpen, closeModal, selectedItem, refreshForm }) 
                         }).catch((err) => {
                             console.log(err);
                             reduxNotification.showWrongNotification(
-                              "Error When Change Product Image",
-                              "Change Product Image Failed!");
+                                "Error When Change Product Image",
+                                "Change Product Image Failed!");
                         })
                     }}
                 >

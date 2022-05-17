@@ -107,14 +107,14 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
                             </Row>
-                            <Button type="submit">Save</Button>
+                            <Button type="submit">Lưu</Button>
                         </Form>
                     )}
                 </Formik>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>
-                    Close
+                    Đóng
                 </Button>
             </Modal.Footer>
         </Modal>

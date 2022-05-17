@@ -308,10 +308,10 @@ const ModalProductFeature = ({ isOpen, closeModal, selectedItem }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={() => addDacTrungToSP()}>
-          Add Feature
+          Thêm đặc trưng
         </Button>
         <Button variant="secondary" onClick={closeModal}>
-          Close
+          Đóngf
         </Button>
       </Modal.Footer>
     </Modal>

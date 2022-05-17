@@ -56,7 +56,7 @@ const ModalDescription = ({ isOpen, closeModal, refreshForm, selectedItem }) => 
                                     </Field>
                                 </Form.Group>
                             </Row>
-                            <Button type="submit">Update</Button>
+                            <Button type="submit">Cập nhật</Button>
                         </Form>
                     )}
                 </Formik>

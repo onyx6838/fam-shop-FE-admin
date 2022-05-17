@@ -62,15 +62,15 @@ const Product = () => {
           setSelectedItem(row)
         }} />
         {
-          row.trangThai !== 0 && <Icon.Lock size="24" className="align-middle mr-2" onClick={() => {
+          row.trangThai !== 0 && <Icon.Lock color="red" size="24" className="align-middle mr-2" onClick={() => {
             dispatch(changeSelectedRow(row.maSP))
             deleteSpecProduct(row)
           }} />
         }
         {
-          row.trangThai === 0 && <Icon.Unlock size="24" className="align-middle mr-2" onClick={() => reactiveSpecProduct(row)} />
+          row.trangThai === 0 && <Icon.Unlock color="green" size="24" className="align-middle mr-2" onClick={() => reactiveSpecProduct(row)} />
         }
-        <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
+        <Icon.Image color='brown' size="24" className="align-middle mr-2" onClick={() => {
           setOpenUploadFileModal(true)
           setSelectedItem(row)
         }} />
@@ -92,7 +92,7 @@ const Product = () => {
   const fileFormatter = (cell, row, rowIndex, formatExtraData) => {
     return (
       <div>
-        <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
+        <Icon.Image color="brown" size="24" className="align-middle mr-2" onClick={() => {
           setOpenProfileModal(true)
           setSelectedItem(row)
         }} />

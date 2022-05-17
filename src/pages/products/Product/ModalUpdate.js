@@ -51,6 +51,7 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                         moTa: selectedItem.moTa,
                         donGiaBan: selectedItem.donGiaBan,
                         donGiaNhap: selectedItem.donGiaNhap,
+                        soLuong: selectedItem.soLuong,
                         parentSP: (selectedItem.spCha !== null ? selectedItem.spCha.maSP : 0),
                         childCategory: selectedItem.loaiSanPham.maLoai,
                         brand: selectedItem.thuongHieu.maThuongHieu
@@ -125,6 +126,17 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
+                                <Form.Group as={Col} md="12" controlId="validationFormik01">
+                                    <Form.Label>Số lượng</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="soLuong"
+                                        value={values.soLuong}
+                                        onChange={handleChange}
+                                        isValid={touched.soLuong && !errors.soLuong}
+                                    />
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                </Form.Group>
                                 <Form.Group as={Col} md="12" className="mb-3">
                                     <Form.Label>Sản Phẩm Cha</Form.Label>
                                     <Select
@@ -165,7 +177,7 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                                     />
                                 </Form.Group>
                             </Row>
-                            <Button type="submit">Save Changes</Button>
+                            <Button type="submit">Thay đổi</Button>
                         </Form>
                     )}
                 </Formik>
