@@ -31,7 +31,7 @@ const slice = createSlice({
         totalElements: 0,
         totalPages: 0,
         page: 1,
-        size: 2,
+        size: 3,
         role: '',
         selectedRowShipper: []
     },
