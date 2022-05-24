@@ -91,7 +91,7 @@ const ModalGroupFeature = ({ isOpen, closeModal, selectedItem }) => {
                                     <div className="float-right pull-right">
                                         <Icon.PlusCircle size="24" className="align-middle mr-2"
                                             onClick={() => setOpenFormCreateFeature((state) => !state)} />
-                                        <Icon.Trash2 size="24" className="align-middle mr-2" />
+                                        {/* <Icon.Trash2 size="24" className="align-middle mr-2" /> */}
                                     </div>
                                 </Col>
                             </Row>

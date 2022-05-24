@@ -98,7 +98,7 @@ const Brand = () => {
                   <Col lg="3" style={{ paddingBottom: 20 }}>
                     <div className="float-right pull-right">
                       <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={() => setOpenCreateModal(true)} />
-                      <Icon.Trash2 size="24" className="align-middle mr-2" />
+                      {/* <Icon.Trash2 size="24" className="align-middle mr-2" /> */}
                     </div>
                   </Col>
                 </Row>

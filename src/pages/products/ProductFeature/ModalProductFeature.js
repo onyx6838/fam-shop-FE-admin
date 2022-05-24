@@ -311,7 +311,7 @@ const ModalProductFeature = ({ isOpen, closeModal, selectedItem }) => {
           Thêm đặc trưng
         </Button>
         <Button variant="secondary" onClick={closeModal}>
-          Đóngf
+          Đóng
         </Button>
       </Modal.Footer>
     </Modal>

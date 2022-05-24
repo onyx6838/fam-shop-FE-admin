@@ -218,7 +218,7 @@ const Product = () => {
 
   const deleteSpecProduct = ({ maSP }) => {
     Swal.fire({
-      title: 'Xóa sản phẩm',
+      title: 'Thay đổi trang thái sản phẩm',
       text: 'Thao tác sản phẩm?',
       icon: 'warning',
       showCancelButton: true,
@@ -329,7 +329,7 @@ const Product = () => {
                   <Col lg="3" style={{ paddingBottom: 20 }}>
                     <div className="float-right pull-right">
                       <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={() => setOpenCreateModal(true)} />
-                      <Icon.Trash2 size="24" className="align-middle mr-2" onClick={deleteProduct} />
+                      <Icon.Lock size="24" className="align-middle mr-2" onClick={deleteProduct} />
                     </div>
                   </Col>
                 </Row>
