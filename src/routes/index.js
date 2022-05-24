@@ -53,8 +53,8 @@ const productRoutes = {
   path: "/",
   name: "Sản Phẩm",
   icon: ListIcon,
-  badgeText: "5",
-  badgeColor: "primary",
+  // badgeText: "5",
+  // badgeColor: "primary",
   children: [
     {
       path: "/product",
@@ -88,8 +88,8 @@ const orderRoutes = {
   path: "/",  // tạm thời để trống
   name: "Bán Hàng",
   icon: CreditCard,
-  badgeText: "2",
-  badgeColor: "primary",
+  // badgeText: "2",
+  // badgeColor: "primary",
   children: [
     {
       path: "/purchase-order",  // mở rộng route theo path cha
@@ -109,8 +109,8 @@ const accountRoutes = {
   path: "/",
   name: "Tài Khoản",
   icon: UsersIcon,
-  badgeText: "1",
-  badgeColor: "primary",
+  // badgeText: "1",
+  // badgeColor: "primary",
   children: [
     {
       path: "/accounts",

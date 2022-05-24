@@ -40,7 +40,7 @@ const Report = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <td>Doanh thu tổng hợp</td>
+                                <td>Doanh thu tổng hợp trong năm nay ({new Date().getFullYear()})</td>
                                 <td className="table-action">
                                     <a href={`http://localhost:8080/api/v1/admin/baocao/bcao-tong-hop/export/excel/${new Date().getFullYear()}`}
                                         target='_blank' download rel="noopener noreferrer">
