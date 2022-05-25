@@ -94,11 +94,9 @@ const ProductFeature = () => {
               <>
                 <Row style={{ alignItems: "flex-end" }}>
                   <Col lg="9">
-
                   </Col>
                   <Col lg="3" style={{ paddingBottom: 20 }}>
                     <div className="float-right pull-right">
-                      
                     </div>
                   </Col>
                 </Row>
@@ -119,7 +117,7 @@ const ProductFeature = () => {
       </Card>
       {
         openProductFeatureModal && <ModalProductFeature isOpen={openProductFeatureModal}
-          closeModal={() => setOpenProductFeatureModal(false)} selectedItem={selectedItem}/>
+          closeModal={() => setOpenProductFeatureModal(false)} selectedItem={selectedItem} />
       }
     </>
   );

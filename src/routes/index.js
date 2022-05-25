@@ -22,6 +22,7 @@ const Feature = async(() => import("../pages/products/Feature"));
 const ProductFeature = async(() => import("../pages/products/ProductFeature"));
 const Category = async(() => import("../pages/products/Category"));
 const Brand = async(() => import("../pages/products/Brand"));
+const Comment = async(() => import("../pages/products/Comment"));
 
 // Order
 const PurchaseOrder = async(() => import('../pages/orders/PurchaseOrder'))
@@ -80,6 +81,11 @@ const productRoutes = {
       path: "/brand",
       name: "Thương Hiệu",
       component: withAuth(Brand)
+    },
+    {
+      path: "/comment",
+      name: "Đánh Giá",
+      component: withAuth(Comment)
     }
   ]
 };
