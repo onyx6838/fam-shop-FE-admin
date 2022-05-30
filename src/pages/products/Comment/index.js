@@ -9,9 +9,6 @@ import { fetchParentComments } from "../../../redux/slice/commentSlice";
 import ModalChildComment from './ModalChildComment';
 import ModalParentComment from "./ModalParentComment";
 
-
-
-
 const Comment = () => {
     const dispatch = useDispatch();
     const size = useSelector(state => state.comment.size);

@@ -34,5 +34,9 @@ const addDacTrung = (form) => {
     return Api.post(`${url}/create`, form)
 }
 
-const api = { getAllDacTrung, getDacTrungGrByLoai, addDacTrung, getAllDacTrungNoneGr }
+const updateDacTrung = (maDacTrung, form) => {
+    return Api.put(`${url}/${maDacTrung}`, form)
+}
+
+const api = { getAllDacTrung, getDacTrungGrByLoai, addDacTrung, getAllDacTrungNoneGr, updateDacTrung }
 export default api;

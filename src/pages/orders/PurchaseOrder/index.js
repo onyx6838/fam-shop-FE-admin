@@ -21,36 +21,43 @@ const paymentTypeColors = [
   {
     ordinary: '1',
     name: "TRUC_TIEP",
-    value: "success",
+    value: "ĐẾN TRỰC TIẾP",
+    style: "success"
   },
   {
     ordinary: '0',
     name: "CHUYEN_KHOAN",
-    value: "warning",
+    value: "CHUYỂN KHOẢN",
+    style: "warning"
   },
   {
     ordinary: '2',
     name: "NHAN_HANG",
-    value: "danger",
+    value: "TRẢ KHI NHẬN HÀNG",
+    style: "danger"
   }
 ];
 
 const statusOrderColors = [
   {
     name: "HOA_DON",
-    value: "success",
+    value: "HÓA ĐƠN",
+    style: "success"
   },
   {
     name: "DON_DAT",
-    value: "warning",
+    value: "ĐƠN ĐẶT",
+    style: "warning"
   },
   {
     name: "VAN_DON",
-    value: "info",
+    value: "VẬN ĐƠN",
+    style: "info"
   },
   {
     name: "HUY_DON",
-    value: "secondary",
+    value: "HỦY ĐƠN",
+    style: "secondary"
   }
 ];
 
@@ -58,12 +65,14 @@ const paymentStatusColors = [
   {
     ordinary: '1',
     name: "DA_TT",
-    value: "success",
+    value: "ĐÃ TTOÁN",
+    style: "success"
   },
   {
     ordinary: '0',
     name: "CHUA_TT",
-    value: "info"
+    value: "CHƯA TTOÁN",
+    style: "info"
   }
 ]
 
@@ -155,6 +164,9 @@ const PurchaseOrder = () => {
                 <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
                   <option hidden>Thao tác</option>
                   <option value='1'>Hoàn thành</option>
+                  {
+                    row.trangThaiTToan === 'CHUA_TT' ? <option value='3'>Hủy đơn</option> : <></>
+                  }
                 </Form.Select>
               )
             )
@@ -179,7 +191,7 @@ const PurchaseOrder = () => {
       <>
         {
           paymentTypeColors.filter(color => row.hinhThucTToan === color.name).map((color, index) => (
-            <span key={index} className={`p-2 badge badge-${color.name ? color.value : 'primary'}`}>{row.hinhThucTToan}</span>
+            <span key={index} className={`p-2 badge badge-${color.style}`}>{color.value}</span>
           ))
         }
       </>
@@ -191,7 +203,7 @@ const PurchaseOrder = () => {
       <>
         {
           statusOrderColors.filter(color => row.trangThai === color.name).map((color, index) => (
-            <span key={index} className={`p-2 badge badge-${color.name ? color.value : 'primary'}`}>{row.trangThai}</span>
+            <span key={index} className={`p-2 badge badge-${color.style}`}>{color.value}</span>
           ))
         }
       </>
@@ -203,7 +215,7 @@ const PurchaseOrder = () => {
       <>
         {
           paymentStatusColors.filter(color => row.trangThaiTToan === color.name).map((color, index) => (
-            <span key={index} className={`p-2 badge badge-${color.name ? color.value : 'primary'}`}>{row.trangThaiTToan}</span>
+            <span key={index} className={`p-2 badge badge-${color.style}`}>{color.value}</span>
           ))
         }
       </>
@@ -276,13 +288,13 @@ const PurchaseOrder = () => {
       dataField: "trangThaiTToan",
       text: "T/thái thanh toán",
       formatter: orderPurchasePaymentStatusFormatter,
-      headerAttrs: { width: 90 }
+      headerAttrs: { width: 110 }
     },
     {
       dataField: "hinhThucTToan",
       text: "Hình thức thanh toán",
       formatter: orderPurchasePaymentTypeFormatter,
-      headerAttrs: { width: 130 }
+      headerAttrs: { width: 150 }
     },
     {
       dataField: "detail",

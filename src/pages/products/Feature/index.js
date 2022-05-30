@@ -11,6 +11,7 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeatures } from "../../../redux/slice/featureSlice";
 import ModalCreateGroupFeature from "./ModalCreateGroupFeature";
+import ModalUpdateFeature from "./ModalUpdateFeature";
 
 const Feature = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Feature = () => {
   const features = useSelector(state => state.feature.features);
   const [openGroupFeatureModal, setOpenGroupFeatureModal] = useState(false);
   const [openCreateGroupFeatureModal, setOpenCreateGroupFeatureModal] = useState(false);
+  const [openUpdateFeatureModal, setOpenUpdateFeatureModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState({})
 
   useEffect(() => {
@@ -33,7 +35,10 @@ const Feature = () => {
           setOpenGroupFeatureModal(true)
           setSelectedItem(row)
         }} />
-        {/* <Icon.Trash2 size="24" className="align-middle mr-2" /> */}
+        <Icon.Edit size="24" className="align-middle mr-2" onClick={() => {
+          setOpenUpdateFeatureModal(true)
+          setSelectedItem(row)
+        }} />
       </div>
     );
   };
@@ -97,7 +102,6 @@ const Feature = () => {
                   <Col lg="3" style={{ paddingBottom: 20 }}>
                     <div className="float-right pull-right">
                       <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={() => setOpenCreateGroupFeatureModal(true)} />
-                      {/* <Icon.Trash2 size="24" className="align-middle mr-2" /> */}
                     </div>
                   </Col>
                 </Row>
@@ -123,6 +127,10 @@ const Feature = () => {
       {
         openCreateGroupFeatureModal && <ModalCreateGroupFeature isOpen={openCreateGroupFeatureModal}
           closeModal={() => setOpenCreateGroupFeatureModal(false)} refreshForm={refreshForm} />
+      }
+      {
+        openUpdateFeatureModal && <ModalUpdateFeature isOpen={openUpdateFeatureModal}
+          closeModal={() => setOpenUpdateFeatureModal(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
       }
     </>
   );

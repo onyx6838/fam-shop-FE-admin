@@ -8,6 +8,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import * as Icon from 'react-feather'
 import FormCreateFeature from './FormCreateFeature';
+import FormUpdateFeature from './FormUpdateFeature';
 
 const ModalGroupFeature = ({ isOpen, closeModal, selectedItem }) => {
     const dispatch = useDispatch();
@@ -16,10 +17,23 @@ const ModalGroupFeature = ({ isOpen, closeModal, selectedItem }) => {
     const totalElements = useSelector(state => state.feature.totalElementsGr);
     const groupFeatures = useSelector(state => state.feature.groupFeatures);
     const [openFormCreateFeature, setOpenFormCreateFeature] = useState(false)
+    const [openFormUpdateFeature, setOpenFormUpdateFeature] = useState(false)
+    const [selectedFeatureItem, setSelectedFeatureItem] = useState({})
 
     useEffect(() => {
         dispatch(fetchGroupFeatures({ page: 1, size, loaiDacTrung: selectedItem.loaiDacTrung }))
     }, [dispatch, selectedItem.loaiDacTrung, size])
+
+    const featureFormatter = (cell, row, rowIndex, formatExtraData) => {
+        return (
+            <div>
+                <Icon.Edit size="24" className="align-middle mr-2" onClick={() => {
+                    setOpenFormUpdateFeature((state) => !state)
+                    setSelectedFeatureItem(row)
+                }} />
+            </div>
+        );
+    };
 
     const configPagination = {
         page: page,
@@ -52,6 +66,13 @@ const ModalGroupFeature = ({ isOpen, closeModal, selectedItem }) => {
         {
             dataField: "donVi",
             text: "Đơn vị"
+        },
+        {
+            dataField: "edit",
+            text: "Edit",
+            sort: false,
+            formatter: featureFormatter,
+            headerAttrs: { width: 80 }
         }
     ];
 
@@ -74,42 +95,48 @@ const ModalGroupFeature = ({ isOpen, closeModal, selectedItem }) => {
                     <span aria-hidden="true">×</span>
                 </button>
             </Modal.Header>
-            <Modal.Body style={{ 'height': `${openFormCreateFeature ? '730px' : '350px'}` }}>
+            <Modal.Body style={{ 'height': `${openFormCreateFeature || openFormUpdateFeature ? '730px' : '380px'}` }}>
                 <ToolkitProvider
                     keyField="maDacTrung"
                     data={groupFeatures}
                     columns={tableColumnGroupFeature}
                     search
                 >
-                    {toolkitprops => (
-                        <>
-                            <Row style={{ alignItems: "flex-end" }}>
-                                <Col lg="9">
+                    {
+                        toolkitprops => (
+                            <>
+                                <Row style={{ alignItems: "flex-end" }}>
+                                    <Col lg="9">
 
-                                </Col>
-                                <Col lg="3" style={{ paddingBottom: 20 }}>
-                                    <div className="float-right pull-right">
-                                        <Icon.PlusCircle size="24" className="align-middle mr-2"
-                                            onClick={() => setOpenFormCreateFeature((state) => !state)} />
-                                        {/* <Icon.Trash2 size="24" className="align-middle mr-2" /> */}
-                                    </div>
-                                </Col>
-                            </Row>
-                            <BootstrapTable
-                                {...toolkitprops.baseProps}
-                                bootstrap4
-                                striped
-                                hover
-                                bordered
-                                remote
-                                pagination={paginationFactory(configPagination)}
-                                onTableChange={handleTableChange}
-                            />
-                        </>
-                    )}
+                                    </Col>
+                                    <Col lg="3" style={{ paddingBottom: 20 }}>
+                                        <div className="float-right pull-right">
+                                            <Icon.PlusCircle size="24" className="align-middle mr-2"
+                                                onClick={() => {
+                                                    setOpenFormCreateFeature((state) => !state)
+                                                }} />
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <BootstrapTable
+                                    {...toolkitprops.baseProps}
+                                    bootstrap4
+                                    striped
+                                    hover
+                                    bordered
+                                    remote
+                                    pagination={paginationFactory(configPagination)}
+                                    onTableChange={handleTableChange}
+                                />
+                            </>
+                        )
+                    }
                 </ToolkitProvider>
                 {
                     openFormCreateFeature && <FormCreateFeature loaiDacTrung={selectedItem.loaiDacTrung} refreshForm={refreshForm} closeForm={() => setOpenFormCreateFeature(false)} />
+                }
+                {
+                    openFormUpdateFeature && <FormUpdateFeature selectedItem={selectedFeatureItem} refreshForm={refreshForm} closeForm={() => setOpenFormUpdateFeature(false)} />
                 }
             </Modal.Body>
             <Modal.Footer>
