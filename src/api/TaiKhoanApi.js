@@ -30,5 +30,9 @@ const unlockAccount = (maTK) => {
     return Api.get(`${url}/unlock-account/${maTK}`);
 }
 
-const api = { getAllTaiKhoan, getAccountsByRole, lockAccount, unlockAccount }
+const updateAccount = (maTK, form) => {
+    return Api.put(`${url}/${maTK}`, form);
+}
+
+const api = { getAllTaiKhoan, getAccountsByRole, lockAccount, unlockAccount, updateAccount }
 export default api;

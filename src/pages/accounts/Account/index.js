@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import * as Icon from 'react-feather'
 
@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import reduxNotification from "../../../components/ReduxNotification";
 
 import TaiKhoanApi from '../../../api/TaiKhoanApi'
+import ModalUpdateAccount from "./ModalUpdateAccount";
 
 // const roleOptions = [
 //   {
@@ -49,6 +50,8 @@ const Account = () => {
   const pageNumber = useSelector(state => state.account.page);
   const totalElements = useSelector(state => state.account.totalElements);
   const accounts = useSelector(state => state.account.accounts);
+  const [selectedItem, setSelectedItem] = useState({})
+  const [openModalUpdateAccount, setOpenModalUpdateAccount] = useState(false)
 
   useEffect(() => {
     dispatch(fetchAccounts({ page: 1, size }))
@@ -63,6 +66,10 @@ const Account = () => {
         {
           row.trangThai === 'NOT_ACTIVE' && <Icon.Unlock color="green" size="24" className="align-middle mr-2" onClick={() => unlockAccount(row)} />
         }
+        <Icon.Edit2 color="green" size="24" className="align-middle mr-2" onClick={() => {
+          setSelectedItem(row)
+          setOpenModalUpdateAccount(true)
+        }} />
       </div>
     );
   };
@@ -196,7 +203,6 @@ const Account = () => {
 
   return (
     <>
-
       <Card>
         <Card.Body>
           <ToolkitProvider
@@ -233,6 +239,9 @@ const Account = () => {
           </ToolkitProvider>
         </Card.Body>
       </Card>
+      {
+        openModalUpdateAccount && <ModalUpdateAccount isOpen={openModalUpdateAccount} closeModal={() => setOpenModalUpdateAccount(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
+      }
     </>
   );
 };
