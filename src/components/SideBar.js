@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import arrayRoutes from "../routes/index";
-import avatar from "../assets/img/avatars/avatar.jpg";
+import usericon from '../assets/img/avatars/user-icon.jpg'
 import withRouter from "../routes/withRouter";
 
 const initOpenRoutes = (location) => {
@@ -173,8 +173,8 @@ const Sidebar = ({ location }) => {
               <div className="media">
                 <img
                   className="rounded-circle mr-3"
-                  src={avatar}
-                  alt="Chris Wood"
+                  src={usericon}
+                  alt="name"
                   width="40"
                   height="40"
                 />

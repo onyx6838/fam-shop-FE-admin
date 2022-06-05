@@ -8,9 +8,9 @@ import {
     NavDropdown,
 } from "react-bootstrap";
 
-import { Settings, User } from "react-feather";
+import { Settings } from "react-feather";
 
-import avatar1 from "../assets/img/avatars/avatar.jpg";
+import usericon from '../assets/img/avatars/user-icon.jpg'
 import storage from "../storage/storage";
 import { setRefreshToken, setToken, setUserInfo } from "../redux/slice/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +22,9 @@ const ImgAvt = ({ userInfo }) => (
         </span>
         <span className="d-none d-sm-inline-block">
             <img
-                src={avatar1}
+                src={usericon}
                 className="avatar img-fluid rounded-circle mr-1"
-                alt="Chris Wood"
+                alt="name"
             />
             <span className="text-dark">{userInfo.hoTen}</span>
         </span>
@@ -59,12 +59,12 @@ const NavbarComponent = () => {
             <Navbar.Collapse>
                 <Nav className="ml-auto">
                     <NavDropdown title={<ImgAvt userInfo={userInfo} />}>
-                        <NavDropdown.Item>
+                        {/* <NavDropdown.Item>
                             <User size={18} className="align-middle mr-2" />Profile
                         </NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item>Settings & Privacy</NavDropdown.Item>
-                        <NavDropdown.Item onClick={logout}>Sign out</NavDropdown.Item>
+                        <NavDropdown.Item>Settings & Privacy</NavDropdown.Item> */}
+                        <NavDropdown.Item onClick={logout}>Đăng xuất</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
