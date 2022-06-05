@@ -10,7 +10,9 @@ const ModalCreateReceipt = ({ isOpen, closeModal }) => {
                     <span aria-hidden="true">×</span>
                 </button>
             </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Body>
+                Woohoo, you're reading this text in a modal!
+            </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>
                     Close

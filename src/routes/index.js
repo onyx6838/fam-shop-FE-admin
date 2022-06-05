@@ -102,12 +102,12 @@ const orderRoutes = {
       name: "Đơn Hàng",
       component: withAuth(PurchaseOrder)
     }
-    ,
-    {
-      path: "/receipt",  // mở rộng route theo path cha
-      name: "Nhập Kho",
-      component: withAuth(Receipt),
-    }
+    // ,
+    // {
+    //   path: "/receipt",  // mở rộng route theo path cha
+    //   name: "Nhập Kho",
+    //   component: withAuth(Receipt),
+    // }
   ]
 };
 
