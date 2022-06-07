@@ -31,7 +31,7 @@ const ModalCreateReceipt = ({ isOpen, closeModal }) => {
 
     const formik = useFormik({
         initialValues: {
-
+            loaiPhieu: ''
         },
         onSubmit: onSubmitForm,
         validateOnChange: false,
@@ -163,35 +163,13 @@ const ModalCreateReceipt = ({ isOpen, closeModal }) => {
                         <Form onSubmit={formik.handleSubmit}>
                             <Row className="mb-3">
                                 <Form.Group as={Col} md="12">
-                                    <Form.Label>Địa chỉ</Form.Label>
+                                    <Form.Label>Loại phiếu</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="diaChi"
-                                        value={formik.values.diaChi}
+                                        name="loaiPhieu"
+                                        value={formik.values.loaiPhieu}
                                         onChange={formik.handleChange}
-                                        isValid={formik.touched.diaChi && !formik.errors.diaChi}
-                                    />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                                </Form.Group>
-                                <Form.Group as={Col} md="12">
-                                    <Form.Label>Họ Tên</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="hoTen"
-                                        value={formik.values.hoTen}
-                                        onChange={formik.handleChange}
-                                        isValid={formik.touched.hoTen && !formik.errors.hoTen}
-                                    />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                                </Form.Group>
-                                <Form.Group as={Col} md="12">
-                                    <Form.Label>Mật khẩu</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        name="matKhau"
-                                        value={formik.values.matKhau}
-                                        onChange={formik.handleChange}
-                                        isValid={formik.touched.matKhau && !formik.errors.matKhau}
+                                        isValid={formik.touched.loaiPhieu && !formik.errors.loaiPhieu}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
