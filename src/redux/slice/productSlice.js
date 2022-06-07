@@ -22,7 +22,9 @@ const slice = createSlice({
         page: 1,
         size: 6,
         selectedRows: [],   // delete multiple item
-        selectedRow: 0  // delete one item
+        selectedRow: 0,  // delete one item
+        selectedReceiptRows: [],
+        selectedReceiptRow: 0
     },
     reducers: {
         changeSelectedRows: (state, action) => {
@@ -30,7 +32,13 @@ const slice = createSlice({
         },
         changeSelectedRow: (state, action) => {
             state.selectedRow = action.payload
-        }
+        },
+        changeSelectedReceiptRows: (state, action) => {
+            state.selectedReceiptRows = action.payload
+        },
+        changeSelectedReceiptRow: (state, action) => {
+            state.selectedReceiptRow = action.payload
+        },
     },
     extraReducers: {
         [fetchProducts.fulfilled]: (state, action) => {
@@ -43,5 +51,5 @@ const slice = createSlice({
 });
 
 const { reducer, actions } = slice;
-export const { changeSelectedRows, changeSelectedRow } = actions;
+export const { changeSelectedRows, changeSelectedRow, changeSelectedReceiptRows, changeSelectedReceiptRow } = actions;
 export default reducer;

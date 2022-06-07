@@ -39,7 +39,7 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-scroll": "^1.8.7",
-    "react-select": "^5.3.0",
+    "react-select": "^5.3.2",
     "redux": "^4.1.2",
     "sass": "^1.49.9",
     "sweetalert2": "^11.4.8",
