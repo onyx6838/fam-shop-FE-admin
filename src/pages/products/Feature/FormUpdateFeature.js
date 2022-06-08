@@ -3,6 +3,7 @@ import React from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import DacTrungApi from '../../../api/DacTrungApi'
 import reduxNotification from '../../../components/ReduxNotification';
+import validator from '../../../utils/YupValidator';
 
 const FormUpdateFeature = ({ selectedItem, closeForm, refreshForm }) => {
     const onSubmitForm = async (values, { resetForm }) => {
@@ -29,6 +30,7 @@ const FormUpdateFeature = ({ selectedItem, closeForm, refreshForm }) => {
             giaTri: selectedItem.giaTri ? selectedItem.giaTri : "",
             donVi: selectedItem.donVi ? selectedItem.donVi : ""
         },
+        validationSchema: validator.FeatureSchema,
         onSubmit: onSubmitForm,
         validateOnChange: false,
         validateOnBlur: false

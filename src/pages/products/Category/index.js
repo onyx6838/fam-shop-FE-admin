@@ -9,6 +9,7 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../../redux/slice/categorySlice";
 import ModalCreate from "./ModalCreate";
+import ModalUpdate from "./ModalUpdate";
 
 const Category = () => {
   const dispatch = useDispatch();
@@ -17,11 +18,26 @@ const Category = () => {
 
   const totalElements = useSelector(state => state.category.totalElements);
   const categories = useSelector(state => state.category.categories);
+
+  const [selectedItem, setSelectedItem] = useState({})
+
   const [openCreateModal, setOpenCreateModal] = useState(false)
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCategories({ page: 1, size }))
   }, [dispatch, size])
+
+  const textFormatter = (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <div>
+        <Icon.Edit size="24" className="align-middle mr-2" onClick={() => {
+          setOpenUpdateModal(true)
+          setSelectedItem(row)
+        }} />
+      </div>
+    )
+  }
 
   const tableColumnsCategory = [
     {
@@ -35,6 +51,12 @@ const Category = () => {
     {
       dataField: "moTa",
       text: "Mô Tả"
+    },
+    {
+      dataField: "edit",
+      text: "Edit",
+      formatter: textFormatter,
+      headerAttrs: { width: 80 }
     }
   ];
 
@@ -100,6 +122,9 @@ const Category = () => {
       </Card>
       {
         openCreateModal && <ModalCreate isOpen={openCreateModal} closeModal={() => setOpenCreateModal(false)} refreshForm={refreshForm} />
+      }
+      {
+        openUpdateModal && <ModalUpdate isOpen={openUpdateModal} closeModal={() => setOpenUpdateModal(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
       }
     </>
   );

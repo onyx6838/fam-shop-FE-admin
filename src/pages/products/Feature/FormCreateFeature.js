@@ -3,6 +3,7 @@ import React from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import DacTrungApi from '../../../api/DacTrungApi'
 import reduxNotification from '../../../components/ReduxNotification';
+import validator from '../../../utils/YupValidator';
 
 const FormCreateFeature = ({ loaiDacTrung, refreshForm, closeForm }) => {
     return (
@@ -13,6 +14,7 @@ const FormCreateFeature = ({ loaiDacTrung, refreshForm, closeForm }) => {
                 giaTri: "",
                 donVi: ""
             }}
+            validationSchema={validator.FeatureSchema}
             onSubmit={async (values) => {
                 try {
                     await DacTrungApi.addDacTrung({ ...values, loaiDacTrung });
@@ -51,6 +53,7 @@ const FormCreateFeature = ({ loaiDacTrung, refreshForm, closeForm }) => {
                                 isValid={touched.ten && !errors.ten}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                            {errors.ten && touched.ten ? <span className='col-lg-12 text-danger'>{errors.ten}</span> : null}
                         </Form.Group>
                         <Form.Group as={Col} md="12">
                             <Form.Label>Mô tả</Form.Label>
@@ -62,6 +65,7 @@ const FormCreateFeature = ({ loaiDacTrung, refreshForm, closeForm }) => {
                                 isValid={touched.moTa && !errors.moTa}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                            {errors.moTa && touched.moTa ? <span className='col-lg-12 text-danger'>{errors.moTa}</span> : null}
                         </Form.Group>
                         <Form.Group as={Col} md="12">
                             <Form.Label>Giá trị</Form.Label>

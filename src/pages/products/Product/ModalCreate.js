@@ -8,20 +8,12 @@ import LoaiSanPhamApi from '../../../api/LoaiSanPhamApi'
 import ThuongHieuApi from '../../../api/ThuongHieuApi'
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import reduxNotification from '../../../components/ReduxNotification'
-
-import * as Yup from 'yup';
+import validator from '../../../utils/YupValidator';
 
 const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
   const [parentSP, setParentSP] = useState([])
   const [childCategory, setChildCategory] = useState([])
   const [brand, setBrand] = useState([])
-
-  const yupValid = Yup.object({
-    ten: Yup.string()
-      .required('Required')
-      .max(50, 'Must be between 6 to 50 characters')
-      .min(6, 'Must be between 6 to 50 characters')
-  })
 
   useEffect(() => {
     const fetchSelectData = async () => {
@@ -60,7 +52,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
             childCategory: 0,
             brand: 0
           }}
-          validationSchema={yupValid}
+          validationSchema={validator.ProductSchema}
           onSubmit={async (values) => {
             try {
               await SanPhamApi.addSanPham(values);
@@ -87,7 +79,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
             errors,
             setFieldValue
           }) => (
-            <Form noValidate onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <Row className="mb-3">
                 <Form.Group as={Col} md="12">
                   <Form.Label>Tên</Form.Label>
@@ -99,6 +91,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                     isValid={touched.ten && !errors.ten}
                   />
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  {errors.ten && touched.ten ? <span className='col-lg-12 text-danger'>{errors.ten}</span> : null}
                 </Form.Group>
                 <Form.Group as={Col} md="12">
                   <Form.Label>Mô tả</Form.Label>

@@ -24,5 +24,9 @@ const createLSP = (form) => {
     return Api.post(`${url}/create`, form)
 }
 
-const api = { getChildCategory, getAllLoaiSP, getAllLoaiSPIncludeChildAndParent, createLSP }
+const getAllParentLSPIncludeAll = () => {
+    return Api.get(`${url}/parents`);
+}
+
+const api = { getChildCategory, getAllLoaiSP, getAllLoaiSPIncludeChildAndParent, createLSP, getAllParentLSPIncludeAll }
 export default api;

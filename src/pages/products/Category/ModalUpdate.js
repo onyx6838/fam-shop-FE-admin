@@ -1,53 +1,59 @@
-import { Formik } from 'formik';
+import { Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
-import reduxNotification from '../../../components/ReduxNotification';
+import { Button, Col, Form, Modal, ModalBody, ModalHeader, Row } from 'react-bootstrap'
 import Select from "react-select";
-import LoaiSanPhamApi from '../../../api/LoaiSanPhamApi'
-import validator from '../../../utils/YupValidator';
 
-const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
-    const [childCategory, setChildCategory] = useState([])
+import LoaiSanPhamApi from '../../../api/LoaiSanPhamApi'
+import reduxNotification from '../../../components/ReduxNotification';
+
+const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
+    const [parentCategory, setParentCategory] = useState([])
+    const [parentCategoryId, setParentCategoryId] = useState(0)
 
     useEffect(() => {
         const fetchSelectData = async () => {
-            let childCategoryResponse = await LoaiSanPhamApi.getAllLoaiSPIncludeChildAndParent();
-            let arrChildCategory = childCategoryResponse.map(({ maLoai, ten }) => ({ value: maLoai, label: ten }))
-            setChildCategory(arrChildCategory)
+            let response = await LoaiSanPhamApi.getAllParentLSPIncludeAll();
+            let arrTest =
+                response.content.filter((item) => item.maLoai !== selectedItem.maLoai).map(({ maLoai, ten }) => ({ value: maLoai, label: ten }))
+            console.log(arrTest);
+            setParentCategory(arrTest)
         }
         fetchSelectData()
-    }, [])
+    }, [selectedItem.maLoai])
+
+    const defaultValue = (options, value) => {
+        return options ? options.find(option => option.value === value) : "";
+    };
 
     return (
-        <Modal show={isOpen}>
-            <Modal.Header>
-                Thêm mới
+        <Modal show={isOpen} size='lg'>
+            <ModalHeader>
+                Sửa
                 <button type="button" className="close" aria-label="Close" onClick={closeModal}>
                     <span aria-hidden="true">×</span>
                 </button>
-            </Modal.Header>
-            <Modal.Body>
+            </ModalHeader>
+            <ModalBody className="text-left m-3">
                 <Formik
                     initialValues={{
-                        ten: "",
-                        moTa: "",
-                        loaiSPCha: 0
+                        ten: selectedItem.ten,
+                        moTa: selectedItem.moTa ? selectedItem.moTa : "",
+                        parentCategory: (selectedItem.loaiSPCha !== null ? selectedItem.loaiSPCha.maLoai : 0)
                     }}
-                    validationSchema={validator.CategorySchema}
                     onSubmit={async (values) => {
-                        try {
-                            await LoaiSanPhamApi.createLSP(values);
-                            closeModal()
-                            reduxNotification.showSuccessNotification(
-                                "Create Category",
-                                "Create Category Successfully!");
-                            refreshForm()
-                        } catch (error) {
-                            console.log(error);
-                            reduxNotification.showWrongNotification(
-                                "Error When Create Category",
-                                "Create Category Failed!");
-                        }
+                        // try {
+                        //     await SanPhamApi.updateSP(values, selectedItem.maSP);
+                        //     closeModal()
+                        //     reduxNotification.showSuccessNotification(
+                        //         "Update Product",
+                        //         "Update Product Successfully!");
+                        //     refreshForm();
+                        // } catch (error) {
+                        //     console.log(error);
+                        //     reduxNotification.showWrongNotification(
+                        //         "Error When Update Product",
+                        //         "Update Product Failed!");
+                        // }
                     }}
                 >
                     {({
@@ -72,10 +78,9 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                                         isValid={touched.ten && !errors.ten}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                                    {errors.ten && touched.ten ? <span className='col-lg-12 text-danger'>{errors.ten}</span> : null}
                                 </Form.Group>
                                 <Form.Group as={Col} md="12">
-                                    <Form.Label>Mô tả</Form.Label>
+                                    <Form.Label>Mô Tả</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="moTa"
@@ -90,21 +95,22 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                                     <Select
                                         className="react-select-container"
                                         classNamePrefix="react-select"
-                                        options={childCategory}
-                                        name="loaiSPCha"
+                                        options={parentCategory}
+                                        value={defaultValue(parentCategory, values.parentCategory)}
+                                        name="parentCategory"
                                         onChange={selectedOption => {
-                                            setFieldValue("loaiSPCha", selectedOption.value);
+                                            setFieldValue("parentCategory", selectedOption.value);
                                         }}
                                     />
                                 </Form.Group>
                             </Row>
-                            <Button type="submit">Save</Button>
+                            <Button type="submit">Thay đổi</Button>
                         </Form>
                     )}
                 </Formik>
-            </Modal.Body>
+            </ModalBody>
         </Modal>
     )
 }
 
-export default ModalCreate
+export default ModalUpdate

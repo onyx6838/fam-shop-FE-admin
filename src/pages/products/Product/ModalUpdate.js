@@ -57,9 +57,6 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                         brand: selectedItem.thuongHieu.maThuongHieu
                     }}
                     onSubmit={async (values) => {
-                        // setTimeout(() => {
-                        //     alert(JSON.stringify(values, null, 2));
-                        // }, 400);
                         try {
                             await SanPhamApi.updateSP(values, selectedItem.maSP);
                             closeModal()
@@ -87,7 +84,7 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
                             <Row className="mb-3">
-                                <Form.Group as={Col} md="12" controlId="validationFormik01">
+                                <Form.Group as={Col} md="12">
                                     <Form.Label>Tên</Form.Label>
                                     <Form.Control
                                         type="text"
@@ -104,33 +101,36 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                                         {({ field }) => <ReactQuill value={field.value} onChange={field.onChange(field.name)} />}
                                     </Field>
                                 </Form.Group>
-                                <Form.Group as={Col} md="12" controlId="validationFormik01">
+                                <Form.Group as={Col} md="12">
                                     <Form.Label>Đơn giá bán</Form.Label>
                                     <Form.Control
                                         type="number"
                                         name="donGiaBan"
+                                        min={0}
                                         value={values.donGiaBan}
                                         onChange={handleChange}
                                         isValid={touched.donGiaBan && !errors.donGiaBan}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group as={Col} md="12" controlId="validationFormik01">
+                                <Form.Group as={Col} md="12">
                                     <Form.Label>Đơn giá nhập</Form.Label>
                                     <Form.Control
                                         type="number"
                                         name="donGiaNhap"
+                                        min={0}
                                         value={values.donGiaNhap}
                                         onChange={handleChange}
                                         isValid={touched.donGiaNhap && !errors.donGiaNhap}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group as={Col} md="12" controlId="validationFormik01">
+                                <Form.Group as={Col} md="12">
                                     <Form.Label>Số lượng</Form.Label>
                                     <Form.Control
                                         type="number"
                                         name="soLuong"
+                                        min={0}
                                         value={values.soLuong}
                                         onChange={handleChange}
                                         isValid={touched.soLuong && !errors.soLuong}

@@ -3,6 +3,7 @@ import { Button, Col, Modal, Row, Form } from 'react-bootstrap'
 import { useFormik } from 'formik';
 import reduxNotification from '../../../components/ReduxNotification';
 import DacTrungApi from '../../../api/DacTrungApi'
+import validator from '../../../utils/YupValidator';
 
 const ModalUpdateFeature = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
     const onSubmitForm = async (values, { resetForm }) => {
@@ -30,6 +31,7 @@ const ModalUpdateFeature = ({ isOpen, closeModal, selectedItem, refreshForm }) =
             donVi: selectedItem.donVi ? selectedItem.donVi : ""
         },
         onSubmit: onSubmitForm,
+        validationSchema: validator.FeatureSchema,
         validateOnChange: false,
         validateOnBlur: false
     });
@@ -55,6 +57,7 @@ const ModalUpdateFeature = ({ isOpen, closeModal, selectedItem, refreshForm }) =
                                 isValid={formik.touched.ten && !formik.errors.ten}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                            {formik.errors.ten && formik.touched.ten ? <span className='col-lg-12 text-danger'>{formik.errors.ten}</span> : null}
                         </Form.Group>
                         <Form.Group as={Col} md="12">
                             <Form.Label>Mô tả</Form.Label>
@@ -66,6 +69,7 @@ const ModalUpdateFeature = ({ isOpen, closeModal, selectedItem, refreshForm }) =
                                 isValid={formik.touched.moTa && !formik.errors.moTa}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                            {formik.errors.moTa && formik.touched.moTa ? <span className='col-lg-12 text-danger'>{formik.errors.moTa}</span> : null}
                         </Form.Group>
                         <Form.Group as={Col} md="12">
                             <Form.Label>Giá trị</Form.Label>

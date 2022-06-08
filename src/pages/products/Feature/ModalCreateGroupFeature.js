@@ -3,6 +3,7 @@ import React from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import DacTrungApi from '../../../api/DacTrungApi'
 import reduxNotification from '../../../components/ReduxNotification';
+import validator from '../../../utils/YupValidator';
 
 const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
     return (
@@ -22,6 +23,7 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                         donVi: "",
                         loaiDacTrung: ""
                     }}
+                    validationSchema={validator.FeatureSchema}
                     onSubmit={async (values) => {
                         try {
                             // tạm thời bỏ qua validate style loaiDacTrung
@@ -61,6 +63,7 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                                         isValid={touched.loaiDacTrung && !errors.loaiDacTrung}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    {errors.loaiDacTrung && touched.loaiDacTrung ? <span className='col-lg-12 text-danger'>{errors.loaiDacTrung}</span> : null}
                                 </Form.Group>
                                 <Form.Group as={Col} md="12">
                                     <Form.Label>Tên</Form.Label>
@@ -72,6 +75,7 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                                         isValid={touched.ten && !errors.ten}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    {errors.ten && touched.ten ? <span className='col-lg-12 text-danger'>{errors.ten}</span> : null}
                                 </Form.Group>
                                 <Form.Group as={Col} md="12">
                                     <Form.Label>Mô tả</Form.Label>
@@ -83,6 +87,7 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                                         isValid={touched.moTa && !errors.moTa}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    {errors.moTa && touched.moTa ? <span className='col-lg-12 text-danger'>{errors.moTa}</span> : null}
                                 </Form.Group>
                                 <Form.Group as={Col} md="12">
                                     <Form.Label>Giá trị</Form.Label>
