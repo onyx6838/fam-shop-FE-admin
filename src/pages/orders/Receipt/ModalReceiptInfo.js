@@ -76,10 +76,14 @@ const ModalReceiptInfo = ({ isOpen, closeModal, selectedItem }) => {
                   <p className="text-muted mb-0">NV phụ trách</p>
                   <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhanVien.hoTen}</p>
                 </div>
-                <div className="d-flex justify-content-between pt-2">
-                  <p className="text-muted mb-0">Nhà cung cấp</p>
-                  <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhaCungCap.hoTen}</p>
-                </div>
+                {
+                  selectedItem.nhaCungCap && (
+                    <div className="d-flex justify-content-between pt-2">
+                      <p className="text-muted mb-0">Nhà cung cấp</p>
+                      <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhaCungCap.hoTen}</p>
+                    </div>
+                  )
+                }
               </div>
               <div className="card-footer border-0 px-4 py-5" style={{ 'backgroundColor': '#a8729a', 'borderBottomLeftRadius': '10px', 'borderBottomRightRadius': '10px' }}>
                 <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Tổng tiền:&nbsp;<span className="h2 mb-0 ms-2">{selectedItem.tongTien}</span></h5>

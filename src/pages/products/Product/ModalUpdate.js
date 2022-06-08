@@ -17,8 +17,8 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
     useEffect(() => {
         const fetchSelectData = async () => {
             let response = await SanPhamApi.getAllParentSanPhams();
-            let arrTest = 
-            response.content.filter((item) => item.maSP !== selectedItem.maSP).map(({ maSP, ten }) => ({ value: maSP, label: ten }))
+            let arrTest =
+                response.content.filter((item) => item.maSP !== selectedItem.maSP).map(({ maSP, ten }) => ({ value: maSP, label: ten }))
             setParentSP(arrTest)
 
             let childCategoryResponse = await LoaiSanPhamApi.getChildCategory();
@@ -64,15 +64,15 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                             await SanPhamApi.updateSP(values, selectedItem.maSP);
                             closeModal()
                             reduxNotification.showSuccessNotification(
-                              "Update Product",
-                              "Update Product Successfully!");
+                                "Update Product",
+                                "Update Product Successfully!");
                             refreshForm();
-                          } catch (error) {
+                        } catch (error) {
                             console.log(error);
                             reduxNotification.showWrongNotification(
-                              "Error When Update Product",
-                              "Update Product Failed!");
-                          }
+                                "Error When Update Product",
+                                "Update Product Failed!");
+                        }
                     }}
                 >
                     {({

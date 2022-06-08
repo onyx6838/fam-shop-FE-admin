@@ -11,6 +11,8 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import Swal from 'sweetalert2'
 import { Element } from 'react-scroll'
+import reduxNotification from '../../../components/ReduxNotification'
+import PhieuNhapKhoApi from '../../../api/PhieuNhapKhoApi'
 
 const ModalCreateReceipt = ({ isOpen, closeModal }) => {
     const dispatch = useDispatch();
@@ -19,6 +21,7 @@ const ModalCreateReceipt = ({ isOpen, closeModal }) => {
     const totalElements = useSelector(state => state.product.totalElements);
     const products = useSelector(state => state.product.products);
     const selectedReceiptRows = useSelector(state => state.product.selectedReceiptRows);
+    const userInfo = useSelector(state => state.user.userInfo)
     const [receiptProduct, setReceiptProduct] = useState([])
 
     useEffect(() => {
@@ -26,7 +29,26 @@ const ModalCreateReceipt = ({ isOpen, closeModal }) => {
     }, [dispatch, size])
 
     const onSubmitForm = async (values, { resetForm }) => {
-
+        try {
+            const request = {
+                receipt: {
+                    loaiPhieu: values.loaiPhieu,
+                    tenTKQuanTri: userInfo.tenTK
+                },
+                ctpnks: receiptProduct
+            }
+            await PhieuNhapKhoApi.addPNK(request);
+            resetForm()
+            closeModal()
+            reduxNotification.showSuccessNotification(
+                "Tạo phiếu nhập kho",
+                "Tạo phiếu nhập kho thành công!");
+        } catch (error) {
+            console.log(error);
+            reduxNotification.showWrongNotification(
+                "Lỗi khi tạo phiếu nhập kho",
+                "Tạo PNK lỗi !!");
+        }
     }
 
     const formik = useFormik({
@@ -137,7 +159,7 @@ const ModalCreateReceipt = ({ isOpen, closeModal }) => {
     const changeDataReceiptPrdSoLuong = (e, maSP) => {
         const products = [...receiptProduct]
         const selected = products.find(p => p.maSP === maSP)
-        selected.soLuong = e.target.value
+        selected.soLuong = Number.parseInt(e.target.value)
         selected.tongTienMuc = selected.soLuong * selected.donGiaNhap
         setReceiptProduct(products)
     }

@@ -21,5 +21,9 @@ const getCTPNKByMaSP = (maSP, page, size) => {
     return Api.get(`${url}/ctpnk/${maSP}`, { params: parameters });
 }
 
-const api = { getAllPNK, getCTPNKByMaSP }
+const addPNK = (form) => {
+    return Api.post(`${url}`, form)
+}
+
+const api = { getAllPNK, getCTPNKByMaSP, addPNK }
 export default api;
