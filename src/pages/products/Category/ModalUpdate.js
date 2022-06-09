@@ -8,14 +8,12 @@ import reduxNotification from '../../../components/ReduxNotification';
 
 const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
     const [parentCategory, setParentCategory] = useState([])
-    const [parentCategoryId, setParentCategoryId] = useState(0)
 
     useEffect(() => {
         const fetchSelectData = async () => {
             let response = await LoaiSanPhamApi.getAllParentLSPIncludeAll();
             let arrTest =
                 response.content.filter((item) => item.maLoai !== selectedItem.maLoai).map(({ maLoai, ten }) => ({ value: maLoai, label: ten }))
-            console.log(arrTest);
             setParentCategory(arrTest)
         }
         fetchSelectData()
@@ -35,25 +33,26 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
             </ModalHeader>
             <ModalBody className="text-left m-3">
                 <Formik
+                    enableReinitialize
                     initialValues={{
                         ten: selectedItem.ten,
                         moTa: selectedItem.moTa ? selectedItem.moTa : "",
-                        parentCategory: (selectedItem.loaiSPCha !== null ? selectedItem.loaiSPCha.maLoai : 0)
+                        parentCategory: 0
                     }}
                     onSubmit={async (values) => {
-                        // try {
-                        //     await SanPhamApi.updateSP(values, selectedItem.maSP);
-                        //     closeModal()
-                        //     reduxNotification.showSuccessNotification(
-                        //         "Update Product",
-                        //         "Update Product Successfully!");
-                        //     refreshForm();
-                        // } catch (error) {
-                        //     console.log(error);
-                        //     reduxNotification.showWrongNotification(
-                        //         "Error When Update Product",
-                        //         "Update Product Failed!");
-                        // }
+                        try {
+                            await LoaiSanPhamApi.updateLSP({ ...values, loaiSPCha: values.parentCategory }, selectedItem.maLoai);
+                            closeModal()
+                            reduxNotification.showSuccessNotification(
+                                "Cập nhật loại sản phẩm",
+                                "Cập nhật loại sản phẩm thành công !!");
+                            refreshForm();
+                        } catch (error) {
+                            console.log(error);
+                            reduxNotification.showWrongNotification(
+                                "Lỗi khi cập nhật loại sản phẩm",
+                                "Cập nhật loại sản phẩm thất bại !!");
+                        }
                     }}
                 >
                     {({

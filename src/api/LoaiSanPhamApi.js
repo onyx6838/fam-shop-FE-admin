@@ -28,5 +28,17 @@ const getAllParentLSPIncludeAll = () => {
     return Api.get(`${url}/parents`);
 }
 
-const api = { getChildCategory, getAllLoaiSP, getAllLoaiSPIncludeChildAndParent, createLSP, getAllParentLSPIncludeAll }
+const updateLSP = (form, maLSP) => {
+    return Api.put(`${url}/${maLSP}`, form);
+};
+
+const api = {
+    getChildCategory,
+    getAllLoaiSP,
+    getAllLoaiSPIncludeChildAndParent,
+    createLSP,
+    getAllParentLSPIncludeAll,
+    updateLSP
+}
+
 export default api;
