@@ -2,12 +2,17 @@ import React, { useEffect } from 'react'
 import { Button, Col, Modal, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChildReceiptsByMaSP } from '../../../redux/slice/receiptSlice';
+import * as Icon from 'react-feather'
+
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
+import Swal from 'sweetalert2';
+import reduxNotification from '../../../components/ReduxNotification';
 
-const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId }) => {
+import PhieuNhapKhoApi from '../../../api/PhieuNhapKhoApi'
+
+const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId, maCTDDH }) => {
     const dispatch = useDispatch();
     const size = useSelector(state => state.receipt.childSize);
     const page = useSelector(state => state.receipt.childPage);
@@ -17,6 +22,45 @@ const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId }) => {
     useEffect(() => {
         dispatch(fetchChildReceiptsByMaSP({ maSP: selectedProductId, page: 1, size }))
     }, [dispatch, selectedProductId, size])
+
+    const rankFormatter = (cell, row, rowIndex, formatExtraData) => {
+        return (
+            <div>
+                <Icon.Archive size="24" className="align-middle mr-2" onClick={() => addCheckPNKToProduct(row, maCTDDH)} />
+            </div>
+        );
+    };
+
+    const addCheckPNKToProduct = (row, maCTDDH) => {
+        Swal.fire({
+            title: `Chọn sản phẩm này trong kho ??`,
+            text: 'Lựa chọn',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const response = PhieuNhapKhoApi.checkCTDDHToCTPNK({
+                    maCTPNK: row.maCTPNK,
+                    maCTDDH: maCTDDH
+                })
+                response.then((r) => {
+                    reduxNotification.showSuccessNotification(
+                        "Chọn sản phẩm trong kho",
+                        "Chọn sản phẩm trong kho thành công!");
+                    closeModal()
+                }).catch((error) => {
+                    console.log(error);
+                    reduxNotification.showWrongNotification(
+                        "Chọn sản phẩm trong kho",
+                        "Chọn sản phẩm trong kho thất bại!");
+                })
+            }
+        })
+    }
 
     const tableProductCheck = [
         {
@@ -30,6 +74,12 @@ const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId }) => {
         {
             dataField: "hanSuDung",
             text: "Hạn SDụng"
+        },
+        {
+            dataField: "edit",
+            text: "Edit",
+            formatter: rankFormatter,
+            headerAttrs: { width: 60 }
         }
     ];
 
@@ -58,7 +108,7 @@ const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId }) => {
             </Modal.Header>
             <Modal.Body>
                 <ToolkitProvider
-                    keyField="maDonDat"
+                    keyField="maCTPNK"
                     data={childReceipts}
                     columns={tableProductCheck}
                     search
@@ -71,7 +121,6 @@ const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId }) => {
                                 </Col>
                                 <Col lg="3" style={{ paddingBottom: 20 }}>
                                     <div className="float-right pull-right">
-                                        {/* <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={() => setOpenCreatePurchaseOrderModal(true)} /> */}
                                     </div>
                                 </Col>
                             </Row>
@@ -91,7 +140,7 @@ const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>
-                    Close
+                    Đóng
                 </Button>
             </Modal.Footer>
         </Modal>

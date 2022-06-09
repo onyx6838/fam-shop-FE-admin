@@ -25,5 +25,9 @@ const addPNK = (form) => {
     return Api.post(`${url}`, form)
 }
 
-const api = { getAllPNK, getCTPNKByMaSP, addPNK }
+const checkCTDDHToCTPNK = (form) => {
+    return Api.post(`${url}/check/ctddh/ctpnk`, form)
+}
+
+const api = { getAllPNK, getCTPNKByMaSP, addPNK, checkCTDDHToCTPNK }
 export default api;

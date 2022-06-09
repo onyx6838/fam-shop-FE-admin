@@ -27,14 +27,14 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
               await ThuongHieuApi.createThuongHieu({ file: file, tenThuongHieu: values.ten });
               closeModal()
               reduxNotification.showSuccessNotification(
-                "Create Brand",
-                "Create Brand Successfully!");
+                "Tạo thương hiệu",
+                "Tạo thương hiệu thành công!");
               refreshForm()
             } catch (error) {
               console.log(error);
               reduxNotification.showWrongNotification(
-                "Error When Brand Product",
-                "Create Brand Failed!");
+                "Lỗi khi tạo thương hiệu",
+                "Tạo thương hiệu lỗi!");
             }
           }}
         >
@@ -74,7 +74,7 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                   />
                 </Form.Group>
               </Row>
-              <Button type="submit">Save</Button>
+              <Button type="submit">Lưu</Button>
             </Form>
           )}
         </Formik>

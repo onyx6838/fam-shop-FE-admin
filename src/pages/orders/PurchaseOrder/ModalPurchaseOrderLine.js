@@ -6,6 +6,7 @@ import ModalCheckProduct from './ModalCheckProduct';
 const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
   const [openCheckProductModal, setOpenCheckProductModal] = useState(false);
   const [selectedCheckProductId, setSelectedCheckProductId] = useState(0);
+  const [selectedCheckCTDDH, setSelectedCheckCTDDH] = useState(0);
 
   return (
     <>
@@ -48,12 +49,16 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
                                 <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
                                   <p className="text-muted mb-0">Tổng tiền: {tongTienMuc}</p>
                                 </div>
-                                <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                  <button className={`p-2 badge badge-primary`} onClick={() => {
-                                    setSelectedCheckProductId(maSP)
-                                    setOpenCheckProductModal(true)
-                                  }}>Kiểm tra</button>
-                                </div>
+                                {
+                                  selectedItem.trangThai === 'DON_DAT' && (
+                                    <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                      <button className={`p-2 badge badge-primary`} onClick={() => {
+                                        setSelectedCheckProductId(maSP)
+                                        setOpenCheckProductModal(true)
+                                        setSelectedCheckCTDDH(maCTDDH)
+                                      }}>Kiểm tra</button>
+                                    </div>)
+                                }
                               </div>
                             </div>
                           </div>
@@ -105,7 +110,7 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
         </Modal.Footer>
       </Modal>
       {
-        openCheckProductModal && <ModalCheckProduct isOpen={openCheckProductModal} closeModal={() => setOpenCheckProductModal(false)} selectedProductId={selectedCheckProductId} />
+        openCheckProductModal && <ModalCheckProduct isOpen={openCheckProductModal} closeModal={() => setOpenCheckProductModal(false)} selectedProductId={selectedCheckProductId} maCTDDH={selectedCheckCTDDH} />
       }
     </>
   )

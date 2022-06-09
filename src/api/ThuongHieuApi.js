@@ -43,5 +43,9 @@ const getById = (id) => {
     return Api.get(`${url}/${id}`);
 };
 
-const api = { getAll, getAllBrandWithoutPaging, createThuongHieu, uploadImage, getById }
+const updateThuongHieu = (maThuongHieu, form) => {
+    return Api.put(`${url}/${maThuongHieu}`, form);
+};
+
+const api = { getAll, getAllBrandWithoutPaging, createThuongHieu, uploadImage, getById, updateThuongHieu }
 export default api;

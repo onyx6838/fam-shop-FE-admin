@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBrands } from "../../../redux/slice/brandSlice";
 import ModalCreate from "./ModalCreate";
 import ModalFile from "./ModalFile";
+import ModalUpdate from "./ModalUpdate";
 
 const Brand = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Brand = () => {
   const brands = useSelector(state => state.brand.brands);
 
   const [openCreateModal, setOpenCreateModal] = useState(false)
+  const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [openFileModal, setOpenFileModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState({})
 
@@ -32,6 +34,10 @@ const Brand = () => {
         <Icon.Image size="24" className="align-middle mr-2" onClick={() => {
           setSelectedItem(row)
           setOpenFileModal(true)
+        }} />
+        <Icon.Edit size="24" className="align-middle mr-2" onClick={() => {
+          setSelectedItem(row)
+          setOpenUpdateModal(true)
         }} />
       </div>
     );
@@ -52,7 +58,7 @@ const Brand = () => {
       text: "Edit",
       sort: false,
       formatter: rankFormatter,
-      headerAttrs: { width: 160 }
+      headerAttrs: { width: 90 }
     }
   ];
 
@@ -122,6 +128,9 @@ const Brand = () => {
       }
       {
         openFileModal && <ModalFile isOpen={openFileModal} closeModal={() => setOpenFileModal(false)} selectedItem={selectedItem} />
+      }
+      {
+        openUpdateModal && <ModalUpdate isOpen={openUpdateModal} closeModal={() => setOpenUpdateModal(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
       }
     </>
   );
