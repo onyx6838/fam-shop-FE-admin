@@ -7,7 +7,6 @@ import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import reduxNotification from '../../../components/ReduxNotification'
 
 const ModalDescription = ({ isOpen, closeModal, refreshForm, selectedItem }) => {
-
     return (
         <Modal show={isOpen} size='lg'>
             <ModalHeader>
@@ -26,26 +25,19 @@ const ModalDescription = ({ isOpen, closeModal, refreshForm, selectedItem }) => 
                             await SanPhamApi.updateDescSP(values, selectedItem.maSP);
                             closeModal()
                             reduxNotification.showSuccessNotification(
-                                "Update Product",
-                                "Update Desc Product Successfully!");
+                                "Cập nhật mô tả sản phẩm",
+                                "Cập nhật mô tả sản phẩm thành công!");
                             refreshForm()
                         } catch (error) {
                             console.log(error);
                             reduxNotification.showWrongNotification(
-                                "Error When Update Desc Product",
-                                "Update Desc Product Failed!");
+                                "Cập nhật mô tả sản phẩm",
+                                "Cập nhật mô tả sản phẩm thành công lỗi!");
                         }
                     }}
                 >
                     {({
-                        handleSubmit,
-                        handleChange,
-                        handleBlur,
-                        values,
-                        touched,
-                        isValid,
-                        errors,
-                        setFieldValue
+                        handleSubmit
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
                             <Row className="mb-3">

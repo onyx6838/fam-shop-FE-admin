@@ -1,41 +1,45 @@
 import { useFormik } from 'formik';
 import React from 'react'
-import { Button, Modal, Form, Col, Row } from 'react-bootstrap'
-import TaiKhoanApi from '../../../api/TaiKhoanApi'
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import reduxNotification from '../../../components/ReduxNotification';
 import Select from "react-select";
+import TaiKhoanApi from '../../../api/TaiKhoanApi'
 
-const ModalUpdateAccount = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
+const ModalCreateAccount = ({ isOpen, closeModal, refreshForm }) => {
     const onSubmitForm = async (values, { resetForm }) => {
         try {
-            await TaiKhoanApi.updateAccount(selectedItem.maTK, values);
-            resetForm()
-            reduxNotification.showSuccessNotification(
-                "Sửa tài khoản",
-                "Sửa tài khoản thành công !!");
-            closeModal()
-            refreshForm()
+            const response = TaiKhoanApi.extByTenTK(values.tenTK);
+            response.then((rs) => {
+                if (rs) {
+                    reduxNotification.showWrongNotification(
+                        "Tên tài khoản đã tồn tại",
+                        "Đã xảy ra lỗi");
+                } else {
+                    const response1 = TaiKhoanApi.extByEmail(values.email);
+                    response1.then(async (rs) => {
+                        if (rs) {
+                            reduxNotification.showWrongNotification(
+                                "Email đã tồn tại",
+                                "Đã xảy ra lỗi");
+                        } else {
+                            await TaiKhoanApi.addTaiKhoan(values);
+                            resetForm()
+                            reduxNotification.showSuccessNotification(
+                                "Thêm tài khoản",
+                                "Thêm tài khoản thành công !!");
+                            closeModal()
+                            refreshForm()
+                        }
+                    })
+                }
+            })
         } catch (error) {
             console.log(error);
             reduxNotification.showWrongNotification(
-                "Lỗi khi sửa tài khoản",
-                "Sửa tài khoản lỗi !!");
+                "Lỗi khi thêm tài khoản",
+                "Thêm tài khoản lỗi !!");
         }
     }
-
-    const formik = useFormik({
-        initialValues: {
-            diaChi: selectedItem.diaChi ? selectedItem.diaChi : "",
-            hoTen: selectedItem.hoTen ? selectedItem.hoTen : "",
-            matKhau: "",
-            sdt: selectedItem.sdt ? selectedItem.sdt : "",
-            email: selectedItem.email ? selectedItem.email : "",
-            loaiTK: selectedItem.loaiTK
-        },
-        onSubmit: onSubmitForm,
-        validateOnChange: false,
-        validateOnBlur: false
-    });
 
     const roleOptions = [
         {
@@ -60,14 +64,25 @@ const ModalUpdateAccount = ({ isOpen, closeModal, selectedItem, refreshForm }) =
         }
     ];
 
-    const defaultValue = (options, value) => {
-        return options ? options.find(option => option.value === value) : "";
-    };
+    const formik = useFormik({
+        initialValues: {
+            diaChi: "",
+            hoTen: "",
+            tenTK: "",
+            matKhau: "",
+            sdt: "",
+            email: "",
+            loaiTK: ""
+        },
+        onSubmit: onSubmitForm,
+        validateOnChange: false,
+        validateOnBlur: false
+    });
 
     return (
-        <Modal show={isOpen} onHide={closeModal}>
+        <Modal show={isOpen}>
             <Modal.Header>
-                <Modal.Title>Cập nhật tài khoản</Modal.Title>
+                Thêm mới
                 <button type="button" className="close" aria-label="Close" onClick={closeModal}>
                     <span aria-hidden="true">×</span>
                 </button>
@@ -94,6 +109,17 @@ const ModalUpdateAccount = ({ isOpen, closeModal, selectedItem, refreshForm }) =
                                 value={formik.values.hoTen}
                                 onChange={formik.handleChange}
                                 isValid={formik.touched.hoTen && !formik.errors.hoTen}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="12">
+                            <Form.Label>Tên Tài Khoản</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="tenTK"
+                                value={formik.values.tenTK}
+                                onChange={formik.handleChange}
+                                isValid={formik.touched.tenTK && !formik.errors.tenTK}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
@@ -136,7 +162,6 @@ const ModalUpdateAccount = ({ isOpen, closeModal, selectedItem, refreshForm }) =
                                 className="react-select-container"
                                 classNamePrefix="react-select"
                                 options={roleOptions}
-                                value={defaultValue(roleOptions, formik.values.loaiTK)}
                                 name="loaiTK"
                                 onChange={selectedOption => {
                                     formik.setFieldValue("loaiTK", selectedOption.value);
@@ -144,7 +169,7 @@ const ModalUpdateAccount = ({ isOpen, closeModal, selectedItem, refreshForm }) =
                             />
                         </Form.Group>
                     </Row>
-                    <Button type="submit">Cập nhật</Button>
+                    <Button type="submit">Lưu</Button>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
@@ -156,4 +181,4 @@ const ModalUpdateAccount = ({ isOpen, closeModal, selectedItem, refreshForm }) =
     )
 }
 
-export default ModalUpdateAccount
+export default ModalCreateAccount

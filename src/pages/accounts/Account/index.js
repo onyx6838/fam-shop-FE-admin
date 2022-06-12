@@ -13,25 +13,36 @@ import reduxNotification from "../../../components/ReduxNotification";
 
 import TaiKhoanApi from '../../../api/TaiKhoanApi'
 import ModalUpdateAccount from "./ModalUpdateAccount";
+import withRoleComponent from "../../../HOC/withRoleComponent";
+import ModalCreateAccount from "./ModalCreateAccount";
 
-// const roleOptions = [
-//   {
-//     name: "QUAN_TRI",
-//     value: "success",
-//   },
-//   {
-//     name: "NGUOI_DUNG",
-//     value: "warning",
-//   },
-//   {
-//     name: "NHA_CUNG_CAP",
-//     value: "info",
-//   },
-//   {
-//     name: "SHIPPER",
-//     value: "secondary",
-//   }
-// ];
+const roleOptions = [
+  {
+    name: "QUAN_TRI",
+    style: "success",
+    value: "QUẢN TRỊ"
+  },
+  {
+    name: "NGUOI_DUNG",
+    style: "warning",
+    value: "NGƯỜI DÙNG"
+  },
+  {
+    name: "NHA_CUNG_CAP",
+    style: "info",
+    value: "NHÀ CUNG CẤP"
+  },
+  {
+    name: "NHAN_VIEN",
+    style: "secondary",
+    value: "NHÂN VIÊN"
+  },
+  {
+    name: "SHIPPER",
+    style: "secondary",
+    value: "SHIPPER"
+  }
+];
 
 const statusOptions = [
   {
@@ -44,6 +55,10 @@ const statusOptions = [
   }
 ]
 
+const ButtonFnc = ({ openModal }) => <Icon.PlusCircle size="24" className="align-middle mr-2" onClick={openModal}></Icon.PlusCircle>
+
+const ButtonProtect = withRoleComponent(ButtonFnc)
+
 const Account = () => {
   const dispatch = useDispatch();
   const size = useSelector(state => state.account.size);
@@ -52,6 +67,7 @@ const Account = () => {
   const accounts = useSelector(state => state.account.accounts);
   const [selectedItem, setSelectedItem] = useState({})
   const [openModalUpdateAccount, setOpenModalUpdateAccount] = useState(false)
+  const [openModalCreateAccount, setOpenModalCreateAccount] = useState(false)
 
   useEffect(() => {
     dispatch(fetchAccounts({ page: 1, size }))
@@ -86,6 +102,18 @@ const Account = () => {
     );
   };
 
+  const roleFormatter = (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <>
+        {
+          roleOptions.filter(color => row.loaiTK === color.name).map((color, index) => (
+            <span key={index} className={`p-2 badge badge-${color.name ? color.style : 'primary'}`}>{color.value}</span>
+          ))
+        }
+      </>
+    );
+  };
+
   const lockAccount = ({ maTK }) => {
     Swal.fire({
       title: 'Khóa tài khoản',
@@ -101,14 +129,14 @@ const Account = () => {
         const response = TaiKhoanApi.lockAccount(maTK)
         response.then((r) => {
           reduxNotification.showSuccessNotification(
-            "Change status Account",
-            "Change status Account Successfully!");
+            "Thay đổi trạng thái tài khoản",
+            "Thay đổi trạng thái tài khoản thành công!");
           refreshForm()
         }).catch((error) => {
           console.log(error);
           reduxNotification.showWrongNotification(
-            "Change status Account",
-            "Change status Account Failed!");
+            "Thay đổi trạng thái tài khoản",
+            "Thay đổi trạng thái tài khoản thất bại!");
         })
       }
     })
@@ -129,14 +157,14 @@ const Account = () => {
         const response = TaiKhoanApi.unlockAccount(maTK)
         response.then((r) => {
           reduxNotification.showSuccessNotification(
-            "Change status Account",
-            "Change status Account Successfully!");
+            "Thay đổi trạng thái tài khoản",
+            "Thay đổi trạng thái tài khoản thành công!");
           refreshForm()
         }).catch((error) => {
           console.log(error);
           reduxNotification.showWrongNotification(
-            "Change status Account",
-            "Change status Account Failed!");
+            "Thay đổi trạng thái tài khoản",
+            "Thay đổi trạng thái tài khoản thất bại!");
         })
       }
     })
@@ -150,7 +178,8 @@ const Account = () => {
     },
     {
       dataField: "tenTK",
-      text: "Tên TK"
+      text: "Tên TK",
+      headerAttrs: { width: 120 }
     },
     {
       dataField: "hoTen",
@@ -162,7 +191,9 @@ const Account = () => {
     },
     {
       dataField: "loaiTK",
-      text: "Loại TK"
+      text: "Loại TK",
+      formatter: roleFormatter,
+      headerAttrs: { width: 130 }
     },
     {
       dataField: "trangThai",
@@ -175,7 +206,7 @@ const Account = () => {
       text: "Edit",
       sort: false,
       formatter: rankFormatter,
-      headerAttrs: { width: 160 }
+      headerAttrs: { width: 100 }
     }
   ];
 
@@ -219,8 +250,7 @@ const Account = () => {
                   </Col>
                   <Col lg="3" style={{ paddingBottom: 20 }}>
                     <div className="float-right pull-right">
-                      {/* <Icon.PlusCircle size="24" className="align-middle mr-2" />
-                      <Icon.Trash2 size="24" className="align-middle mr-2" /> */}
+                      <ButtonProtect openModal={() => setOpenModalCreateAccount(true)} />
                     </div>
                   </Col>
                 </Row>
@@ -241,6 +271,9 @@ const Account = () => {
       </Card>
       {
         openModalUpdateAccount && <ModalUpdateAccount isOpen={openModalUpdateAccount} closeModal={() => setOpenModalUpdateAccount(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
+      }
+      {
+        openModalCreateAccount && <ModalCreateAccount isOpen={openModalCreateAccount} closeModal={() => setOpenModalCreateAccount(false)} refreshForm={refreshForm} />
       }
     </>
   );
