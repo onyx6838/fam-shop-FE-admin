@@ -20,14 +20,14 @@ const FormCreateFeature = ({ loaiDacTrung, refreshForm, closeForm }) => {
                     await DacTrungApi.addDacTrung({ ...values, loaiDacTrung });
                     closeForm()
                     reduxNotification.showSuccessNotification(
-                        "Create Feature In Group Features",
-                        "Create Feature Successfully!");
+                        "Thêm đặc trưng cho nhóm đặc trưng",
+                        "Thêm đặc trưng cho nhóm đặc trưng thành công !!");
                     refreshForm()
                 } catch (error) {
                     console.log(error);
                     reduxNotification.showWrongNotification(
-                        "Error When Create Feature",
-                        "Create Feature Failed!");
+                        "Thêm đặc trưng cho nhóm đặc trưng",
+                        "Thêm đặc trưng cho nhóm đặc trưng lỗi !!");
                 }
             }}
         >

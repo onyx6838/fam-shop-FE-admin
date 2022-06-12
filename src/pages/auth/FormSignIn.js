@@ -55,7 +55,7 @@ function FormSignIn() {
               size="lg"
               type="text"
               name="username"
-              placeholder="Enter your username"
+              placeholder="Nhập tài khoản"
               value={values.username}
               isInvalid={Boolean(touched.username && errors.username)}
               onBlur={handleBlur}
@@ -67,14 +67,13 @@ function FormSignIn() {
               </Form.Control.Feedback>
             )}
           </Form.Group>
-
           <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
             <Form.Control
               size="lg"
               type="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder="Nhập mật khẩu"
               value={values.password}
               isInvalid={Boolean(touched.password && errors.password)}
               onBlur={handleBlur}

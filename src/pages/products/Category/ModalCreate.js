@@ -39,14 +39,14 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
                             await LoaiSanPhamApi.createLSP(values);
                             closeModal()
                             reduxNotification.showSuccessNotification(
-                                "Create Category",
-                                "Create Category Successfully!");
+                                "Thêm loại sản phẩm",
+                                "Thêm loại sản phẩm thành công !!");
                             refreshForm()
                         } catch (error) {
                             console.log(error);
                             reduxNotification.showWrongNotification(
-                                "Error When Create Category",
-                                "Create Category Failed!");
+                                "Thêm loại sản phẩm",
+                                "Thêm loại sản phẩm lỗi !!");
                         }
                     }}
                 >

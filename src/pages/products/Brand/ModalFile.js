@@ -44,13 +44,13 @@ const ModalFile = ({ isOpen, closeModal, selectedItem }) => {
               setInitFile(res.hinhAnh)
               setFile(null)
               reduxNotification.showSuccessNotification(
-                "Brand Image",
-                "Change Brand Image Successfully!");
+                "Ảnh đại diện thương hiệu",
+                "Thay đổi ảnh đại diện thương hiệu thành công !!");
             }).catch((err) => {
               console.log(err);
               reduxNotification.showWrongNotification(
-                "Error When Change Brand Image",
-                "Change Brand Image Failed!");
+                "Ảnh đại diện thương hiệu",
+                "Thay đổi ảnh đại diện thương hiệu lỗi !!");
             })
           }}
         >

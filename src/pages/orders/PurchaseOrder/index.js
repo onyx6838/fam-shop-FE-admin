@@ -368,6 +368,13 @@ const PurchaseOrder = () => {
     hideSizePerPage: true
   };
 
+  const refreshForm = () => {
+    handleTableChange(null, {
+        page: 1,
+        sizePerPage: size
+    })
+}
+
   return (
     <>
       <Card>
@@ -412,7 +419,7 @@ const PurchaseOrder = () => {
         openCreatePurchaseOrderModal && <ModalCreatePurchaseOrder isOpen={openCreatePurchaseOrderModal} closeModal={() => setOpenCreatePurchaseOrderModal(false)} />
       }
       {
-        openShipperAssignmentModal && <ModalShipperAssignment isOpen={openShipperAssignmentModal} closeModal={() => setOpenShipperAssignmentModal(false)} selectedItem={selectedItem} />
+        openShipperAssignmentModal && <ModalShipperAssignment isOpen={openShipperAssignmentModal} closeModal={() => setOpenShipperAssignmentModal(false)} selectedItem={selectedItem} refreshForm={refreshForm}/>
       }
       {
         openShipperInfo && <ModalShipInfo isOpen={openShipperInfo} closeModal={() => setOpenShipperInfo(false)} selectedItem={selectedItem} />

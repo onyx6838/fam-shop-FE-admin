@@ -96,14 +96,14 @@ const ModalChildComment = ({ isOpen, closeModal, selectedItem }) => {
                 const response = DanhGiaApi.deleteChildCmt(maDanhGia)
                 response.then((r) => {
                     reduxNotification.showSuccessNotification(
-                        "Change Comment",
-                        "Remove Comment Successfully!");
+                        "Xóa bình luận",
+                        "Xóa bình luận thành công !!");
                     dispatch(fetchChildComments({ page: page, size: size, maDanhGiaCha: selectedItem.maDanhGia }))
                 }).catch((error) => {
                     console.log(error);
                     reduxNotification.showWrongNotification(
-                        "Change Comment",
-                        "Remove Comment Failed!");
+                        "Xóa bình luận",
+                        "Xóa bình luận thất bại !!");
                 })
             }
         })
@@ -125,14 +125,14 @@ const ModalChildComment = ({ isOpen, closeModal, selectedItem }) => {
                 const response = DanhGiaApi.lockChildCmt(maDanhGia)
                 response.then((r) => {
                     reduxNotification.showSuccessNotification(
-                        "Change Comment",
-                        "Hide Comment Successfully!");
+                        "Ẩn bình luận",
+                        "Ẩn bình luận thành công !!");
                     dispatch(fetchChildComments({ page: page, size: size, maDanhGiaCha: selectedItem.maDanhGia }))
                 }).catch((error) => {
                     console.log(error);
                     reduxNotification.showWrongNotification(
-                        "Change Comment",
-                        "Hide Comment Failed!");
+                        "Ẩn bình luận",
+                        "Ẩn bình luận lỗi !!");
                 })
             }
         })
@@ -154,14 +154,14 @@ const ModalChildComment = ({ isOpen, closeModal, selectedItem }) => {
                 const response = DanhGiaApi.unlockChildCmt(maDanhGia)
                 response.then((r) => {
                     reduxNotification.showSuccessNotification(
-                        "Change Comment",
-                        "Pulish Comment Successfully!");
+                        "Công bố bình luận",
+                        "Công bố bình luận thành công !!");
                     dispatch(fetchChildComments({ page: page, size: size, maDanhGiaCha: selectedItem.maDanhGia }))
                 }).catch((error) => {
                     console.log(error);
                     reduxNotification.showWrongNotification(
-                        "Change Comment",
-                        "Pulish Comment Failed!");
+                        "Công bố bình luận",
+                        "Công bố bình luận lỗi");
                 })
             }
         })

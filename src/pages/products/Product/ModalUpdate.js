@@ -61,14 +61,14 @@ const ModalUpdate = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
                             await SanPhamApi.updateSP(values, selectedItem.maSP);
                             closeModal()
                             reduxNotification.showSuccessNotification(
-                                "Update Product",
-                                "Update Product Successfully!");
+                                "Cập nhật sản phẩm",
+                                "Cập nhật sản phẩm thành công !!");
                             refreshForm();
                         } catch (error) {
                             console.log(error);
                             reduxNotification.showWrongNotification(
-                                "Error When Update Product",
-                                "Update Product Failed!");
+                                "Cập nhật sản phẩm",
+                                "Cập nhật sản phẩm thất bại !!");
                         }
                     }}
                 >

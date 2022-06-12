@@ -58,21 +58,20 @@ const ModalCreate = ({ isOpen, closeModal, refreshForm }) => {
               await SanPhamApi.addSanPham(values);
               closeModal()
               reduxNotification.showSuccessNotification(
-                "Create Product",
-                "Create Product Successfully!");
+                "Thêm sản phẩm",
+                "Thêm sản phẩm thành công !!!");
               refreshForm()
             } catch (error) {
               console.log(error);
               reduxNotification.showWrongNotification(
-                "Error When Create Product",
-                "Create Product Failed!");
+                "Thêm sản phẩm",
+                "Thêm sản phẩm lỗi !!!");
             }
           }}
         >
           {({
             handleSubmit,
             handleChange,
-            handleBlur,
             values,
             touched,
             isValid,

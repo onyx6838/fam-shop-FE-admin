@@ -182,15 +182,15 @@ const ModalProductFeature = ({ isOpen, closeModal, selectedItem }) => {
         })
         response.then((r) => {
           reduxNotification.showSuccessNotification(
-            "Change Feature Product",
-            "Change Feature Product Successfully!");
+            "Thay đổi đặc trưng sản phẩm",
+            "Thay đổi đặc trưng sản phẩm thành công !!");
           dispatch(fetchProductFeatures({ page: 1, size, maSP: selectedItem.maSP }))
           dispatch(changeFeaturesNonGrSelectedRows([]))
         }).catch((error) => {
           console.log(error);
           reduxNotification.showWrongNotification(
-            "Change Feature Product",
-            "Change Feature Product Failed!");
+            "Thay đổi đặc trưng sản phẩm",
+            "Thay đổi đặc trưng sản phẩm lỗi");
         })
       }
     })
@@ -214,14 +214,14 @@ const ModalProductFeature = ({ isOpen, closeModal, selectedItem }) => {
         })
         response.then((r) => {
           reduxNotification.showSuccessNotification(
-            "Change Feature Product",
-            "Remove Feature Product Successfully!");
+            "Xóa đặc trưng sản phẩm",
+            "Xóa đặc trưng sản phẩm thành công !!");
           dispatch(fetchProductFeatures({ page: 1, size, maSP: selectedItem.maSP }))
         }).catch((error) => {
           console.log(error);
           reduxNotification.showWrongNotification(
-            "Change Feature Product",
-            "Remove Feature Product Failed!");
+            "Xóa đặc trưng sản phẩm",
+            "Xóa đặc trưng sản phẩm lỗi !!");
         })
       }
     })

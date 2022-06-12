@@ -32,15 +32,15 @@ const FormAdminReply = ({ selectedItem, maDanhGiaCha, adminIsReplyCmt, closeForm
                 const response = DanhGiaApi.createQuanTriDanhGia(form)
                 response.then((r) => {
                     reduxNotification.showSuccessNotification(
-                        "Change Comment",
-                        "Add Comment Successfully!");
+                        "Thêm bình luận quản trị",
+                        "Thêm bình luận quản trị thành công !!");
                     resetForm()
                     closeForm()
                 }).catch((error) => {
                     console.log(error);
                     reduxNotification.showWrongNotification(
-                        "Change Comment",
-                        "Add Comment Failed!");
+                        "Thêm bình luận quản trị",
+                        "Thêm bình luận quản trị lỗi !!");
                 })
             }
         })
@@ -66,15 +66,15 @@ const FormAdminReply = ({ selectedItem, maDanhGiaCha, adminIsReplyCmt, closeForm
                 const response = DanhGiaApi.updateQuanTriDanhGia(form, idAdminRep)
                 response.then((r) => {
                     reduxNotification.showSuccessNotification(
-                        "Change Comment",
-                        "Update Comment Successfully!");
+                        "Cập nhật bình luận quản trị",
+                        "Cập nhật bình luận quản trị thành công !!");
                     resetForm()
                     closeForm()
                 }).catch((error) => {
                     console.log(error);
                     reduxNotification.showWrongNotification(
-                        "Change Comment",
-                        "Update Comment Failed!");
+                        "Cập nhật bình luận quản trị",
+                        "Cập nhật bình luận quản trị lỗi");
                 })
             }
         })

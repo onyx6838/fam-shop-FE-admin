@@ -88,14 +88,14 @@ const ModalUploadFileTest = ({ isOpen, closeModal, selectedItem, refreshForm }) 
                             setFile([])
                             closeModal()
                             reduxNotification.showSuccessNotification(
-                                "Product Image",
-                                "Change Product Image Successfully!");
+                                "Thay đổi ảnh",
+                                "Thay đổi ảnh thành công!");
                             refreshForm()
                         }).catch((err) => {
                             console.log(err);
                             reduxNotification.showWrongNotification(
-                                "Error When Change Product Image",
-                                "Change Product Image Failed!");
+                                "Thay đổi ảnh",
+                                "Thay đổi ảnh lỗi!");
                         })
                     }}
                 >

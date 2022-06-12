@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal, Table } from 'react-bootstrap'
 
 const ModalShipInfo = ({ isOpen, closeModal, selectedItem }) => {
     return (
@@ -11,9 +11,22 @@ const ModalShipInfo = ({ isOpen, closeModal, selectedItem }) => {
                 </button>
             </Modal.Header>
             <Modal.Body>
-                {
-                    selectedItem.nhanVien.hoTen
-                }
+                <Table>
+                    <tbody>
+                        <tr>
+                            <td><b>Họ tên:</b></td>
+                            <td>{selectedItem.nhanVien.hoTen}</td>
+                        </tr>
+                        <tr>
+                            <td><b>SĐT:</b></td>
+                            <td>{selectedItem.nhanVien.sdt}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Email:</b></td>
+                            <td>{selectedItem.nhanVien.email}</td>
+                        </tr>
+                    </tbody>
+                </Table>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>

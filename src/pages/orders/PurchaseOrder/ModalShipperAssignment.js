@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 
 import DonDatHangApi from '../../../api/DonDatHangApi'
 
-const ModalShipperAssignment = ({ isOpen, closeModal, selectedItem }) => {
+const ModalShipperAssignment = ({ isOpen, closeModal, selectedItem, refreshForm }) => {
     const dispatch = useDispatch();
     const shippers = useSelector(state => state.account.accounts)
     const size = useSelector(state => state.account.size);
@@ -86,13 +86,14 @@ const ModalShipperAssignment = ({ isOpen, closeModal, selectedItem }) => {
                     closeModal()
                     dispatch(changeSelectedRowShipper([]))
                     reduxNotification.showSuccessNotification(
-                        "Change Shipper",
-                        "Change Shipper Successfully!");
+                        "Phân công shipper",
+                        "Phân công shipper thành công !!");
+                    refreshForm()
                 }).catch((error) => {
                     console.log(error);
                     reduxNotification.showWrongNotification(
-                        "Change Shipper",
-                        "Change Shipper Failed!");
+                        "Phân công shipper",
+                        "Phân công shipper lỗi !!");
                 })
             }
         })

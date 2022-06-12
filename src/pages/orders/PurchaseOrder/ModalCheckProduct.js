@@ -12,6 +12,8 @@ import reduxNotification from '../../../components/ReduxNotification';
 
 import PhieuNhapKhoApi from '../../../api/PhieuNhapKhoApi'
 
+import './modalCheckProduct.css'
+
 const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId, maCTDDH }) => {
     const dispatch = useDispatch();
     const size = useSelector(state => state.receipt.childSize);
@@ -99,7 +101,7 @@ const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId, maCTDDH }) =
     };
 
     return (
-        <Modal show={isOpen} centered className='border border-dark modal-warning'>
+        <Modal show={isOpen} centered className='my_modal border border-dark'>
             <Modal.Header>
                 <Modal.Title>Check kho</Modal.Title>
                 <button type="button" className="close" aria-label="Close" onClick={closeModal}>
@@ -127,7 +129,7 @@ const ModalCheckProduct = ({ isOpen, closeModal, selectedProductId, maCTDDH }) =
                             <BootstrapTable
                                 {...toolkitprops.baseProps}
                                 bootstrap4
-                                striped
+                                
                                 hover
                                 bordered
                                 remote

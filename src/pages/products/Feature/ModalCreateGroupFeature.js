@@ -30,14 +30,14 @@ const ModalCreateGroupFeature = ({ isOpen, closeModal, refreshForm }) => {
                             await DacTrungApi.addDacTrung(values);
                             closeModal()
                             reduxNotification.showSuccessNotification(
-                                "Create Master Feature",
-                                "Create Master Feature Successfully!");
+                                "Thêm đặc trưng đại diện",
+                                "Thêm đặc trưng đại diện thành công !!");
                             refreshForm()
                         } catch (error) {
                             console.log(error);
                             reduxNotification.showWrongNotification(
-                                "Error When Create Master Feature",
-                                "Create Master Feature Failed!");
+                                "Thêm đặc trưng đại diện",
+                                "Thêm đặc trưng đại diện lỗi !!");
                         }
                     }}
                 >
