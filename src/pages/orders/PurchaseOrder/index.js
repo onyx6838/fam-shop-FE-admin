@@ -117,35 +117,66 @@ const PurchaseOrder = () => {
   }, [dispatch, size])
 
   const changeStatusOrder = async (order, e) => {
-    Swal.fire({
-      title: `${changeStatusOrderMessage.filter(msg => msg.ordinary === e.target.value).map((item) => item.value)}`,
-      text: 'Thay đổi trạng thái đơn hàng?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Đồng ý',
-      cancelButtonText: 'Hủy'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const response = DonDatHangApi.changeStatusDonDat({
-          id: order.maDonDat,
-          orderStatus: parseInt(e.target.value),
-          paymentType: parseInt(e.target.value) === 1 ? 1 : -1
-        })
-        response.then((r) => {
-          reduxNotification.showSuccessNotification(
-            "Change Order Status",
-            "Change Order Status Successfully!");
-          dispatch(fetchPurchaseOrders({ page: 1, size }))
-        }).catch((error) => {
-          console.log(error);
-          reduxNotification.showWrongNotification(
-            "Change Order Status",
-            "Change Order Status Failed!");
-        })
-      }
-    })
+    if (e.target.value === 'DA_TT') {
+      Swal.fire({
+        title: `Xác nhận thanh toán`,
+        text: 'Thay đổi trạng thái thanh toán?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const response = DonDatHangApi.changeStatusTToan({
+            id: order.maDonDat,
+            paymentType: 1  // chỉ cần xác nhận thanh toán cho đơn chứ k cần chuyển giữa 2 trạng thái
+          })
+          response.then((r) => {
+            reduxNotification.showSuccessNotification(
+              "Thay đổi trạng thái thanh toán",
+              "Thay đổi trạng thái thanh toán thành công!");
+            dispatch(fetchPurchaseOrders({ page: 1, size }))
+          }).catch((error) => {
+            console.log(error);
+            reduxNotification.showWrongNotification(
+              "Thay đổi trạng thái thanh toán",
+              "Thay đổi trạng thái thanh toán thất bại!");
+          })
+        }
+      })
+    } else {
+      Swal.fire({
+        title: `${changeStatusOrderMessage.filter(msg => msg.ordinary === e.target.value).map((item) => item.value)}`,
+        text: 'Thay đổi trạng thái đơn hàng?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const response = DonDatHangApi.changeStatusDonDat({
+            id: order.maDonDat,
+            orderStatus: parseInt(e.target.value)
+            //paymentType: parseInt(e.target.value) === 1 ? 1 : -1
+          })
+          response.then((r) => {
+            reduxNotification.showSuccessNotification(
+              "Thay đổi trạng thái đơn hàng",
+              "Thay đổi trạng thái đơn hàng thành công!");
+            dispatch(fetchPurchaseOrders({ page: 1, size }))
+          }).catch((error) => {
+            console.log(error);
+            reduxNotification.showWrongNotification(
+              "Thay đổi trạng thái đơn hàng",
+              "Thay đổi trạng thái đơn hàng thất bại!");
+          })
+        }
+      })
+    }
   }
 
   const rankFormatter = (cell, row, rowIndex, formatExtraData) => {
@@ -155,17 +186,23 @@ const PurchaseOrder = () => {
           row.trangThai === 'HUY_DON' || row.trangThai === 'HOA_DON' ? <></> :
             (
               row.trangThai === 'DON_DAT' ? (
-                <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
+                <Form.Select className="mb-2" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
                   <option hidden>Thao tác</option>
                   <option value='2'>Xác nhận</option>
                   <option value='3'>Hủy đơn</option>
+                  <option value='DA_TT'>Thanh toán</option>
                 </Form.Select>
               ) : (
-                <Form.Select className="mb-3" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
+                <Form.Select className="mb-2" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
                   <option hidden>Thao tác</option>
                   <option value='1'>Hoàn thành</option>
                   {
-                    row.trangThaiTToan === 'CHUA_TT' ? <option value='3'>Hủy đơn</option> : <></>
+                    row.trangThaiTToan === 'CHUA_TT' ? (
+                      <>
+                        <option value='3'>Hủy đơn</option>
+                        <option value='DA_TT'>Thanh toán</option>
+                      </>
+                    ) : <></>
                   }
                 </Form.Select>
               )
@@ -292,7 +329,7 @@ const PurchaseOrder = () => {
     },
     {
       dataField: "hinhThucTToan",
-      text: "Hình thức thanh toán",
+      text: "Hình thức",
       formatter: orderPurchasePaymentTypeFormatter,
       headerAttrs: { width: 150 }
     },
@@ -300,7 +337,7 @@ const PurchaseOrder = () => {
       dataField: "detail",
       text: "Chi tiết",
       formatter: orderPurchaseLineFormatter,
-      headerAttrs: { width: 70 }
+      headerAttrs: { width: 50 }
     },
     {
       dataField: "edit",
