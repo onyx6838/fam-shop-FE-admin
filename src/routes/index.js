@@ -33,7 +33,7 @@ const Account = async(() => import('../pages/accounts/Account'))
 const dashboardRoutes = {
   path: "/",
   name: "Thống kê",
-  header: "Pages",
+  header: "Danh mục",
   icon: SlidersIcon,
   containsHome: true,
   children: [
