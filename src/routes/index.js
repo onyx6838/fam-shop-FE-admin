@@ -29,6 +29,10 @@ const PurchaseOrder = async(() => import('../pages/orders/PurchaseOrder'))
 const Receipt = async(() => import('../pages/orders/Receipt'))
 const Account = async(() => import('../pages/accounts/Account'))
 
+// Post
+const Post = async(() => import('../pages/posts/Post'))
+const PostCate = async(() => import('../pages/posts/PostCate'))
+
 // Auth
 const dashboardRoutes = {
   path: "/",
@@ -111,6 +115,25 @@ const orderRoutes = {
   ]
 };
 
+const postRoutes = {
+  path: "/",
+  name: "Bài Viết",
+  icon: CreditCard,
+  children: [
+    {
+      path: "/post",
+      name: "Bài Viết",
+      component: withAuth(Post)
+    }
+    ,
+    {
+      path: "/post-cate",
+      name: "Thể Loại",
+      component: withAuth(PostCate)
+    }
+  ]
+};
+
 const accountRoutes = {
   path: "/",
   name: "Tài Khoản",
@@ -146,7 +169,8 @@ export const dashboard = [
   dashboardRoutes,
   productRoutes,
   orderRoutes,
-  accountRoutes
+  accountRoutes,
+  postRoutes
 ];
 
 // Auth specific routes
@@ -157,7 +181,8 @@ const arrayRoutes = [
   dashboardRoutes,
   productRoutes,
   orderRoutes,
-  accountRoutes
+  accountRoutes,
+  postRoutes
 ]
 
 export default arrayRoutes;

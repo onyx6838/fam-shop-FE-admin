@@ -13,6 +13,8 @@ import receipt from '../slice/receiptSlice'
 import user from '../slice/userSlice'
 import account from '../slice/accountSlice'
 import comment from '../slice/commentSlice'
+import post from '../slice/postSlice'
+import postCate from '../slice/postCateSlice'
 import { reducer as toastr } from "react-redux-toastr";
 
 const reducer = combineReducers({
@@ -29,7 +31,9 @@ const reducer = combineReducers({
     receipt,
     user,
     account,
-    comment
+    comment,
+    post,
+    postCate
 })
 
 const store = configureStore({
