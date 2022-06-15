@@ -35,12 +35,17 @@ const getById = (id) => {
     return Api.get(`${url}/${id}`);
 };
 
+const updateDescBV = (form, maBaiViet) => {
+    return Api.put(`${url}/desc/${maBaiViet}`, form);
+};
+
 const api = {
     getAll,
     createShortBaiViet,
     updateBV,
     uploadImage,
-    getById
+    getById,
+    updateDescBV
 }
 
 export default api;

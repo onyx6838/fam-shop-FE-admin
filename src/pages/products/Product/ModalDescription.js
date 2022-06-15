@@ -32,7 +32,7 @@ const ModalDescription = ({ isOpen, closeModal, refreshForm, selectedItem }) => 
                             console.log(error);
                             reduxNotification.showWrongNotification(
                                 "Cập nhật mô tả sản phẩm",
-                                "Cập nhật mô tả sản phẩm thành công lỗi!");
+                                "Cập nhật mô tả sản phẩm lỗi!");
                         }
                     }}
                 >

@@ -11,6 +11,7 @@ import { fetchPosts } from "../../../redux/slice/postSlice";
 import ModalCreate from "./ModalCreate";
 import ModalUpdate from "./ModalUpdate";
 import ModalFile from "./ModalFile";
+import ModalDescription from "./ModalDescription";
 
 const Post = () => {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Post = () => {
     const [openCreateModal, setOpenCreateModal] = useState(false)
     const [openUpdateModal, setOpenUpdateModal] = useState(false)
     const [openFileModal, setOpenFileModal] = useState(false)
+    const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState({})
 
     useEffect(() => {
@@ -41,7 +43,7 @@ const Post = () => {
                 }} />
                 <Icon.FileText size="24" className="align-middle mr-2" onClick={() => {
                     setSelectedItem(row)
-                    setOpenUpdateModal(true)
+                    setOpenDescriptionModal(true)
                 }} />
             </div>
         );
@@ -139,6 +141,9 @@ const Post = () => {
             }
             {
                 openFileModal && <ModalFile isOpen={openFileModal} closeModal={() => setOpenFileModal(false)} selectedItem={selectedItem} />
+            }
+            {
+                openDescriptionModal && <ModalDescription selectedItem={selectedItem} isOpen={openDescriptionModal} closeModal={() => setOpenDescriptionModal(false)} refreshForm={refreshForm} />
             }
         </>
     );
