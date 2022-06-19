@@ -69,7 +69,7 @@ const ModalShipperAssignment = ({ isOpen, closeModal, selectedItem, refreshForm 
 
     const confirmShipper = () => {
         Swal.fire({
-            title: `${selectedItem.trangThai === 'VAN_DON' ? 'Thay đổi sang shipper khác ?' : 'Giao cho shipper giao hàng ?'}`,
+            title: `${selectedItem.trangThai === 'VAN_DON' ? 'Chọn shipper ?' : 'Giao cho shipper giao hàng ?'}`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

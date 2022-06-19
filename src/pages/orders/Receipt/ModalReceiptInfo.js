@@ -33,10 +33,10 @@ const ModalReceiptInfo = ({ isOpen, closeModal, selectedItem }) => {
                                 i === 0 ? <img src={`https://firebasestorage.googleapis.com/v0/b/fam-shop-4fd26.appspot.com/o/${sanPhamFiles[0].name}?alt=media&token=${sanPhamFiles[0].token}`} className="img-fluid" alt="Phone" /> : ""
                               }
                             </div> */}
-                            <div className="col-md-2">
-                              <img src={hinhAnh} className="img-fluid" alt="Receipt Order Line Item" />
+                            <div className="col-md-1">
+                              <img src={hinhAnh} className="img-fluid" alt="Receipt Order Line Item"/>
                             </div>
-                            <div className="col-md-3 text-center d-flex justify-content-center align-items-center">
+                            <div className="col-md-4 text-center d-flex justify-content-center align-items-center">
                               <p className="text-muted mb-0">{ten}</p>
                             </div>
                             <div className="col-md-1 text-center d-flex justify-content-center align-items-center">

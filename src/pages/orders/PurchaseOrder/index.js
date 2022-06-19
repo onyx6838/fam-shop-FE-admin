@@ -147,35 +147,46 @@ const PurchaseOrder = () => {
         }
       })
     } else {
-      Swal.fire({
-        title: `${changeStatusOrderMessage.filter(msg => msg.ordinary === e.target.value).map((item) => item.value)}`,
-        text: 'Thay đổi trạng thái đơn hàng?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const response = DonDatHangApi.changeStatusDonDat({
-            id: order.maDonDat,
-            orderStatus: parseInt(e.target.value)
-            //paymentType: parseInt(e.target.value) === 1 ? 1 : -1
-          })
-          response.then((r) => {
-            reduxNotification.showSuccessNotification(
-              "Thay đổi trạng thái đơn hàng",
-              "Thay đổi trạng thái đơn hàng thành công!");
-            dispatch(fetchPurchaseOrders({ page: 1, size }))
-          }).catch((error) => {
-            console.log(error);
-            reduxNotification.showWrongNotification(
-              "Thay đổi trạng thái đơn hàng",
-              "Thay đổi trạng thái đơn hàng thất bại!");
-          })
-        }
-      })
+      if (Number.parseInt(e.target.value) === 1 && order.trangThaiTToan === 'CHUA_TT') {
+        reduxNotification.showWrongNotification(
+          "Thay đổi trạng thái đơn hàng",
+          "Chưa thanh toán cho đơn hàng!!");
+      } else if (Number.parseInt(e.target.value) === 1 && order.nhanVien === null) {
+        reduxNotification.showWrongNotification(
+          "Thay đổi trạng thái đơn hàng",
+          "Chưa phân công ship!!");
+      }
+      else {
+        Swal.fire({
+          title: `${changeStatusOrderMessage.filter(msg => msg.ordinary === e.target.value).map((item) => item.value)}`,
+          text: 'Thay đổi trạng thái đơn hàng?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Đồng ý',
+          cancelButtonText: 'Hủy'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const response = DonDatHangApi.changeStatusDonDat({
+              id: order.maDonDat,
+              orderStatus: parseInt(e.target.value)
+              //paymentType: parseInt(e.target.value) === 1 ? 1 : -1
+            })
+            response.then((r) => {
+              reduxNotification.showSuccessNotification(
+                "Thay đổi trạng thái đơn hàng",
+                "Thay đổi trạng thái đơn hàng thành công!");
+              dispatch(fetchPurchaseOrders({ page: 1, size }))
+            }).catch((error) => {
+              console.log(error);
+              reduxNotification.showWrongNotification(
+                "Thay đổi trạng thái đơn hàng",
+                "Thay đổi trạng thái đơn hàng thất bại!");
+            })
+          }
+        })
+      }
     }
   }
 
@@ -190,7 +201,9 @@ const PurchaseOrder = () => {
                   <option hidden>Thao tác</option>
                   <option value='2'>Xác nhận</option>
                   <option value='3'>Hủy đơn</option>
-                  <option value='DA_TT'>Thanh toán</option>
+                  {
+                    row.trangThaiTToan === 'CHUA_TT' && <option value='DA_TT'>Thanh toán</option>
+                  }
                 </Form.Select>
               ) : (
                 <Form.Select className="mb-2" defaultValue={'0'} onChange={(e) => changeStatusOrder(row, e)}>
@@ -263,11 +276,21 @@ const PurchaseOrder = () => {
     return (
       <>
         {
+          row.hinhThucTToan !== 'TRUC_TIEP' &&
           {
-            'DON_DAT': <Icon.Truck size="24" className="align-middle mr-2" onClick={() => {
-              setOpenShipperAssignmentModal(true)
-              setSelectedItem(row)
-            }} />
+            'DON_DAT': <>
+              {
+                row.nhanVien === null ?
+                  <Icon.Truck size="24" className="align-middle mr-2" onClick={() => {
+                    setOpenShipperAssignmentModal(true)
+                    setSelectedItem(row)
+                  }} /> :
+                  <Icon.Info size="24" className="align-middle mr-2" onClick={() => {
+                    setOpenShipperInfo(true)
+                    setSelectedItem(row)
+                  }} />
+              }
+            </>
             ,
             'VAN_DON':
               <>
@@ -313,7 +336,8 @@ const PurchaseOrder = () => {
     },
     {
       dataField: "tongTien",
-      text: "Tổng tiền"
+      text: "Tổng tiền",
+      headerAttrs: { width: 125 }
     },
     {
       dataField: "trangThai",
@@ -323,7 +347,7 @@ const PurchaseOrder = () => {
     },
     {
       dataField: "trangThaiTToan",
-      text: "T/thái thanh toán",
+      text: "Thanh toán",
       formatter: orderPurchasePaymentStatusFormatter,
       headerAttrs: { width: 110 }
     },
@@ -331,13 +355,13 @@ const PurchaseOrder = () => {
       dataField: "hinhThucTToan",
       text: "Hình thức",
       formatter: orderPurchasePaymentTypeFormatter,
-      headerAttrs: { width: 150 }
+      headerAttrs: { width: 155 }
     },
     {
       dataField: "detail",
       text: "Chi tiết",
       formatter: orderPurchaseLineFormatter,
-      headerAttrs: { width: 50 }
+      headerAttrs: { width: 80 }
     },
     {
       dataField: "edit",
@@ -347,9 +371,9 @@ const PurchaseOrder = () => {
     },
     {
       dataField: "shipper",
-      text: "Phân công ship",
+      text: "Ship",
       formatter: shipperAssignmentFormatter,
-      headerAttrs: { width: 120 }
+      headerAttrs: { width: 70 }
     }
   ];
 
@@ -370,10 +394,10 @@ const PurchaseOrder = () => {
 
   const refreshForm = () => {
     handleTableChange(null, {
-        page: 1,
-        sizePerPage: size
+      page: 1,
+      sizePerPage: size
     })
-}
+  }
 
   return (
     <>
@@ -419,7 +443,7 @@ const PurchaseOrder = () => {
         openCreatePurchaseOrderModal && <ModalCreatePurchaseOrder isOpen={openCreatePurchaseOrderModal} closeModal={() => setOpenCreatePurchaseOrderModal(false)} />
       }
       {
-        openShipperAssignmentModal && <ModalShipperAssignment isOpen={openShipperAssignmentModal} closeModal={() => setOpenShipperAssignmentModal(false)} selectedItem={selectedItem} refreshForm={refreshForm}/>
+        openShipperAssignmentModal && <ModalShipperAssignment isOpen={openShipperAssignmentModal} closeModal={() => setOpenShipperAssignmentModal(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
       }
       {
         openShipperInfo && <ModalShipInfo isOpen={openShipperInfo} closeModal={() => setOpenShipperInfo(false)} selectedItem={selectedItem} />
