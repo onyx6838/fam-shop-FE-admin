@@ -151,10 +151,12 @@ const PurchaseOrder = () => {
         reduxNotification.showWrongNotification(
           "Thay đổi trạng thái đơn hàng",
           "Chưa thanh toán cho đơn hàng!!");
-      } else if (Number.parseInt(e.target.value) === 1 && order.nhanVien === null) {
+          dispatch(fetchPurchaseOrders({ page: 1, size }))
+      } else if (Number.parseInt(e.target.value) === 1 && order.nhanVien === null && order.hinhThucTToan !== 'TRUC_TIEP') {
         reduxNotification.showWrongNotification(
           "Thay đổi trạng thái đơn hàng",
           "Chưa phân công ship!!");
+          dispatch(fetchPurchaseOrders({ page: 1, size }))
       }
       else {
         Swal.fire({

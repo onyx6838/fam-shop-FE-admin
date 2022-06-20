@@ -71,8 +71,8 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
                     </div>
 
                     <div className="d-flex justify-content-between pt-2">
-                      <p className="text-muted mb-0">Thời gian đặt</p>
-                      <p className="text-muted mb-0"><span className="fw-bold me-4"></span>{selectedItem.thoiGianDat}</p>
+                      <p className="text-muted mb-0">Tên khách hàng</p>
+                      <p className="text-muted mb-0"><span className="fw-bold me-4"></span>{selectedItem.khachHang.hoTen}</p>
                     </div>
 
                     <div className="d-flex justify-content-between pt-2">
@@ -89,11 +89,14 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
                       <p className="text-muted mb-0">SĐT Nhận hàng</p>
                       <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.sdtNhanHang}</p>
                     </div>
-
-                    <div className="d-flex justify-content-between pt-2">
-                      <p className="text-muted mb-0">Shipper giao hàng</p>
-                      <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhanVien ? selectedItem.nhanVien.hoTen : ''}</p>
-                    </div>
+                    {
+                      selectedItem.nhanVien !== null && (
+                        <div className="d-flex justify-content-between pt-2">
+                          <p className="text-muted mb-0">Shipper giao hàng</p>
+                          <p className="text-muted mb-0"><span className="fw-bold me-4"></span> {selectedItem.nhanVien ? selectedItem.nhanVien.hoTen : ''}</p>
+                        </div>
+                      )
+                    }
                   </div>
                   <div className="card-footer border-0 px-4 py-5" style={{ 'backgroundColor': '#a8729a', 'borderBottomLeftRadius': '10px', 'borderBottomRightRadius': '10px' }}>
                     <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Tổng tiền:&nbsp;<span className="h2 mb-0 ms-2">{selectedItem.tongTien}</span></h5>
