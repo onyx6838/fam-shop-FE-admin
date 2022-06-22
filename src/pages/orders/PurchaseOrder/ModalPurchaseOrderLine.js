@@ -47,7 +47,7 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
                                   <p className="text-muted mb-0">Số lượng: {soLuong}</p>
                                 </div>
                                 <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                  <p className="text-muted mb-0">Tổng tiền: {tongTienMuc}</p>
+                                  <p className="text-muted mb-0">Tổng tiền: {tongTienMuc}đ</p>
                                 </div>
                                 {
                                   selectedItem.trangThai === 'DON_DAT' && (
@@ -99,7 +99,7 @@ const ModalPurchaseOrderLine = ({ isOpen, closeModal, selectedItem }) => {
                     }
                   </div>
                   <div className="card-footer border-0 px-4 py-5" style={{ 'backgroundColor': '#a8729a', 'borderBottomLeftRadius': '10px', 'borderBottomRightRadius': '10px' }}>
-                    <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Tổng tiền:&nbsp;<span className="h2 mb-0 ms-2">{selectedItem.tongTien}</span></h5>
+                    <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Tổng tiền:&nbsp;<span className="h2 mb-0 ms-2">{selectedItem.tongTien}đ</span></h5>
                   </div>
                 </div>
               </div>
