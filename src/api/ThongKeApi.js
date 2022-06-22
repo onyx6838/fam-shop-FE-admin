@@ -26,12 +26,18 @@ const categorySoldWithOrder = () => {
     return Api.get(`${url}/category-most-sold`);
 };
 
+const productMostSold = () => {
+    return Api.get(`${url}/product-most-sold`);
+};
+
+
 const api = {
     totalRevenue,
     totalProductSold,
     countOrderWithType,
     statisticOrderByYear,
     countCustomerBuyOrderDone,
-    categorySoldWithOrder
+    categorySoldWithOrder,
+    productMostSold
 }
 export default api;

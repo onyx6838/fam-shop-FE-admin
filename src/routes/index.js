@@ -143,7 +143,7 @@ const accountRoutes = {
   children: [
     {
       path: "/accounts",
-      name: "Tài Khoản",
+      name: "Tài Khoản Người Dùng",
       component: withRole(withAuth(Account))
     }
   ]

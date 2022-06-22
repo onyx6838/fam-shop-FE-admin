@@ -208,8 +208,8 @@ const Product = () => {
           catch (err) {
             console.log(err);
             reduxNotification.showWrongNotification(
-              "Change Product",
-              "Remove Product Failed!");
+              "Xóa nhiều sản phẩm",
+              "Xóa nhiều sản phẩm lỗi");
           }
         }
       })
@@ -231,14 +231,14 @@ const Product = () => {
         const response = SanPhamApi.deleteByMaSP(maSP)
         response.then((r) => {
           reduxNotification.showSuccessNotification(
-            "Change Product",
-            "Remove Product Successfully!");
+            "Xóa sản phẩm",
+            "Xóa sản phẩm thành công !!!");
           refreshForm()
         }).catch((error) => {
           console.log(error);
           reduxNotification.showWrongNotification(
-            "Change Product",
-            "Remove Product Failed!");
+            "Xóa sản phẩm",
+            "Xóa sản phẩm lỗi !!");
         })
       }
     })
@@ -259,14 +259,14 @@ const Product = () => {
         const response = SanPhamApi.reactiveSP(maSP)
         response.then((r) => {
           reduxNotification.showSuccessNotification(
-            "Change Product",
-            "Change Status Product Successfully!");
+            "Thay đổi sản phẩm",
+            "Thay đổi trạng thái thành công");
           refreshForm()
         }).catch((error) => {
           console.log(error);
           reduxNotification.showWrongNotification(
-            "Change Product",
-            "Change Status Failed !");
+            "Thay đổi sản phẩm",
+            "Thay đổi trạng thái thất bại");
         })
       }
     })
@@ -349,7 +349,9 @@ const Product = () => {
           </ToolkitProvider>
         </Card.Body>
       </Card>
-      <ModalCreate isOpen={openCreateModal} closeModal={() => setOpenCreateModal(false)} refreshForm={refreshForm} />
+      {
+        openCreateModal && <ModalCreate isOpen={openCreateModal} closeModal={() => setOpenCreateModal(false)} refreshForm={refreshForm} />
+      }  
       {
         openUpdateModal && <ModalUpdate isOpen={openUpdateModal} closeModal={() => setOpenUpdateModal(false)} selectedItem={selectedItem} refreshForm={refreshForm} />
       }
